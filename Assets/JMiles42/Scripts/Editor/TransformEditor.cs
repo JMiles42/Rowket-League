@@ -100,6 +100,8 @@ public class TransformEditor : Editor
         scaleAmount = EditorGUILayout.FloatField(content, scaleAmount);
         GUIContent scaleContent = new GUIContent("Set Scale", string.Format("Sets the scale ({0},{0},{0})",scaleAmount));
         if (GUILayout.Button(scaleContent)) transform.localScale = Vector3.one*scaleAmount;
+        GUIContent scaleTimesContent = new GUIContent("Times Scale", string.Format("Sets the scale ({0},{1},{2})",transform.position.x*scaleAmount,transform.position.y*scaleAmount,transform.position.z*scaleAmount));
+        if (GUILayout.Button(scaleTimesContent)) transform.localScale*=scaleAmount;
         EditorGUILayout.EndHorizontal();
     }
 }

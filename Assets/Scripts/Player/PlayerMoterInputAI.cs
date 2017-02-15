@@ -1,0 +1,12 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "InputAI", menuName = "Rowket/Input/AI", order = 0)]
+public class PlayerMoterInputAI : PlayerMoterInputBase
+{
+    public override Vector3 GetInput()
+    {
+        throw new System.NotImplementedException();
+    }
+}
