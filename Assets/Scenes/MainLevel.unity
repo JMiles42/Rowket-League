@@ -113,7 +113,7 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 35956250}
-  m_LocalRotation: {x: 0, y: 0, z: 0.00000037252897, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 10, z: 15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -209,7 +209,7 @@ GameObject:
   - component: {fileID: 131840708}
   - component: {fileID: 131840709}
   m_Layer: 0
-  m_Name: Cube (6)
+  m_Name: Hitbox7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 348630165}
   - component: {fileID: 348630166}
   m_Layer: 0
-  m_Name: Cube (12)
+  m_Name: Hitbox12
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -410,7 +410,7 @@ GameObject:
   - component: {fileID: 467717283}
   - component: {fileID: 467717284}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Hitbox3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1009,7 +1009,7 @@ GameObject:
   - component: {fileID: 1028503018}
   - component: {fileID: 1028503019}
   m_Layer: 0
-  m_Name: Cube (11)
+  m_Name: Hitbox11
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1050,7 +1050,7 @@ GameObject:
   - component: {fileID: 1036218367}
   - component: {fileID: 1036218368}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: Hitbox6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1091,7 +1091,7 @@ GameObject:
   - component: {fileID: 1039854784}
   - component: {fileID: 1039854785}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Hitbox2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1132,7 +1132,7 @@ GameObject:
   - component: {fileID: 1102539766}
   - component: {fileID: 1102539767}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Hitbox4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1236,7 +1236,7 @@ GameObject:
   - component: {fileID: 1208018995}
   - component: {fileID: 1208018997}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Hitbox1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1277,7 +1277,7 @@ GameObject:
   - component: {fileID: 1474932523}
   - component: {fileID: 1474932524}
   m_Layer: 0
-  m_Name: Cube (8)
+  m_Name: Hitbox8
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1412,7 +1412,7 @@ GameObject:
   - component: {fileID: 1530728264}
   - component: {fileID: 1530728265}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: Hitbox5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1656,7 +1656,7 @@ GameObject:
   - component: {fileID: 1700523810}
   - component: {fileID: 1700523811}
   m_Layer: 0
-  m_Name: Cube (10)
+  m_Name: Hitbox10
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1868,7 +1868,7 @@ GameObject:
   - component: {fileID: 2128813935}
   - component: {fileID: 2128813936}
   m_Layer: 0
-  m_Name: Cube (9)
+  m_Name: Hitbox9
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
