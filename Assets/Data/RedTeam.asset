@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Name: RedTeam
   m_EditorClassIdentifier: 
   myTeam: 0
-  score: 1
+  score: 0
   myTeamColour: {r: 1, g: 0, b: 0, a: 1}

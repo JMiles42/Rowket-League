@@ -6,36 +6,32 @@ using UnityEngine;
 
 public class TeamManager : Singleton<TeamManager>
 {
-    public Team TeamRed;
-    public Team TeamBlue;
+    public List<Team> teams;
 
     private void Start()
     {
-        TeamRed.score = 0;
-        TeamBlue.score = 0;
+        foreach (var team in teams)
+        {
+            team.score = 0;
+        }
     }
 
     public Team GetTeam(TeamType type)
     {
-        switch (type)
-        {
-            case TeamType.Red:
-                return TeamRed;
-            case TeamType.Blue:
-                return TeamBlue;
-            default:
-                throw new ArgumentOutOfRangeException("type", type, null);
-        }
+        foreach (var team in teams)
+            if (team.myTeam == type)
+                return team;
+        return null;
     }
 
     public void TeamInit()
     {
-        TeamRed.StartListening();
-        TeamBlue.StartListening();
+        foreach (var team in teams)
+            team.StartListening();
     }
     public void TeamStop()
     {
-        TeamRed.StopListening();
-        TeamBlue.StopListening();
+        foreach (var team in teams)
+            team.StopListening();
     }
 }

@@ -22,9 +22,4 @@ public class Ball : JMilesBehaviour {
 	{
 	    Rigidbody.velocity = Vector3.down * 20f;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }
