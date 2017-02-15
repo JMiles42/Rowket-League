@@ -28,6 +28,15 @@ public class Goal : JMilesBehaviour
             GoalScored();
         }
     }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.GetComponent<Ball>())
+        {
+            var ball = other.gameObject.GetComponent<Ball>();
+            GoalScored();
+        }
+    }
 }
 
 

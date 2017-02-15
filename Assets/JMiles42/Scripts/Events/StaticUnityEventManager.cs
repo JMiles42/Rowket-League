@@ -27,6 +27,7 @@ public static class StaticUnityEventManager
 	}
 	public static void TriggerEvent(string eventName)
 	{
+	    Debug.Log(string.Format("Triggered \"{0}\" Event",eventName));
 		UnityEvent thisEvent = null;
 		if (eventDictionary.TryGetValue(eventName, out thisEvent))
 			thisEvent.Invoke();
