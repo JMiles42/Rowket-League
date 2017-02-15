@@ -1,0 +1,19 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public static class TranformExtensions
+{
+    public static void ResetLocalPosRotScale(this Transform transform)
+    {
+        transform.localPosition = Vector3.zero;
+        transform.localEulerAngles = Vector3.zero;
+        transform.localScale = Vector3.one;
+    }
+    public static void ResetPosRotScale(this Transform transform)
+    {
+        transform.position = Vector3.zero;
+        transform.eulerAngles = Vector3.zero;
+        transform.localScale = Vector3.one;
+    }
+}
