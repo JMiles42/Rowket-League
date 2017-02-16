@@ -2,10 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Rigidbody))]
-public class PlayerMoter : MonoBehaviour
+public class PlayerMoter : JMilesRigidbodyBehaviour
 {
     public PlayerMoterInputBase MyInput;
+    public float speed;
+
+    void Update()
+    {
+        Vector3 input = MyInput.GetInput();
+        rigidbody.AddRelativeForce(input * speed);
+    }
 
     public void StartInput()
     {

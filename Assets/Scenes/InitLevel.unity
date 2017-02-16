@@ -119,15 +119,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Horizontal:
-    Axis: 
+    Axis: Horizontal
     m_Value: 0
     ValueInverted: 0
   MouseScroll:
-    Axis: 
+    Axis: MouseScroll
     m_Value: 0
     ValueInverted: 0
   Vertical:
-    Axis: 
+    Axis: Vertical
     m_Value: 0
     ValueInverted: 0
   MousePos: {x: 0, y: 0}
