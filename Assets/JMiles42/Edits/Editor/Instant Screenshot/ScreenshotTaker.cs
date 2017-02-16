@@ -17,7 +17,7 @@ public class Screenshot : EditorWindow
 	public Camera myCamera;
 
 	static string path = Application.persistentDataPath + @"/Screenshots";
-	bool showPreview = true;
+	//bool showPreview = true;
 	RenderTexture renderTexture;
 
 	bool isTransparent = false;

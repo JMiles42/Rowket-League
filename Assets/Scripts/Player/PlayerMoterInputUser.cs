@@ -29,13 +29,27 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         rotation += Vector3.up * PlayerInputManager.Instance.Horizontal;
     }
 
+    private void JumpPressed()
+    {
+        UserSubmit = true;
+    }
+
+    private void JumpReleased()
+    {
+        UserSubmit = false;
+    }
+
     private void OnEnable()
     {
-        StaticUnityEventManager.StartListening(PlayerInputValues.Horizontal, HorizontalPressed);
+        PlayerInputManager.Instance.Horizontal.onKey += HorizontalPressed;
+        PlayerInputManager.Instance.Jump.onKeyDown += JumpPressed;
+        PlayerInputManager.Instance.Jump.onKeyUp += JumpReleased;
     }
 
     private void OnDisable()
     {
-        StaticUnityEventManager.StopListening(PlayerInputValues.Horizontal, HorizontalPressed);
+        PlayerInputManager.Instance.Horizontal.onKey -= HorizontalPressed;
+        PlayerInputManager.Instance.Jump.onKeyDown -= JumpPressed;
+        PlayerInputManager.Instance.Jump.onKeyUp -= JumpReleased;
     }
 }

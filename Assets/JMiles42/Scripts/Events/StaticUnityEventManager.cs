@@ -25,13 +25,15 @@ public static class StaticUnityEventManager
 		if (eventDictionary.TryGetValue(eventName, out thisEvent))
 			thisEvent.RemoveListener(listener);
 	}
-	public static void TriggerEvent(string eventName)
-	{
-	    Debug.Log(string.Format("Triggered \"{0}\" Event",eventName));
-		UnityEvent thisEvent = null;
-		if (eventDictionary.TryGetValue(eventName, out thisEvent))
-			thisEvent.Invoke();
-	}
+    public static void TriggerEvent(string eventName)
+    {
+        UnityEvent thisEvent = null;
+        if (eventDictionary.TryGetValue(eventName, out thisEvent))
+        {
+            thisEvent.Invoke();
+            Debug.Log(string.Format("Triggered \"{0}\" Event", eventName));
+        }
+    }
 
     public static void StartListening(PlayerInputValues eventName, PlayerInputDirections eventDir, UnityAction listener)
     {

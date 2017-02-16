@@ -6,7 +6,7 @@ using UnityEngine;
 public class Ball : JMilesBehaviour {
 
     private Rigidbody m_Rigidbody;
-    public new Rigidbody Rigidbody
+    public new Rigidbody rigidbody
     {
         get
         {
@@ -20,6 +20,6 @@ public class Ball : JMilesBehaviour {
     // Use this for initialization
 	void Start ()
 	{
-	    Rigidbody.velocity = Vector3.down * 20f;
+	    rigidbody.velocity = Vector3.down * 20f;
 	}
 }

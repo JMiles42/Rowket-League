@@ -21,7 +21,7 @@ namespace JMiles42.Physics
         public Vector3 velocityOthers;
 
         private Collider m_collider;
-        public Collider collider
+        public new Collider collider
         {
             get
             {

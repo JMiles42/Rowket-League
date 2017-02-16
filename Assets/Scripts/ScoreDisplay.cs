@@ -28,12 +28,19 @@ public class ScoreDisplay : MonoBehaviour
 
     public void SetUpListening()
     {
-        StaticUnityEventManager.StartListening("goal"+myTeam.ToString(),UpdateDisplay);
-
+        if (!TeamManager.Instance)
+            return;
+        var goal = TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal();
+        if (goal)
+            goal.onGoal += UpdateDisplay;
     }
     public void EndUpListening()
     {
-        StaticUnityEventManager.StopListening("goal"+myTeam.ToString(),UpdateDisplay);
+        if (!TeamManager.Instance)
+            return;
+        var goal = TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal();
+        if(goal)
+            goal.onGoal -= UpdateDisplay;
     }
 
     private void UpdateDisplay()

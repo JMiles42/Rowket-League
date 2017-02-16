@@ -22,16 +22,24 @@ public class Team : JMilesScriptableObject
     }
     public void StartListening()
     {
-        StaticUnityEventManager.StopListening("goal"+myTeam.ToString(), TeamScored);
-        StaticUnityEventManager.StartListening("goal"+myTeam.ToString(), TeamScored);
+        GetTeamsGoal().onGoal += TeamScored;
     }
     public void StopListening()
     {
-        StaticUnityEventManager.StopListening("goal"+myTeam.ToString(), TeamScored);
+        GetTeamsGoal().onGoal -= TeamScored;
     }
     public void TeamScored()
     {
         score++;
+    }
+
+    public Goal GetTeamsGoal()
+    {
+        var goals = FindObjectsOfType<Goal>();
+        foreach (var goal in goals)
+            if (goal.myTeam == myTeam)
+                return goal;
+        return null;
     }
 
 }

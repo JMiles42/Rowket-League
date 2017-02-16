@@ -7,11 +7,35 @@ using UnityEngine.UI;
 
 public class PlayerInputManager : Singleton<PlayerInputManager>
 {
-    public InputAxis Horizontal;
-    public InputAxis MouseScroll;
-    public InputAxis Vertical;
+    public InputAxis Horizontal
+    {
+        get { return inputsToUse[0]; }
+        set { inputsToUse[0] = value; }
+    }
+    public InputAxis Vertical
+    {
+        get { return inputsToUse[1]; }
+        set { inputsToUse[1] = value; }
+    }
+    public InputAxis MouseScroll
+    {
+        get { return inputsToUse[2]; }
+        set { inputsToUse[2] = value; }
+    }
+    public InputAxis Jump
+    {
+        get { return inputsToUse[3]; }
+        set { inputsToUse[3] = value; }
+    }
 
-	public Vector2 MousePos;
+    public List<InputAxis> inputsToUse = new List<InputAxis>
+    {
+        new InputAxis("Horizontal"),
+        new InputAxis("Vertical"),
+        new InputAxis("MouseScroll"),
+        new InputAxis("Jump")
+    };
+    public Vector2 MousePos;
 
 	void Start()
 	{
@@ -20,46 +44,37 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 	void Update()
 	{
 		GetAxisValues();
-		Axis();
-		MousePress();
 		TriggerInputs();
 	}
 	void GetAxisValues()
 	{
-        Horizontal.UpdateData();
-        Vertical.UpdateData();
-        MouseScroll.UpdateData();
-		MousePos = Input.mousePosition;
-	}
-	void MousePress()
-	{
-		if (MouseScroll != 0) StaticUnityEventManager.TriggerEvent(PlayerInputValues.MouseScrollWheel);
-	}
-	void Axis()
-	{
-		if (Horizontal != 0) StaticUnityEventManager.TriggerEvent(PlayerInputValues.Horizontal);
-		if (Vertical != 0) StaticUnityEventManager.TriggerEvent(PlayerInputValues.Vertical);
-	}
-	public List<string> inputsToUse;
-	public void AddInput(string key)
-	{
-		if (!inputsToUse.Contains(key)) inputsToUse.Add(key);
-	}
-	public void RemoveInput(string key)
-	{
-		if (inputsToUse.Contains(key)) inputsToUse.Remove(key);
+	    foreach (InputAxis input in inputsToUse)
+	        input.UpdateData();
+	    MousePos = Input.mousePosition;
 	}
 	public void TriggerInputs()
 	{
         if(inputsToUse.Count == 0) return;
-		foreach (var k in inputsToUse)
+		foreach (var key in inputsToUse)
 		{
-			if (Input.GetButtonUp(k))
-				StaticUnityEventManager.TriggerEvent(k + PlayerInputDirections.Up);
-			else if (Input.GetButtonDown(k))
-				StaticUnityEventManager.TriggerEvent(k + PlayerInputDirections.Down);
-			else if (Input.GetButton(k))
-				StaticUnityEventManager.TriggerEvent(k + PlayerInputDirections.Held);
+		    if (Input.GetButtonUp(key))
+		    {
+		        if(key.onKeyUp != null)
+		            key.onKeyUp();
+		        StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Up);
+		    }
+			else if (Input.GetButtonDown(key))
+			{
+			    if(key.onKeyDown != null)
+			        key.onKeyDown();
+			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Down);
+			}
+			else if (Input.GetButton(key))
+			{
+			    if(key.onKey != null)
+			        key.onKey();
+			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Held);
+			}
 		}
 	}
 }
@@ -80,7 +95,7 @@ public enum PlayerInputValues
     Sprint,
 }
 [Serializable]
-public struct InputAxis
+public class InputAxis
 {
     public string Axis;
     public float Value
@@ -89,13 +104,16 @@ public struct InputAxis
         set{ m_Value = ValueInverted ? value : -value;}
     }
     [SerializeField]
-    float m_Value;
+    float m_Value = 0;
     public bool ValueInverted;
+
+    public Action onKeyDown;
+    public Action onKeyUp;
+    public Action onKey;
 
     public InputAxis(string axis,bool invert = false)
     {
         Axis = axis;
-        m_Value = 0;
         ValueInverted = invert;
     }
 
@@ -106,6 +124,10 @@ public struct InputAxis
     public static implicit operator float(InputAxis fp)
     {
         return fp.Value;
+    }
+    public static implicit operator string(InputAxis fp)
+    {
+        return fp.Axis;
     }
     public static implicit operator bool(InputAxis fp)
     {

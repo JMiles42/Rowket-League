@@ -6,14 +6,12 @@ using UnityEngine;
 
 public class TeamManager : Singleton<TeamManager>
 {
-    public List<Team> teams;
+    public List<Team> teams = new List<Team>();
 
     private void Start()
     {
         foreach (var team in teams)
-        {
             team.score = 0;
-        }
     }
 
     public Team GetTeam(TeamType type)
