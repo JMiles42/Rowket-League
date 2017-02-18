@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,22 +11,26 @@ public class Team : JMilesScriptableObject
     public int score;
     public Color myTeamColour;
 
-    private void OnEnable()
+    public void Enable()
     {
+        StopListening();
         StartListening();
     }
 
-    private void OnDisable()
+    public void Disable()
     {
         StopListening();
     }
+
     public void StartListening()
     {
         GetTeamsGoal().onGoal += TeamScored;
     }
     public void StopListening()
     {
+#if !UNITY_EDITOR
         GetTeamsGoal().onGoal -= TeamScored;
+#endif
     }
     public void TeamScored()
     {
@@ -41,7 +45,6 @@ public class Team : JMilesScriptableObject
                 return goal;
         return null;
     }
-
 }
 
 [Serializable]

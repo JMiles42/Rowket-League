@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -16,6 +16,21 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
     }
 
     public override bool GetInputSubmit()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Enable(PlayerMoter callingObject)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void Disable(PlayerMoter callingObject)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override float GetMoveStrength()
     {
         throw new System.NotImplementedException();
     }

@@ -55,7 +55,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 	public void TriggerInputs()
 	{
         if(inputsToUse.Count == 0) return;
-		foreach (var key in inputsToUse)
+		foreach (InputAxis key in inputsToUse)
 		{
 		    if (Input.GetButtonUp(key))
 		    {

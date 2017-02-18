@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class JMilesBehaviour : MonoBehaviour
@@ -36,5 +37,15 @@ public class JMilesBehaviour : MonoBehaviour
         {
             transform.position = value;
         }
+    }
+    
+    public void StartRoutine(IEnumerator method)
+    {
+        StartCoroutine(method);
+    }
+
+    public void StopRoutine(IEnumerator method)
+    {
+        StopCoroutine(method);
     }
 }

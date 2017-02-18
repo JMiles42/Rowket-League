@@ -11,8 +11,7 @@ public class ScoreDisplay : MonoBehaviour
 
     private void Start()
     {
-        if (myTextDisplay == null)
-            myTextDisplay = GetComponent<Text>();
+        if (myTextDisplay == null) myTextDisplay = GetComponent<Text>();
         UpdateDisplay();
     }
 
@@ -28,19 +27,16 @@ public class ScoreDisplay : MonoBehaviour
 
     public void SetUpListening()
     {
-        if (!TeamManager.Instance)
-            return;
+        if (!TeamManager.Instance) return;
+        EndUpListening();
         var goal = TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal();
-        if (goal)
-            goal.onGoal += UpdateDisplay;
+        if (goal) goal.onGoal += UpdateDisplay;
     }
     public void EndUpListening()
     {
-        if (!TeamManager.Instance)
-            return;
+        if (!TeamManager.Instance) return;
         var goal = TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal();
-        if(goal)
-            goal.onGoal -= UpdateDisplay;
+        if(goal) goal.onGoal -= UpdateDisplay;
     }
 
     private void UpdateDisplay()

@@ -8,10 +8,18 @@ public class TeamManager : Singleton<TeamManager>
 {
     public List<Team> teams = new List<Team>();
 
+    private void OnEnable()
+    {
+        foreach (var team in teams) team.Enable();
+    }
+    private void OnDisable()
+    {
+        foreach (var team in teams) team.Disable();
+    }
+
     private void Start()
     {
-        foreach (var team in teams)
-            team.score = 0;
+        foreach (var team in teams) team.score = 0;
     }
 
     public Team GetTeam(TeamType type)

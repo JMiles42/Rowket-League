@@ -12,3 +12,13 @@ MonoBehaviour:
   m_Name: PlayerOne
   m_EditorClassIdentifier: 
   UserSubmit: 0
+  UserCoolingDown: 1
+  RotationSpeed: 5
+  rotation: {x: 0, y: -438.8534, z: 0}
+  speed: 0
+  strength: 1.0902214
+  strengthMultiplyer: 8
+  strengthPingPongMax: 2
+  RotDamp: 10
+  FollowDamp: 4
+  inputCooldown: 2
