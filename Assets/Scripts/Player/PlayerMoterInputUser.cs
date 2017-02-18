@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "InputUser", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMoterInputUser : PlayerMoterInputBase
@@ -22,6 +23,9 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     public float FollowDamp = 2;
 
     public float inputCooldown = 0.4f;
+
+    public Vector3 ScaleMin = new Vector3(0.1f,0.1f,0.1f);
+    public Vector3 ScaleMax = new Vector3(0.5f,0.5f,1f);
 
     public override Vector3 GetMoveDirection()
     {
@@ -97,15 +101,26 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     {
         bool update = true;
         Camera cam = callingObject.GetComponentInChildren<Camera>();
+
+        PlayerDisplayArrow arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();
         if (cam == null)
         {
             var newCam = new InitWithComponent<Camera>("Player Camera");
             cam = newCam;
             newCam.gameObject.transform.parent = null;
         }
+        if (arrow == null)
+        {
+            var newArrow = new InitWithComponent<PlayerDisplayArrow>("Player Arrow");
+            newArrow.gameObject.transform.parent = callingObject.transform;
+            arrow = newArrow;
+        }
+
         cam.transform.parent = null;
         while (update)
         {
+            arrow.SetScale((strength-strengthMin)/strengthMax);
+
             //Get the direction of the camera from the input
             var currentRotation = Quaternion.Euler(GetMoveDirection());
             //Set the positon of the camera to "behind the players look direction"
@@ -116,6 +131,8 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             //Lerp the current values to the 
             cam.transform.position = Vector3.Lerp(cam.transform.position, newPosition, Time.deltaTime * FollowDamp);
             cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
+
+            arrow.transform.localRotation = Quaternion.Euler(GetMoveDirection());
 
             yield return null;
         }
