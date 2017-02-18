@@ -19,7 +19,9 @@ public class Team : JMilesScriptableObject
 
     public void Disable()
     {
+#if !UNITY_EDITOR
         StopListening();
+#endif
     }
 
     public void StartListening()
@@ -28,9 +30,7 @@ public class Team : JMilesScriptableObject
     }
     public void StopListening()
     {
-#if !UNITY_EDITOR
         GetTeamsGoal().onGoal -= TeamScored;
-#endif
     }
     public void TeamScored()
     {

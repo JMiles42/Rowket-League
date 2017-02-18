@@ -13,9 +13,10 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
     public float speed;
     public float strength = 0;
+    public float strengthMin = 0;
     public float strengthMultiplyer = 4;
     //private float maxStrength = 0;
-    public float strengthPingPongMax = 10;
+    public float strengthMax = 2;
 
     public float RotDamp = 5;
     public float FollowDamp = 2;
@@ -50,6 +51,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     public override void Enable(PlayerMoter callingObject)
     {
         Disable();
+        UserCoolingDown = false;
         PlayerInputManager.Instance.Horizontal.onKey += HorizontalPressed;
         PlayerInputManager.Instance.Jump.onKeyDown += JumpPressed;
         callingObject.StartRoutine(InputSession());
@@ -86,7 +88,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     {
         while (true)
         {
-            strength = Mathf.PingPong(Time.time, strengthPingPongMax);
+            strength = strengthMin + Mathf.PingPong(Time.time, strengthMax);
             yield return null;
         }
     }
@@ -107,9 +109,9 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             //Get the direction of the camera from the input
             var currentRotation = Quaternion.Euler(GetMoveDirection());
             //Set the positon of the camera to "behind the players look direction"
-            var newPosition = callingObject.transform.TransformPoint((currentRotation * -callingObject.transform.forward * 10) + Vector3.up * 4);
+            var newPosition = callingObject.transform.TransformPoint((currentRotation * -callingObject.transform.forward * 10) + callingObject.transform.up * 4) ;
             //Get the camera looking at the player
-            var newRotation = Quaternion.LookRotation(callingObject.transform.position - cam.transform.position);
+            var newRotation = Quaternion.LookRotation(callingObject.transform.position - (cam.transform.position + (Vector3.down * 2)));
 
             //Lerp the current values to the 
             cam.transform.position = Vector3.Lerp(cam.transform.position, newPosition, Time.deltaTime * FollowDamp);
