@@ -5,7 +5,6 @@ using UnityEngine;
 public class PlayerMoter : JMilesRigidbodyBehaviour
 {
     public PlayerMoterInputBase MyInput;
-    public bool IsPlayer;
 
     private void OnEnable()
     {

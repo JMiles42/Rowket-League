@@ -14,12 +14,14 @@ MonoBehaviour:
   UserSubmit: 0
   UserCoolingDown: 0
   RotationSpeed: 5
-  rotation: {x: 0, y: 542.3618, z: 0}
+  rotation: {x: 0, y: 305.70526, z: 0}
   speed: 0
-  strength: 5.337023
+  strength: 5.193515
   strengthMin: 5
   strengthMultiplyer: 100
   strengthMax: 2
   RotDamp: 10
   FollowDamp: 4
-  inputCooldown: 0.1
+  inputCooldown: 1
+  ScaleMin: {x: 0.1, y: 0.1, z: 0.1}
+  ScaleMax: {x: 0.5, y: 0.5, z: 1}

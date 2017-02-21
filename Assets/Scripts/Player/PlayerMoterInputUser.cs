@@ -119,20 +119,22 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         cam.transform.parent = null;
         while (update)
         {
+            arrow.gameObject.SetActive(!UserCoolingDown);
             arrow.SetScale((strength-strengthMin)/strengthMax);
-
-            //Get the direction of the camera from the input
-            var currentRotation = Quaternion.Euler(GetMoveDirection());
+            //Stores resualt to sav multiple calls
+            var MoveDirection = GetMoveDirection();
+            var currentRotation = Quaternion.Euler(MoveDirection);
             //Set the positon of the camera to "behind the players look direction"
             var newPosition = callingObject.transform.TransformPoint((currentRotation * -callingObject.transform.forward * 10) + callingObject.transform.up * 4) ;
             //Get the camera looking at the player
             var newRotation = Quaternion.LookRotation(callingObject.transform.position - (cam.transform.position + (Vector3.down * 2)));
+            var newPosativeRotation = callingObject.transform.TransformDirection((currentRotation * callingObject.transform.forward));
 
             //Lerp the current values to the 
             cam.transform.position = Vector3.Lerp(cam.transform.position, newPosition, Time.deltaTime * FollowDamp);
             cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
 
-            arrow.transform.localRotation = Quaternion.Euler(GetMoveDirection());
+            arrow.transform.rotation = Quaternion.LookRotation(newPosativeRotation);
 
             yield return null;
         }
