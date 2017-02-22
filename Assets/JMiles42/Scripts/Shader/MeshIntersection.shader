@@ -7,7 +7,7 @@ Shader "JMiles42/IntersectionHighlights"
 	{
 		_RegularColor("Main Color", Color) = (1, 1, 1, .5) //Color when not intersecting
 		_HighlightColor("Highlight Color", Color) = (1, 1, 1, .5) //Color when intersecting
-		_HighlightThresholdMax("Highlight Threshold Max", Float) = 1 //Max difference for intersections
+		_HighlightThresholdMax("Highlight Threshold Max", Float) = 0.5 //Max difference for intersections
 	}
 		SubShader
 	{

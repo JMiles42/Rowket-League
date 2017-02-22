@@ -27,10 +27,12 @@ public class Team : JMilesScriptableObject
     public void StartListening()
     {
         GetTeamsGoal().onGoal += TeamScored;
+        GetTeamsGoal().onGoal += TeamManager.Instance.GoalScored;
     }
     public void StopListening()
     {
         GetTeamsGoal().onGoal -= TeamScored;
+        GetTeamsGoal().onGoal -= TeamManager.Instance.GoalScored;
     }
     public void TeamScored()
     {

@@ -7,6 +7,7 @@ using UnityEngine;
 public class TeamManager : Singleton<TeamManager>
 {
     public List<Team> teams = new List<Team>();
+    public Action onGoal;
 
     private void OnEnable()
     {
@@ -16,7 +17,10 @@ public class TeamManager : Singleton<TeamManager>
     {
         foreach (var team in teams) team.Disable();
     }
-
+    public void GoalScored()
+    {
+        if(onGoal != null) onGoal();
+    }
     private void Start()
     {
         foreach (var team in teams) team.score = 0;

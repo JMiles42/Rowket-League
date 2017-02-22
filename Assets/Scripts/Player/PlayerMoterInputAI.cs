@@ -5,33 +5,48 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "InputAI", menuName = "Rowket/Input/AI", order = 0)]
 public class PlayerMoterInputAI : PlayerMoterInputBase
 {
+    public Vector3 MoveDir;
+    public float ReactionTime;
+    public float ReactionStrength;
     public override Vector3 GetMoveDirection()
     {
-        throw new System.NotImplementedException();
+        return MoveDir;
     }
 
     public override Vector2 GetInput()
     {
-        throw new System.NotImplementedException();
+        return Vector3.zero;
     }
 
     public override bool GetInputSubmit()
     {
-        throw new System.NotImplementedException();
+        return false;
     }
 
     public override void Enable(PlayerMoter callingObject)
     {
-        throw new System.NotImplementedException();
+        callingObject.StartRoutine(PlayerUnique(callingObject));
     }
 
     public override void Disable(PlayerMoter callingObject)
     {
-        throw new System.NotImplementedException();
+        callingObject.StopRoutine(PlayerUnique(callingObject));
     }
 
     public override float GetMoveStrength()
     {
-        throw new System.NotImplementedException();
+        return ReactionStrength;
+    }
+    private IEnumerator PlayerUnique(PlayerMoter callingObject)
+    {
+        bool update = true;
+        Ball ball = FindObjectOfType<Ball>();
+        while (update)
+        {
+            //Stores resualt to sav multiple calls
+            MoveDir = callingObject.transform.InverseTransformDirection(ball.Position + callingObject.Position);
+            yield return WaitForTimes.GetWaitForTime(ReactionTime);
+            if (onLaunchPlayer != null) onLaunchPlayer();
+        }
     }
 }

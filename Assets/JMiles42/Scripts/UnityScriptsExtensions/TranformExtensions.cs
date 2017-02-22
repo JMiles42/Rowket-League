@@ -16,4 +16,9 @@ public static class TranformExtensions
         transform.eulerAngles = Vector3.zero;
         transform.localScale = Vector3.one;
     }
+    public static void ResetVelocity(this Rigidbody rigidbody)
+    {
+        rigidbody.velocity = Vector3.zero;
+        rigidbody.angularVelocity = Vector3.zero;
+    }
 }

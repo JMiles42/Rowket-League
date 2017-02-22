@@ -9,8 +9,7 @@ public class Goal : JMilesBehaviour
 
     private void GoalScored()
     {
-        if (onGoal != null)
-            onGoal();
+        if (onGoal != null) onGoal();
     }
 
     private void OnCollisionEnter(Collision other)
