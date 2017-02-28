@@ -14,7 +14,7 @@ public class PlayerDisplayArrow : JMilesBehaviour
     public SpriteRenderer ArrowFill;
     public float TEST;
 
-    private void Start()
+    private void OnEnable()
     {
         if (ArrowFill == null) ArrowFill = new SpriteRenderer();
         if (ArrowOutline == null) ArrowOutline = new SpriteRenderer();

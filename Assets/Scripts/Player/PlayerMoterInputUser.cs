@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class PlayerMoterInputUser : PlayerMoterInputBase
 {
     public bool UserSubmit = false;
-    public bool UserCoolingDown = false;
+    public bool UserCoolingDown;
     public float RotationSpeed = 5;
     public Vector3 rotation;
 
@@ -21,25 +21,19 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
     public float RotDamp = 5;
     public float FollowDamp = 2;
+    public float FollowDist = 5;
 
     public float inputCooldown = 0.4f;
 
     public Vector3 ScaleMin = new Vector3(0.1f,0.1f,0.1f);
     public Vector3 ScaleMax = new Vector3(0.5f,0.5f,1f);
 
+    public GameObject ArrowPrefab;
+    public GameObject CameraPrefab;
+
     public override Vector3 GetMoveDirection()
     {
         return rotation;
-    }
-
-    public override Vector2 GetInput()
-    {
-        return new Vector2(PlayerInputManager.Instance.Horizontal,PlayerInputManager.Instance.Vertical);
-    }
-
-    public override bool GetInputSubmit()
-    {
-        return UserSubmit;
     }
 
     private void HorizontalPressed()
@@ -58,15 +52,15 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         UserCoolingDown = false;
         PlayerInputManager.Instance.Horizontal.onKey += HorizontalPressed;
         PlayerInputManager.Instance.Jump.onKeyDown += JumpPressed;
-        callingObject.StartRoutine(InputSession());
-        callingObject.StartRoutine(PlayerUnique(callingObject));
+        callingObject.StartRoutine( InputSession() );
+        callingObject.StartRoutine( PlayerUnique(callingObject) );
     }
 
     public override void Disable(PlayerMoter callingObject)
     {
         Disable();
-        callingObject.StopRoutine(InputSession());
-        callingObject.StopRoutine(PlayerUnique(callingObject));
+        callingObject.StopRoutine( InputSession() );
+        callingObject.StopRoutine( PlayerUnique(callingObject) );
     }
 
     public void Disable()
@@ -105,16 +99,19 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         PlayerDisplayArrow arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();
         if (cam == null)
         {
-            var newCam = new InitWithComponent<Camera>("Player Camera");
-            cam = newCam;
+            GameObject newCam = Instantiate(CameraPrefab);
+            cam = newCam.GetComponent<Camera>();
             newCam.gameObject.transform.parent = null;
         }
+        cam.gameObject.SetActive(true);
         if (arrow == null)
         {
-            var newArrow = new InitWithComponent<PlayerDisplayArrow>("Player Arrow");
+            GameObject newArrow = Instantiate(ArrowPrefab);
+            arrow = newArrow.GetComponent<PlayerDisplayArrow>();
             newArrow.gameObject.transform.parent = callingObject.transform;
-            arrow = newArrow;
+            newArrow.transform.ResetLocalPosRotScale();
         }
+        arrow.gameObject.SetActive(true);
 
         cam.transform.parent = null;
         while (update)
@@ -127,7 +124,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             //Set the positon of the camera to "behind the players look direction"
             var newPosition = callingObject.transform.TransformPoint((currentRotation * -callingObject.transform.forward * 10) + callingObject.transform.up * 4) ;
             //Get the camera looking at the player
-            var newRotation = Quaternion.LookRotation(callingObject.transform.position - (cam.transform.position + (Vector3.down * 2)));
+            var newRotation = Quaternion.LookRotation(callingObject.transform.position - (cam.transform.position + (Vector3.down * FollowDist)));
             var newPosativeRotation = callingObject.transform.TransformDirection((currentRotation * callingObject.transform.forward));
 
             //Lerp the current values to the 

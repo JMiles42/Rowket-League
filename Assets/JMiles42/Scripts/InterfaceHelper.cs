@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Component = UnityEngine.Component;
@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 // Found on Unify wiki at http://wiki.unity3d.com/index.php/Interface_Finder#Class_itself
 //
 //
-
+/*
 namespace JMiles42
 {
     public static class InterfaceHelper
@@ -207,4 +207,4 @@ namespace JMiles42
             return list[0];
         }
     }
-}
+}*/

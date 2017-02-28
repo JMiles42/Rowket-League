@@ -9,12 +9,11 @@ public class RigidbodyEditor : Editor
 	{
 		var body = target as Rigidbody;
 	    DrawDefaultInspector();
-        EditorGUILayout.BeginVertical("box");
-        Label("Warning!!! Changing Velocity may not work.");
-
-        DrawVector3("Velocity", body.velocity);
-	    DrawVector3("Angular", body.angularVelocity);
-        EditorGUILayout.EndVertical();
+        Label("");
+        Label("Changing the Velocity may cause issues.");
+        Label("");
+        body.velocity = DrawVector3("Velocity", body.velocity);
+        body.angularVelocity = DrawVector3("Angular", body.angularVelocity);
     }
 
     Vector3 DrawVector3(string label, Vector3 vec, bool useVecOne = false)

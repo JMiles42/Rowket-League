@@ -6,10 +6,26 @@ ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Map
+    100004: Map.Goal
+    100006: MapMiddle
+    100008: Puck-Hitbox
     400000: //RootNode
+    400002: Map
+    400004: Map.Goal
+    400006: MapMiddle
+    400008: Puck-Hitbox
     2300000: //RootNode
+    2300002: Map
+    2300004: Map.Goal
+    2300006: Puck-Hitbox
     3300000: //RootNode
+    3300002: Map
+    3300004: Map.Goal
+    3300006: Puck-Hitbox
     4300000: Map
+    4300002: Map.Goal
+    4300004: Puck-Hitbox
   materials:
     importMaterials: 1
     materialName: 0

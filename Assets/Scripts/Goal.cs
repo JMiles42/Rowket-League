@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class Goal : JMilesBehaviour
@@ -9,6 +9,8 @@ public class Goal : JMilesBehaviour
 
     private void GoalScored()
     {
+        var playerInstance = TeamManager.Instance.GetPlayerInstance(FindObjectOfType<Ball>().LastPlayerHit);
+        playerInstance.Scores++;
         if (onGoal != null) onGoal();
     }
 
