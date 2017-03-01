@@ -14,6 +14,7 @@ public abstract class PlayerMoterInputBase : JMilesScriptableObject
     public abstract float GetMoveStrength();
     public abstract void Enable(PlayerMoter callingObject);
     public abstract void Disable(PlayerMoter callingObject);
+    public abstract void Init(PlayerMoter callingObject);
 
-    public Action onLaunchPlayer;
+    public Action<Vector3> onLaunchPlayer;
 }

@@ -32,7 +32,8 @@ public class Ball : JMilesRigidbodyBehaviour,IResetable
         {
             LastPlayerHit = playerMoter;
             var playerInstance = TeamManager.Instance.GetPlayerInstance(playerMoter);
-            playerInstance.BallHits++;
+            if( playerInstance != null )
+                playerInstance.BallHit();
         }
     }
 }

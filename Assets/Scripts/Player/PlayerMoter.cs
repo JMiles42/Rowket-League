@@ -12,21 +12,35 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     private void OnEnable()
     {
-        MyInput.Enable(this);
+        MyInput.Init(this);
         playerMoters.Add(this);
-        MyInput.onLaunchPlayer += HitPuck;
+        GameManager.Instance.onGameStart += StartInput;
+        GameManager.Instance.onGameEnd += EndInput;
     }
 
     private void OnDisable()
     {
-        MyInput.onLaunchPlayer -= HitPuck;
         playerMoters.Remove(this);
+        GameManager.Instance.onGameStart -= StartInput;
+        GameManager.Instance.onGameEnd -= EndInput;
+        EndInput();
+    }
+
+    public void StartInput()
+    {
+        MyInput.Enable(this);
+        MyInput.onLaunchPlayer += HitPuck;
+    }
+
+    public void EndInput()
+    {
+        MyInput.onLaunchPlayer -= HitPuck;
         MyInput.Disable(this);
     }
 
-    public void HitPuck()
+    public void HitPuck(Vector3 dir)
     {
-        rigidbody.AddForce(MyInput.GetMoveFinalDirection(transform), ForceMode.Impulse);
+        rigidbody.AddForce(dir, ForceMode.Impulse);
         //var currentRotation = Quaternion.Euler(MyInput.GetMoveDirection());
         //rigidbody.AddForce(transform.TransformDirection((currentRotation * transform.forward) * MyInput.GetMoveStrength()), ForceMode.Impulse);
     }

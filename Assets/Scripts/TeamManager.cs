@@ -40,18 +40,22 @@ public class TeamManager : Singleton<TeamManager>
     public Team GetTeam(TeamType type)
     {
         for (int i = 0, j = teams.Count; i < j; i++)
-        {
             if (teams[i].team.myTeam == type)
                 return teams[i].team;
-        }
         return null;
     }
 
     public TeamInstance.PlayerInstance GetPlayerInstance(PlayerMoter pM)
     {
         for (int i = 0, j = teams.Count; i < j; i++)
-            for (int k = 0, l = teams[i].players.Count; i < j; i++)
-                if (teams[i].players[k].player == pM) return teams[i].players[k];
+        {
+            for (int k = 0, l = teams[i].players.Count; k < l; k++)
+            {
+                var player = teams[i].players[k];
+                if (player.player == pM)
+                    return player;
+            }
+        }
         return null;
     }
 
@@ -65,8 +69,7 @@ public class TeamManager : Singleton<TeamManager>
     }
     public void OnValidate()
     {
-        for (int i = 0, j = teams.Count; i < j; i++)
-            teams[i].name = teams[i].team.myTeam + " Team";
+        for (int i = 0, j = teams.Count; i < j; i++) teams[i].name = teams[i].team.myTeam + " Team";
     }
     [Serializable]
     public class TeamInstance
@@ -82,6 +85,14 @@ public class TeamManager : Singleton<TeamManager>
             public PlayerMoter player;
             public int Scores = 0;
             public int BallHits = 0;
+            public void BallHit()
+            {
+                BallHits++;
+            }
+            public void ScoreGoal()
+            {
+                Scores++;
+            }
         }
     }
 }

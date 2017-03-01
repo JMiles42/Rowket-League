@@ -30,6 +30,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
     public GameObject ArrowPrefab;
     public GameObject CameraPrefab;
+    private PlayerMoter callingObjectStoredCopy;
 
     public override Vector3 GetMoveDirection()
     {
@@ -48,19 +49,20 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
     public override void Enable(PlayerMoter callingObject)
     {
+        callingObjectStoredCopy = callingObject;
         Disable();
         UserCoolingDown = false;
         PlayerInputManager.Instance.Horizontal.onKey += HorizontalPressed;
         PlayerInputManager.Instance.Jump.onKeyDown += JumpPressed;
-        callingObject.StartRoutine( InputSession() );
-        callingObject.StartRoutine( PlayerUnique(callingObject) );
+        callingObject.StartRoutine(InputSession());
     }
 
     public override void Disable(PlayerMoter callingObject)
     {
+        callingObjectStoredCopy = callingObject;
         Disable();
-        callingObject.StopRoutine( InputSession() );
-        callingObject.StopRoutine( PlayerUnique(callingObject) );
+        callingObject.StopRoutine(InputSession());
+        callingObject.StopRoutine(PlayerUnique(callingObject));
     }
 
     public void Disable()
@@ -69,19 +71,27 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         PlayerInputManager.Instance.Jump.onKeyDown -= JumpPressed;
     }
 
+    public override void Init(PlayerMoter callingObject)
+    {
+        callingObjectStoredCopy = callingObject;
+        callingObject.StartRoutine(PlayerUnique(callingObject));
+    }
+
     private void JumpPressed()
     {
         if(UserCoolingDown) return;
 
-        if(onLaunchPlayer != null) onLaunchPlayer();
+        if(onLaunchPlayer != null) onLaunchPlayer(GetMoveFinalDirection(callingObjectStoredCopy.transform));
         PlayerInputManager.Instance.StartCoroutine(InputDelay());
     }
+
     private IEnumerator InputDelay()
     {
         UserCoolingDown = true;
         yield return WaitForTimes.GetWaitForTime(inputCooldown);
         UserCoolingDown = false;
     }
+
     private IEnumerator InputSession()
     {
         while (true)

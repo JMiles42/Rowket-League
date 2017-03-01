@@ -10,7 +10,7 @@ public class Goal : JMilesBehaviour
     private void GoalScored()
     {
         var playerInstance = TeamManager.Instance.GetPlayerInstance(FindObjectOfType<Ball>().LastPlayerHit);
-        playerInstance.Scores++;
+        playerInstance.ScoreGoal();
         if (onGoal != null) onGoal();
     }
 

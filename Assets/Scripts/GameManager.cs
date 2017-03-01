@@ -1,32 +1,58 @@
+using JMiles42.Data;
+using System;
+using System.Collections;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : Singleton<GameManager>
 {
+    public Action<float> onGameCountdown;
+    public Action onGameStartCountdown;
+    public Action onGameStart;
+    public Action onGameEnd;
+    public Action onGameInputEnable;
+    public Action onGameInputDisable;
+
+    public float TimerMax;
+
     void OnEnable()
     {
-        RecordLevel();
-        if( TeamManager.Instance != null )
-            TeamManager.Instance.onGoal += ResetLevel;
+        onGameStart += EnableInput;
+        onGameEnd += DisableInput;
     }
     void OnDisable()
     {
-        if( TeamManager.Instance != null )
-            TeamManager.Instance.onGoal -= ResetLevel;
+        onGameStart -= EnableInput;
+        onGameEnd -= DisableInput;
     }
     void Start()
     {
-        RecordLevel();
+        StartCoroutine(Countdown());
     }
-    public void RecordLevel()
+    IEnumerator Countdown()
     {
-    //    var resetable = JMiles42.InterfaceHelper.FindObjects<IResetable>();
-    //    for (int i = 0, j = resetable.Count; i < j; i++)
-    //        resetable[i].Record();
+        if (onGameStartCountdown != null)
+            onGameStartCountdown();
+        float timer = TimerMax;
+        while(timer > 0)
+        {
+            timer -= Time.deltaTime;
+            if (onGameCountdown != null)
+                onGameCountdown(timer);
+            yield return null;
+        }
+        if (onGameCountdown != null)
+            onGameCountdown(0);
+        if (onGameStart != null)
+            onGameStart();
     }
-    public void ResetLevel()
+    void EnableInput()
     {
-    //    var resetable = JMiles42.InterfaceHelper.FindObjects<IResetable>();
-    //    for (int i = 0, j = resetable.Count; i < j; i++)
-    //        resetable[i].Reset();
+        if (onGameInputEnable != null)
+            onGameInputEnable();
+    }
+    void DisableInput()
+    {
+        if (onGameInputDisable != null)
+            onGameInputDisable();
     }
 }
