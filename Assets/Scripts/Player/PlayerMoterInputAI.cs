@@ -140,7 +140,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
             MoveDir.y = 0;
             Debug.LogWarning("End: "+callingObject);
             Debug.DrawLine(callingObject.Position, callingObject.Position+(MoveDir *2));
-            callingObject.HitPuck(MoveDir * GetMoveStrength());
+            callingObject.HitPuck(myRot * GetMoveStrength());
             //if (callingObject.onLaunchPlayer != null) callingObject.onLaunchPlayer(GetMoveFinalDirection(callingObject.transform));
             //MoveDir = myRot * GetMoveStrength();
         }
