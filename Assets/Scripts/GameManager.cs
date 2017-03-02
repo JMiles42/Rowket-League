@@ -42,6 +42,10 @@ public class GameManager : Singleton<GameManager>
     {
         StartCoroutine(Countdown());
     }
+    public void Start()
+    {
+        StartGame();
+    }
     IEnumerator Countdown()
     {
         if (onGameStartCountdown != null) onGameStartCountdown();

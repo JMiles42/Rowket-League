@@ -9,6 +9,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public TeamType myTeam;
     public PlayerMoterInputBase MyInput;
     public static List<PlayerMoter> playerMoters = new List<PlayerMoter>();
+    public List<Coroutine> ActiveCoroutines = new List<Coroutine>();
 
     public Action<Vector3> onLaunchPlayer;
 
@@ -78,7 +79,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
             {
                 if (i < j)
                     continue;
-                else break;
+                break;
             }
 
             var dist1 = Vector3.Distance(pos, other.Position);

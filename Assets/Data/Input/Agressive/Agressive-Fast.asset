@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: Agressive-Fast
   m_EditorClassIdentifier: 
-  ReactionTime: 4
+  ReactionTime: 2
   AiMode: 3
   MoveDir: {x: 1515.3313, y: 1303.4595, z: 69.02671}

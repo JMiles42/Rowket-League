@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: BallOnly-Normal
   m_EditorClassIdentifier: 
-  ReactionTime: 4
+  ReactionTime: 1
   AiMode: 0
-  MoveDir: {x: 0.7943643, y: -0.4846501, z: 0.60724765}
+  MoveDir: {x: 0.7944579, y: 0, z: 0.60731924}

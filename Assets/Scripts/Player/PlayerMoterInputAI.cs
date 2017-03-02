@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "InputAI", menuName = "Rowket/Input/AI", order = 0)]
 public class PlayerMoterInputAI : PlayerMoterInputBase
@@ -10,7 +11,26 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
     public const float ReactionStrength = 2000;
     public AiAgressiveMode AiMode;
 
-    public Vector3 MoveDir;
+    public static readonly string[] Names =
+    {
+        "Ari","Miu","Fred","Jordan","Kim","Ravi",
+        "Bob","Gayoung","Minhee","Hyoeun","Jeonyoul",
+        "Jae","Gary","Ji Hyo","Haha","Eunice","Huihyeon",
+        "Jenny","Yebin","Eunjin","Chaeyeon","Eunchae",
+        "Exy","Jin","Suga","J-Hope","Rap Monster",
+        "Jimin","V","Jungkook","Tae-il", "B-Bomb","Jae-hyo",
+        "U-Kwon","Park Kyung","Zico","P.O","Xiumin","Suho",
+        "Lay","Baekhyun","Chen","Chanyeol","D.O.","Kai",
+        "Sehun","J.Seph","B.M","Somin","Jiwoo","Matthew",
+        "James","Lenard","Karissa","Sunny","Karena","Ronnie",
+        "Reed","Herbert","Stewart","Jaye","Araceli","Carmelita",
+        "Beverly","Chere","Mirta","Kasie","Deja","Shizue",
+        "Jacquelyne","Randy","Bobby","Gabriel","Lindsey",
+        "Gregg","Mitchel","Albert","Kirk","Berry","Aurelio",
+        "Johnathon","Abraham","Dusty","Anton","Garry","Chang",
+        "Rodger","Shane","Hiram","Herb","Lucas",
+    };
+
     public static float GetReactionTime(AiReactionTime reaction)
     {
         switch (reaction)
@@ -35,36 +55,34 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         return GetReactionTime(ReactionTime);
     }
 
-    public override Vector3 GetMoveDirection()
-    {
-        return MoveDir;
-    }
-
-    public override Vector3 GetMoveFinalDirection(Transform t)
-    {
-        return Vector3.zero;//MoveDir * GetMoveStrength();
-    }
-
     public override void Enable(PlayerMoter callingObject)
     {
-        Debug.Log("Enable: "+ callingObject);
-        callingObject.StartRoutine(AiUnique(callingObject));
+        Debug.Log("Enable: " + callingObject);
+        callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(AiUnique(callingObject)));
     }
 
     public override void Disable(PlayerMoter callingObject)
     {
-        callingObject.StopRoutine(AiUnique(callingObject));
+        if (callingObject.ActiveCoroutines.Count > 0)
+        {
+            for (int i = callingObject.ActiveCoroutines.Count-1; i > 0; i--)
+            {
+                callingObject.StopRoutine(callingObject.ActiveCoroutines[i]);
+                callingObject.ActiveCoroutines.RemoveAt(i);
+            }
+            callingObject.ActiveCoroutines = new List<Coroutine>();
+        }
     }
 
     public override void Init(PlayerMoter callingObject)
     {
-        Debug.Log("Init: "+ callingObject);
+
     }
 
     public override float GetMoveStrength()
     {
-        if(ReactionTime == AiReactionTime.Instant)
-            return ReactionStrength/4;
+        if (ReactionTime == AiReactionTime.Instant)
+            return ReactionStrength / 4;
         return ReactionStrength;
     }
 
@@ -75,12 +93,8 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         Vector3 myRot = Vector3.zero;
         Team team = TeamManager.Instance.GetTeam(callingObject.myTeam);
         Goal goal = team.GetTeamsGoal();
-        float number = UnityEngine.Random.value;
         while (update)
         {
-            //Debug.LogWarning(number);
-            Debug.LogWarning("Start: "+callingObject);
-            Debug.LogWarning(callingObject.onLaunchPlayer);
             yield return WaitForTimes.GetWaitForTime(GetReactionTime());
 
             float ballDist = Vector3.Distance(ball.Position, callingObject.Position);
@@ -107,7 +121,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
                     myRot = AimForObject(ball.Position, callingObject);
                     break;
                 case AiAgressiveMode.GoalShooter:
-                    // 
+                    //
                     //Make the Ai aim to get behind the ball then shoot for the goal
                     //
 
@@ -115,9 +129,9 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
                     //myRot = AimForObject((ball.Position + (-BallToGoalDirection * 2))+Vector3.up * 2, callingObject);
                     break;
                 case AiAgressiveMode.BallFollower:
-                    // 
+                    //
                     //Make the Ai aim to get behind the ball then shoot for the goal
-                    // 
+                    //
                     myRot = AimForObject(ball.Position + ((-BallToGoalDirection + (PlayerToBallDirection + PlayerToGoalDirection).normalized).normalized * 5), callingObject);
                     break;
                 case AiAgressiveMode.Agressive:
@@ -136,24 +150,22 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
                     myRot = AimForObject(ball.Position, callingObject);
                     break;
             }
-            //MoveDir = myRot = new Vector3(0,myRot.y,0);
-            MoveDir.Normalize();
-            MoveDir.y = 0;
-            Debug.LogWarning("End: "+callingObject);
-            Debug.DrawLine(callingObject.Position, callingObject.Position+(MoveDir *2));
+            Debug.DrawLine(callingObject.Position, callingObject.Position + (myRot * 2));
             callingObject.HitPuck(myRot * GetMoveStrength());
-            //if (callingObject.onLaunchPlayer != null) callingObject.onLaunchPlayer(GetMoveFinalDirection(callingObject.transform));
-            //MoveDir = myRot * GetMoveStrength();
         }
     }
 
-    private Vector3 AimForObject(Vector3 target, PlayerMoter callingObject)
+    private static Vector3 AimForObject(Vector3 target, PlayerMoter callingObject)
     {
         return (target - callingObject.Position).normalized;
     }
-    private Vector3 GetDirection(Vector3 target, Vector3 other)
+    private static Vector3 GetDirection(Vector3 target, Vector3 other)
     {
         return (target - other).normalized;
+    }
+    public override string GetName()
+    {
+        return Names[Random.Range(0,Names.Length)];
     }
 }
 

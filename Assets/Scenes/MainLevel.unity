@@ -136,12 +136,12 @@ GameObject:
   - component: {fileID: 22607044}
   - component: {fileID: 22607043}
   m_Layer: 0
-  m_Name: 'Blue : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &22607043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &22607045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -214,12 +214,12 @@ GameObject:
   - component: {fileID: 33618475}
   - component: {fileID: 33618474}
   m_Layer: 0
-  m_Name: 'Red : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Red : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &33618474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &33618476
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1072,12 +1072,12 @@ GameObject:
   - component: {fileID: 263089452}
   - component: {fileID: 263089451}
   m_Layer: 0
-  m_Name: 'Red : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Red : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &263089451
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1105,7 +1105,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &263089453
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2984,12 +2984,12 @@ GameObject:
   - component: {fileID: 957139130}
   - component: {fileID: 957139129}
   m_Layer: 0
-  m_Name: 'Blue : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &957139129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3017,7 +3017,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &957139131
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4125,12 +4125,12 @@ GameObject:
   - component: {fileID: 1489020785}
   - component: {fileID: 1489020784}
   m_Layer: 0
-  m_Name: 'Blue : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1489020784
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4158,7 +4158,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &1489020786
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4630,12 +4630,12 @@ GameObject:
   - component: {fileID: 1667064085}
   - component: {fileID: 1667064084}
   m_Layer: 0
-  m_Name: 'Red : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Red : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1667064084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4663,7 +4663,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &1667064086
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5025,12 +5025,12 @@ GameObject:
   - component: {fileID: 1886583549}
   - component: {fileID: 1886583548}
   m_Layer: 0
-  m_Name: 'Red : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Red : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1886583548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5058,7 +5058,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &1886583550
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5318,12 +5318,12 @@ GameObject:
   - component: {fileID: 2012166102}
   - component: {fileID: 2012166101}
   m_Layer: 0
-  m_Name: 'Blue : BallOnly-Instant (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2012166101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5351,7 +5351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &2012166103
 Rigidbody:
   m_ObjectHideFlags: 0

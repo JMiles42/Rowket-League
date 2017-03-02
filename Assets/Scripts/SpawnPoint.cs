@@ -5,6 +5,7 @@ using UnityEngine;
 public class SpawnPoint : JMilesBehaviour
 {
     public bool b = false;
+
     void OnValidate()
     {
         name = " SP: " + Position;

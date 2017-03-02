@@ -11,6 +11,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: Agressive-Broken
   m_EditorClassIdentifier: 
-  ReactionTime: 4
+  ReactionTime: 3
   AiMode: 3
   MoveDir: {x: 0, y: -0.2, z: 0}

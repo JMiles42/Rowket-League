@@ -31,11 +31,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     public GameObject ArrowPrefab;
     public GameObject CameraPrefab;
     private PlayerMoter callingObjectStoredCopy;
-
-    public override Vector3 GetMoveDirection()
-    {
-        return rotation;
-    }
+    private bool runBefore = false;
 
     private void HorizontalPressed()
     {
@@ -54,15 +50,16 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         UserCoolingDown = false;
         PlayerInputManager.Instance.Horizontal.onKey += HorizontalPressed;
         PlayerInputManager.Instance.Jump.onKeyDown += JumpPressed;
-        callingObject.StartRoutine(InputSession());
+        if(!runBefore)
+            callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(InputSession()));
     }
 
     public override void Disable(PlayerMoter callingObject)
     {
         callingObjectStoredCopy = callingObject;
         Disable();
-        callingObject.StopRoutine(InputSession());
-        callingObject.StopRoutine(PlayerUnique(callingObject));
+        //callingObject.StopRoutine(InputSession());
+        //callingObject.StopRoutine(PlayerUnique(callingObject));
     }
 
     public void Disable()
@@ -74,7 +71,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     public override void Init(PlayerMoter callingObject)
     {
         callingObjectStoredCopy = callingObject;
-        callingObject.StartRoutine(PlayerUnique(callingObject));
+        callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(PlayerUnique(callingObject)));
     }
 
     private void JumpPressed()
@@ -129,7 +126,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             arrow.gameObject.SetActive(!UserCoolingDown);
             arrow.SetScale((strength-strengthMin)/strengthMax);
             //Stores resualt to sav multiple calls
-            var MoveDirection = GetMoveDirection();
+            var MoveDirection = rotation;
             var currentRotation = Quaternion.Euler(MoveDirection);
             //Set the positon of the camera to "behind the players look direction"
             var newPosition = callingObject.transform.TransformPoint((currentRotation * -callingObject.transform.forward * 10) + callingObject.transform.up * 4) ;
@@ -146,5 +143,15 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             yield return null;
         }
         cam.transform.parent = callingObject.transform;
+    }
+
+    public Vector3 GetMoveFinalDirection(Transform t)
+    {
+        return t.TransformDirection(Quaternion.Euler(rotation) * t.forward * GetMoveStrength());
+    }
+
+    public override string GetName()
+    {
+        return "Player";
     }
 }
