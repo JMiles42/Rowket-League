@@ -12,17 +12,33 @@ public class GameManager : Singleton<GameManager>
     public Action onGameInputEnable;
     public Action onGameInputDisable;
 
+    public Action onGoal;
+
     public float TimerMax;
 
     void OnEnable()
     {
+        onGoal += GameOver;
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
+
+        var goals = FindObjectsOfType<Goal>();
+        foreach(var goal in goals)
+            goal.onGoal += CallGoal;
     }
     void OnDisable()
     {
+        onGoal -= GameOver;
         onGameStart -= EnableInput;
         onGameEnd -= DisableInput;
+
+        var goals = FindObjectsOfType<Goal>();
+        foreach (var goal in goals)
+            goal.onGoal -= CallGoal;
+    }
+    void CallGoal()
+    {
+        if (onGoal != null) onGoal();
     }
     void Start()
     {
@@ -36,8 +52,7 @@ public class GameManager : Singleton<GameManager>
         while(timer > 0)
         {
             timer -= Time.deltaTime;
-            if (onGameCountdown != null)
-                onGameCountdown(timer);
+            if (onGameCountdown != null) onGameCountdown(timer);
             yield return null;
         }
         if (onGameCountdown != null)
@@ -55,4 +70,33 @@ public class GameManager : Singleton<GameManager>
         if (onGameInputDisable != null)
             onGameInputDisable();
     }
+    void GameOver()
+    {
+        StartCoroutine(GameEnd());
+        if (onGameEnd != null) onGameEnd();
+    }
+    void Restart()
+    {
+        var resets = FindObjectsOfType<ResetableObject>();
+        foreach(var reset in resets)
+            reset.Reset();
+        Start();
+    }
+
+    IEnumerator GameEnd()
+    {
+        float timer = TimerMax*2;
+        while (timer > 0)
+        {
+            timer -= Time.deltaTime;
+            if (onGameCountdown != null) onGameCountdown(timer);
+            yield return null;
+        }
+
+        if (onGameCountdown != null)
+            onGameCountdown(0);
+
+        Restart();
+    }
+
 }

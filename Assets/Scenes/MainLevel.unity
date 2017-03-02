@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 1184590670}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -136,12 +136,12 @@ GameObject:
   - component: {fileID: 22607044}
   - component: {fileID: 22607043}
   m_Layer: 0
-  m_Name: 'Blue : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Instant (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &22607043
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -169,7 +169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: d1b6ea3705139284ba52f60889824dee, type: 2}
 --- !u!54 &22607045
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -214,12 +214,12 @@ GameObject:
   - component: {fileID: 33618475}
   - component: {fileID: 33618474}
   m_Layer: 0
-  m_Name: 'Red : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Red : Agressive-Broken (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &33618474
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: c26245866a911d241bf5fe9c40e6aa63, type: 2}
 --- !u!54 &33618476
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -277,7 +277,7 @@ Transform:
   m_Children:
   - {fileID: 1632785463}
   m_Father: {fileID: 0}
-  m_RootOrder: 10
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 180, y: -0.000015258789, z: 180}
 --- !u!1 &49668066
 GameObject:
@@ -326,6 +326,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 4e49b7fd9357be149a6beb3370c298f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -398,6 +399,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 5c3ea39be4c28b04bbb7ab2ae00020af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -650,6 +652,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 5c3ea39be4c28b04bbb7ab2ae00020af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -712,6 +715,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 23050311983706298, guid: 33f4d36daf796d64da7c4f5937b73c4d,
+        type: 2}
+      propertyPath: m_Materials.Array.size
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4634982013805670, guid: 33f4d36daf796d64da7c4f5937b73c4d, type: 2}
       propertyPath: m_LocalPosition.x
       value: 15
@@ -742,22 +750,42 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4634982013805670, guid: 33f4d36daf796d64da7c4f5937b73c4d, type: 2}
       propertyPath: m_RootOrder
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1853569110899756, guid: 33f4d36daf796d64da7c4f5937b73c4d, type: 2}
       propertyPath: m_Name
-      value: 'Red : AiGoalShooter (PlayerMoterInputAI)'
+      value: 'Red : Agressive-Slow (PlayerMoterInputAI)'
       objectReference: {fileID: 0}
     - target: {fileID: 114631365002529958, guid: 33f4d36daf796d64da7c4f5937b73c4d,
         type: 2}
       propertyPath: MyInput
       value: 
-      objectReference: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd,
+      objectReference: {fileID: 11400000, guid: e143be0be65adf84cbec829356d54435,
         type: 2}
     - target: {fileID: 1853569110899756, guid: 33f4d36daf796d64da7c4f5937b73c4d, type: 2}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114631365002529958, guid: 33f4d36daf796d64da7c4f5937b73c4d,
+        type: 2}
+      propertyPath: myTeam
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64659315024479878, guid: 33f4d36daf796d64da7c4f5937b73c4d,
+        type: 2}
+      propertyPath: m_InflateMesh
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 64659315024479878, guid: 33f4d36daf796d64da7c4f5937b73c4d,
+        type: 2}
+      propertyPath: m_Convex
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 23050311983706298, guid: 33f4d36daf796d64da7c4f5937b73c4d,
+        type: 2}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 5c3ea39be4c28b04bbb7ab2ae00020af, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 33f4d36daf796d64da7c4f5937b73c4d, type: 2}
   m_IsPrefabParent: 0
@@ -917,7 +945,7 @@ GameObject:
   - component: {fileID: 246383142}
   - component: {fileID: 246383141}
   - component: {fileID: 246383140}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ScoreUiRightScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1210,6 +1238,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 5c3ea39be4c28b04bbb7ab2ae00020af, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1282,6 +1311,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 4e49b7fd9357be149a6beb3370c298f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1647,7 +1677,7 @@ GameObject:
   - component: {fileID: 694783996}
   - component: {fileID: 694783995}
   - component: {fileID: 694783994}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ScoreUiLeftScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1766,6 +1796,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 4e49b7fd9357be149a6beb3370c298f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1974,7 +2005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 855916b97e08cf24f951bb8edb13f14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TimerMax: 1
+  TimerMax: 3
 --- !u!1 &862620702
 GameObject:
   m_ObjectHideFlags: 0
@@ -2384,8 +2415,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 923495269}
-  m_LocalRotation: {x: 0, y: 0.7071053, z: 0, w: -0.7071083}
-  m_LocalPosition: {x: 17, y: 5, z: -0}
+  m_LocalRotation: {x: -0.29380384, y: 0.4417528, z: -0.15576933, w: -0.83322847}
+  m_LocalPosition: {x: 75.1, y: 92.1, z: -49.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2565,12 +2596,12 @@ GameObject:
   - component: {fileID: 957139130}
   - component: {fileID: 957139129}
   m_Layer: 0
-  m_Name: 'Blue : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Blue : GoalShooter-Instant (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &957139129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2699,7 +2730,7 @@ GameObject:
   - component: {fileID: 995079646}
   - component: {fileID: 995079645}
   - component: {fileID: 995079644}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ScoreUiRightScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2868,7 +2899,7 @@ GameObject:
   - component: {fileID: 1028712927}
   - component: {fileID: 1028712926}
   - component: {fileID: 1028712925}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ScoreUiBlueScreen
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3517,6 +3548,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_Materials:
   - {fileID: 2100000, guid: fb90b8c8fb292694eb9be1f7b31d8dc0, type: 2}
+  - {fileID: 2100000, guid: 4e49b7fd9357be149a6beb3370c298f7, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -3555,7 +3587,7 @@ GameObject:
   - component: {fileID: 1489020785}
   - component: {fileID: 1489020784}
   m_Layer: 0
-  m_Name: 'Blue : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Blue : Agressive-Slow (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3588,7 +3620,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: e143be0be65adf84cbec829356d54435, type: 2}
 --- !u!54 &1489020786
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -3618,7 +3650,7 @@ Transform:
   m_Children:
   - {fileID: 1282921894}
   m_Father: {fileID: 0}
-  m_RootOrder: 13
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 180, y: -0.000015258789, z: 180}
 --- !u!1 &1547681392
 GameObject:
@@ -4005,12 +4037,12 @@ GameObject:
   - component: {fileID: 1667064085}
   - component: {fileID: 1667064084}
   m_Layer: 0
-  m_Name: 'Red : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Red : BallOnly-Normal (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1667064084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4038,7 +4070,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: ff621f96b2e86294fa1aed16255e3a38, type: 2}
 --- !u!54 &1667064086
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4068,7 +4100,7 @@ Transform:
   m_Children:
   - {fileID: 877130282}
   m_Father: {fileID: 0}
-  m_RootOrder: 12
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 180, y: -0.000015258789, z: 180}
 --- !u!1 &1678129965
 GameObject:
@@ -4359,12 +4391,12 @@ GameObject:
   - component: {fileID: 1886583549}
   - component: {fileID: 1886583548}
   m_Layer: 0
-  m_Name: 'Red : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Red : BallFollower-Instant (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1886583548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4392,7 +4424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 0
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: 06668ad62c494b54fbbd503e71eb5908, type: 2}
 --- !u!54 &1886583550
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4422,7 +4454,7 @@ Transform:
   m_Children:
   - {fileID: 110335860}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 180, y: -0.000015258789, z: 180}
 --- !u!1 &1919445933
 GameObject:
@@ -4658,12 +4690,12 @@ GameObject:
   - component: {fileID: 2012166102}
   - component: {fileID: 2012166101}
   m_Layer: 0
-  m_Name: 'Blue : AiGoalShooter (PlayerMoterInputAI)'
+  m_Name: 'Blue : BallOnly-Slow (PlayerMoterInputAI)'
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2012166101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4691,7 +4723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTeam: 1
-  MyInput: {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
+  MyInput: {fileID: 11400000, guid: ed70984f1d942a94888c82190aca9218, type: 2}
 --- !u!54 &2012166103
 Rigidbody:
   m_ObjectHideFlags: 0

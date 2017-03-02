@@ -17,19 +17,13 @@ public class Goal : JMilesBehaviour
     private void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<Ball>())
-        {
-            //var ball = other.gameObject.GetComponent<Ball>();
             GoalScored();
-        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Ball>())
-        {
-            //var ball = other.gameObject.GetComponent<Ball>();
             GoalScored();
-        }
     }
 }
 

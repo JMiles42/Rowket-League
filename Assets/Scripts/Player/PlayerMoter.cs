@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Boo.Lang.Environments;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,6 +9,8 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public TeamType myTeam;
     public PlayerMoterInputBase MyInput;
     public static List<PlayerMoter> playerMoters = new List<PlayerMoter>();
+
+    public Action<Vector3> onLaunchPlayer;
 
     private void OnEnable()
     {
@@ -29,12 +31,12 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public void StartInput()
     {
         MyInput.Enable(this);
-        MyInput.onLaunchPlayer += HitPuck;
+        onLaunchPlayer += HitPuck;
     }
 
     public void EndInput()
     {
-        MyInput.onLaunchPlayer -= HitPuck;
+        onLaunchPlayer -= HitPuck;
         MyInput.Disable(this);
     }
 

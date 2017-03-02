@@ -14,6 +14,17 @@ public class JMilesBehaviour : MonoBehaviour
         }
         set { m_Transform = value; }
     }
+    //private GameObject m_GameObject;
+    //public new GameObject gameObject
+    //{
+    //    get
+    //    {
+    //        if (!m_GameObject)
+    //            m_GameObject = GetComponent<GameObject>();
+    //        return m_GameObject;
+    //    }
+    //    set { m_GameObject = value; }
+    //}
     public Quaternion Rotation
     {
         get
@@ -43,7 +54,6 @@ public class JMilesBehaviour : MonoBehaviour
     {
         StartCoroutine(method);
     }
-
     public void StopRoutine(IEnumerator method)
     {
         StopCoroutine(method);

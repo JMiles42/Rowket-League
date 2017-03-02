@@ -9,9 +9,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
-  m_Name: AiBallFollow
+  m_Name: BallFollower-Instant
   m_EditorClassIdentifier: 
-  MoveDir: {x: 0.7943643, y: -0.4846501, z: 0.60724765}
-  ReactionTime: 2
-  ReactionStrength: 2000
+  nam: BallFollower-Instant
+  ReactionTime: 4
+  ReactionStrength: 500
   AiMode: 4
+  MoveDir: {x: 0, y: -0.2, z: 0}

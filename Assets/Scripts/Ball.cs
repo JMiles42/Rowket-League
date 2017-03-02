@@ -3,12 +3,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ball : JMilesRigidbodyBehaviour,IResetable
+public class Ball : JMilesRigidbodyBehaviour, IResetable
 {
     private Vector3 startpos = Vector3.zero;
     private Quaternion startRot = new Quaternion();
     public PlayerMoter LastPlayerHit;
-    
+
+
+    void OnEnable()
+    {
+        //PlayerInputManager.Instance.Jump.onKeyDown += Explode;
+    }
+
+    void OnDisable()
+    {
+        //PlayerInputManager.Instance.Jump.onKeyDown -= Explode;
+    }
+
+
     public void Record()
     {
         startpos = Position;
@@ -36,4 +48,11 @@ public class Ball : JMilesRigidbodyBehaviour,IResetable
                 playerInstance.BallHit();
         }
     }
+
+    //void Explode()
+    //{
+    //    var cols = Physics.OverlapSphere(Position, 50);
+    //
+    //    foreach(var col in cols) col.GetComponent<Rigidbody>().AddExplosionForce(200,Position,50);
+    //}
 }

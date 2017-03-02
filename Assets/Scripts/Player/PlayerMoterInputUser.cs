@@ -81,7 +81,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     {
         if(UserCoolingDown) return;
 
-        if(onLaunchPlayer != null) onLaunchPlayer(GetMoveFinalDirection(callingObjectStoredCopy.transform));
+        if(callingObjectStoredCopy.onLaunchPlayer != null) callingObjectStoredCopy.onLaunchPlayer(GetMoveFinalDirection(callingObjectStoredCopy.transform));
         PlayerInputManager.Instance.StartCoroutine(InputDelay());
     }
 
