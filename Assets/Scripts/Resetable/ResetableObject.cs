@@ -5,22 +5,29 @@ using UnityEngine;
 
 public class ResetableObject : ResetableObjectBase
 {
+    public static List<ResetableObject> ResetableObjects;
     public Transform transformToReset;
     public Vector3 Pos;
     public Quaternion Rot;
 
     void Start()
     {
-        if (transformToReset == null)
-            transformToReset = this.transform;
+        if (transformToReset == null) transformToReset = transform;
         Record();
     }
+
     void OnEnable()
     {
-        if (transformToReset == null)
-            transformToReset = this.transform;
+        ResetableObjects.Add(this);
+        if (transformToReset == null) transformToReset = transform;
         Record();
     }
+
+    void OnDisable()
+    {
+        ResetableObjects.Remove(this);
+    }
+
     public override void Record()
     {
         Pos = transformToReset.position;

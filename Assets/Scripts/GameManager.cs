@@ -23,8 +23,7 @@ public class GameManager : Singleton<GameManager>
         onGameEnd += DisableInput;
 
         var goals = FindObjectsOfType<Goal>();
-        foreach(var goal in goals)
-            goal.onGoal += CallGoal;
+        foreach(var goal in goals) goal.onGoal += CallGoal;
     }
     void OnDisable()
     {
@@ -33,21 +32,19 @@ public class GameManager : Singleton<GameManager>
         onGameEnd -= DisableInput;
 
         var goals = FindObjectsOfType<Goal>();
-        foreach (var goal in goals)
-            goal.onGoal -= CallGoal;
+        foreach (var goal in goals) goal.onGoal -= CallGoal;
     }
     void CallGoal()
     {
         if (onGoal != null) onGoal();
     }
-    void Start()
+    public void StartGame()
     {
         StartCoroutine(Countdown());
     }
     IEnumerator Countdown()
     {
-        if (onGameStartCountdown != null)
-            onGameStartCountdown();
+        if (onGameStartCountdown != null) onGameStartCountdown();
         float timer = TimerMax;
         while(timer > 0)
         {
@@ -55,20 +52,16 @@ public class GameManager : Singleton<GameManager>
             if (onGameCountdown != null) onGameCountdown(timer);
             yield return null;
         }
-        if (onGameCountdown != null)
-            onGameCountdown(0);
-        if (onGameStart != null)
-            onGameStart();
+        if (onGameCountdown != null) onGameCountdown(0);
+        if (onGameStart != null) onGameStart();
     }
     void EnableInput()
     {
-        if (onGameInputEnable != null)
-            onGameInputEnable();
+        if (onGameInputEnable != null) onGameInputEnable();
     }
     void DisableInput()
     {
-        if (onGameInputDisable != null)
-            onGameInputDisable();
+        if (onGameInputDisable != null) onGameInputDisable();
     }
     void GameOver()
     {
@@ -77,24 +70,21 @@ public class GameManager : Singleton<GameManager>
     }
     void Restart()
     {
-        var resets = FindObjectsOfType<ResetableObject>();
-        foreach(var reset in resets)
-            reset.Reset();
-        Start();
+        foreach(var reset in ResetableObject.ResetableObjects) reset.Reset();
+        StartGame();
     }
 
     IEnumerator GameEnd()
     {
         float timer = TimerMax*2;
+
         while (timer > 0)
         {
             timer -= Time.deltaTime;
             if (onGameCountdown != null) onGameCountdown(timer);
             yield return null;
         }
-
-        if (onGameCountdown != null)
-            onGameCountdown(0);
+        if (onGameCountdown != null) onGameCountdown(0);
 
         Restart();
     }

@@ -42,6 +42,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     public void HitPuck(Vector3 dir)
     {
+        Debug.Log("Hit in :" + dir);
         rigidbody.AddForce(dir, ForceMode.Impulse);
         //var currentRotation = Quaternion.Euler(MyInput.GetMoveDirection());
         //rigidbody.AddForce(transform.TransformDirection((currentRotation * transform.forward) * MyInput.GetMoveStrength()), ForceMode.Impulse);

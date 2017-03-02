@@ -47,6 +47,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
 
     public override void Enable(PlayerMoter callingObject)
     {
+        Debug.Log("Enable: "+ callingObject);
         callingObject.StartRoutine(AiUnique(callingObject));
     }
 
@@ -57,7 +58,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
 
     public override void Init(PlayerMoter callingObject)
     {
-
+        Debug.Log("Init: "+ callingObject);
     }
 
     public override float GetMoveStrength()

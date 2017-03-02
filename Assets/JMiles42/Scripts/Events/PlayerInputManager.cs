@@ -48,8 +48,7 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 	}
 	void GetAxisValues()
 	{
-	    foreach (InputAxis input in inputsToUse)
-	        input.UpdateData();
+	    foreach (InputAxis input in inputsToUse) input.UpdateData();
 	    MousePos = Input.mousePosition;
 	}
 	public void TriggerInputs()
@@ -59,20 +58,17 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 		{
 		    if (Input.GetButtonUp(key))
 		    {
-		        if(key.onKeyUp != null)
-		            key.onKeyUp();
+		        if(key.onKeyUp != null) key.onKeyUp();
 		        StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Up);
 		    }
 			else if (Input.GetButtonDown(key))
 			{
-			    if(key.onKeyDown != null)
-			        key.onKeyDown();
+			    if(key.onKeyDown != null) key.onKeyDown();
 			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Down);
 			}
 			else if (Input.GetButton(key))
 			{
-			    if(key.onKey != null)
-			        key.onKey();
+			    if(key.onKey != null) key.onKey();
 			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Held);
 			}
 		}
@@ -111,7 +107,7 @@ public class InputAxis
     public Action onKeyUp;
     public Action onKey;
 
-    public InputAxis(string axis,bool invert = false)
+    public InputAxis(string axis, bool invert = false)
     {
         Axis = axis;
         ValueInverted = invert;
@@ -121,14 +117,17 @@ public class InputAxis
     {
         m_Value = Input.GetAxis(Axis);
     }
+
     public static implicit operator float(InputAxis fp)
     {
         return fp.Value;
     }
+
     public static implicit operator string(InputAxis fp)
     {
         return fp.Axis;
     }
+
     public static implicit operator bool(InputAxis fp)
     {
         return fp.ValueInverted;

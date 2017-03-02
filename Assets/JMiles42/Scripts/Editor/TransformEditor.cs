@@ -2,28 +2,19 @@ using UnityEngine;
 using UnityEditor;
 using System.Collections;
 
+//[CanEditMultipleObjects]
 [CustomEditor(typeof(Transform))]
 public class TransformEditor : Editor
 {
-	bool scaleToggle;
-    private float scaleAmount = 1;
+	static bool scaleToggle;
+    static float scaleAmount = 1;
 	public override void OnInspectorGUI ()
 	{
 		var transform = target as Transform;
-        EditorGUILayout.BeginVertical ("Box");
-        EditorGUILayout.BeginHorizontal();
-        GUIContent CopyContent = new GUIContent("Copy Data", "Copies the Transform data.");
-        GUIContent PasteContent = new GUIContent("Paste Data", "Pastes the Transform data.");
-        if (GUILayout.Button(CopyContent)) CopyPaste.Copy(new TransformData(transform.localEulerAngles, transform.localPosition, transform.localScale));
-        if (GUILayout.Button(PasteContent))
-        {
-            TransformData transformData = CopyPaste.Paste<TransformData>();
-            transform.localEulerAngles = transformData.Rotation;
-            transform.localPosition = transformData.Position;
-            transform.localScale = transformData.Scale;
-        }
+
+        EditorGUILayout.BeginHorizontal("Box");
+        transform = EditorHelpers.CopyPastObjectButtons(transform) as Transform;
         EditorGUILayout.EndHorizontal();
-		EditorGUILayout.EndVertical ();
 
         EditorGUILayout.BeginVertical ("Box");
         EditorGUILayout.BeginVertical ();
@@ -39,11 +30,11 @@ public class TransformEditor : Editor
 		EditorGUILayout.EndHorizontal ();
 		EditorGUILayout.EndHorizontal ();
         EditorGUILayout.EndVertical ();
-		EditorGUILayout.LabelField ("Local Transform");
+        EditorHelpers.Label ("Local Transform");
         
-		transform.localEulerAngles = DrawVector3 ("Rotation", transform.localEulerAngles);
-		transform.localPosition = DrawVector3    ("Position", transform.localPosition);
-		transform.localScale = DrawVector3       ("Scale   ", transform.localScale,true);
+		transform.localEulerAngles = EditorHelpers.DrawVector3("Rotation", transform.localEulerAngles, Vector3.zero);
+		transform.localPosition = EditorHelpers.DrawVector3("Position", transform.localPosition, Vector3.zero);
+		transform.localScale = EditorHelpers.DrawVector3("Scale   ", transform.localScale, Vector3.one);
 	}
 	void ScaleBtnsEnabled()
     {
@@ -72,25 +63,6 @@ public class TransformEditor : Editor
 		    scaleAmount = transform.localScale.x;
 		}
 	}
-    Vector3 DrawVector3(string label, Vector3 vec, bool useVecOne =false)
-    {
-        EditorGUILayout.BeginHorizontal();
-        Label(label);
-        vec = EditorGUILayout.Vector3Field("",vec);
-        GUIContent resetContent = new GUIContent("R", useVecOne?"Resets the vector to (1,1,1)":"Resets the vector to (0,0,0)");
-        if (GUILayout.Button(resetContent, GUILayout.Width(25))) vec = useVecOne?Vector3.one:Vector3.zero;
-        GUIContent copyContent = new GUIContent("C", "Copies the vectors data.");
-        if (GUILayout.Button(copyContent, GUILayout.Width(25))) CopyPaste.Copy(vec);
-        GUIContent pasteContent = new GUIContent("P", "Pastes the vectors data.");
-        if (GUILayout.Button(pasteContent, GUILayout.Width(25))) vec = CopyPaste.Paste<Vector3>();
-        EditorGUILayout.EndHorizontal();
-        return vec;
-    }
-
-    void Label(string label)
-    {
-        EditorGUILayout.LabelField(label, GUILayout.Width(label.Length*10+5));
-    }
 
     void ScaleArea()
     {
@@ -103,19 +75,5 @@ public class TransformEditor : Editor
         GUIContent scaleTimesContent = new GUIContent("Times Scale", string.Format("Sets the scale ({0},{1},{2})",transform.position.x*scaleAmount,transform.position.y*scaleAmount,transform.position.z*scaleAmount));
         if (GUILayout.Button(scaleTimesContent)) transform.localScale*=scaleAmount;
         EditorGUILayout.EndHorizontal();
-    }
-}
-
-public struct TransformData
-{
-    public Vector3 Rotation;
-    public Vector3 Position;
-    public Vector3 Scale;
-
-    public TransformData(Vector3 _Rotation, Vector3 _Position, Vector3 _Scale)
-    {
-        Rotation = _Rotation;
-        Position = _Position;
-        Scale = _Scale;
     }
 }
