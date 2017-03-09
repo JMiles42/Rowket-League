@@ -8,6 +8,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 {
     public TeamType myTeam;
     public PlayerMoterInputBase MyInput;
+    public string playerName = "";
     public static List<PlayerMoter> playerMoters = new List<PlayerMoter>();
     public List<Coroutine> ActiveCoroutines = new List<Coroutine>();
 
@@ -15,6 +16,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     private void OnEnable()
     {
+        playerName = "";
         MyInput.Init(this);
         playerMoters.Add(this);
         GameManager.Instance.onGameStart += StartInput;
@@ -43,10 +45,18 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     public void HitPuck(Vector3 dir)
     {
-        Debug.Log("Hit in :" + dir);
+        //Debug.Log("Hit in :" + dir);
         rigidbody.AddForce(dir, ForceMode.Impulse);
         //var currentRotation = Quaternion.Euler(MyInput.GetMoveDirection());
         //rigidbody.AddForce(transform.TransformDirection((currentRotation * transform.forward) * MyInput.GetMoveStrength()), ForceMode.Impulse);
+    }
+
+    public string GetName()
+    {
+        if(playerName == "")
+            return (playerName = MyInput.GetName());
+        return playerName;
+
     }
 
     public static PlayerMoter GetClosestMoter(Vector3 pos)
@@ -65,6 +75,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         }
         return closest;
     }
+
     public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject)
     {
         if (playerMoters.Count == 0)
@@ -121,6 +132,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     private void OnValidate()
     {
-        gameObject.name = myTeam.ToString() + " : " + MyInput.ToString();
+        gameObject.name = myTeam.ToString()[0] + " : " + GetName() + " : " + MyInput;
+
     }
 }

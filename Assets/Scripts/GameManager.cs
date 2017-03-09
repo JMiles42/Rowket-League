@@ -14,6 +14,14 @@ public class GameManager : Singleton<GameManager>
 
     public Action onGoal;
 
+    public StringListScriptableObject AiNames;
+
+    public SpawnLayout[] SpawnLayouts;
+
+    public PlayerMoterInputAI[] AiInputSystems;
+    public PlayerMoterInputUser InputUser;
+
+
     public float TimerMax;
 
     void OnEnable()
@@ -36,7 +44,7 @@ public class GameManager : Singleton<GameManager>
     }
     void CallGoal()
     {
-        if (onGoal != null) onGoal();
+        onGoal.Trigger();
     }
     public void StartGame()
     {
@@ -48,29 +56,29 @@ public class GameManager : Singleton<GameManager>
     }
     IEnumerator Countdown()
     {
-        if (onGameStartCountdown != null) onGameStartCountdown();
+        onGameStartCountdown.Trigger();
         float timer = TimerMax;
         while(timer > 0)
         {
             timer -= Time.deltaTime;
-            if (onGameCountdown != null) onGameCountdown(timer);
+            onGameCountdown.Trigger(timer);
             yield return null;
         }
-        if (onGameCountdown != null) onGameCountdown(0);
-        if (onGameStart != null) onGameStart();
+        onGameCountdown.Trigger(0);
+        onGameStart.Trigger();
     }
     void EnableInput()
     {
-        if (onGameInputEnable != null) onGameInputEnable();
+        onGameInputEnable.Trigger();
     }
     void DisableInput()
     {
-        if (onGameInputDisable != null) onGameInputDisable();
+        onGameInputDisable.Trigger();
     }
     void GameOver()
     {
         StartCoroutine(GameEnd());
-        if (onGameEnd != null) onGameEnd();
+        onGameEnd.Trigger();
     }
     void Restart()
     {
@@ -85,10 +93,10 @@ public class GameManager : Singleton<GameManager>
         while (timer > 0)
         {
             timer -= Time.deltaTime;
-            if (onGameCountdown != null) onGameCountdown(timer);
+            onGameCountdown.Trigger(timer);
             yield return null;
         }
-        if (onGameCountdown != null) onGameCountdown(0);
+        onGameCountdown.Trigger(0);
 
         Restart();
     }

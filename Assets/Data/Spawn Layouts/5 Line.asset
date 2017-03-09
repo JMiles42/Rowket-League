@@ -12,9 +12,10 @@ MonoBehaviour:
   m_Name: 5 Line
   m_EditorClassIdentifier: 
   SpawnPointsAmounts: 5
+  transform: {fileID: 0}
   Positions:
-  - {x: -20, y: 0, z: -50}
   - {x: -10, y: 0, z: -50}
+  - {x: -20, y: 0, z: -50}
   - {x: 0, y: 0, z: -50}
   - {x: 10, y: 0, z: -50}
   - {x: 20, y: 0, z: -50}

@@ -11,26 +11,6 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
     public const float ReactionStrength = 2000;
     public AiAgressiveMode AiMode;
 
-    public static readonly string[] Names =
-    {
-        "Ari","Miu","Fred","Jordan","Kim","Ravi",
-        "Bob","Gayoung","Minhee","Hyoeun","Jeonyoul",
-        "Jae","Gary","Ji Hyo","Haha","Eunice","Huihyeon",
-        "Jenny","Yebin","Eunjin","Chaeyeon","Eunchae",
-        "Exy","Jin","Suga","J-Hope","Rap Monster",
-        "Jimin","V","Jungkook","Tae-il", "B-Bomb","Jae-hyo",
-        "U-Kwon","Park Kyung","Zico","P.O","Xiumin","Suho",
-        "Lay","Baekhyun","Chen","Chanyeol","D.O.","Kai",
-        "Sehun","J.Seph","B.M","Somin","Jiwoo","Matthew",
-        "James","Lenard","Karissa","Sunny","Karena","Ronnie",
-        "Reed","Herbert","Stewart","Jaye","Araceli","Carmelita",
-        "Beverly","Chere","Mirta","Kasie","Deja","Shizue",
-        "Jacquelyne","Randy","Bobby","Gabriel","Lindsey",
-        "Gregg","Mitchel","Albert","Kirk","Berry","Aurelio",
-        "Johnathon","Abraham","Dusty","Anton","Garry","Chang",
-        "Rodger","Shane","Hiram","Herb","Lucas",
-    };
-
     public static float GetReactionTime(AiReactionTime reaction)
     {
         switch (reaction)
@@ -57,7 +37,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
 
     public override void Enable(PlayerMoter callingObject)
     {
-        Debug.Log("Enable: " + callingObject);
+        //Debug.Log("Enable: " + callingObject);
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(AiUnique(callingObject)));
     }
 
@@ -159,30 +139,33 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
     {
         return (target - callingObject.Position).normalized;
     }
+
     private static Vector3 GetDirection(Vector3 target, Vector3 other)
     {
         return (target - other).normalized;
     }
+
     public override string GetName()
     {
-        return Names[Random.Range(0,Names.Length)];
+        return GameManager.Instance.AiNames.Strings[Random.Range(0, GameManager.Instance.AiNames.Strings.Length)];
     }
 }
 
 public enum AiAgressiveMode
 {
-    BallOnly,
-    Defensive,
-    GoalShooter,
-    Agressive,
-    BallFollower
+    Player = -1,
+    BallOnly =0,
+    Defensive =1,
+    GoalShooter=2,
+    Agressive=3,
+    BallFollower=4
 }
 
 public enum AiReactionTime
 {
-    Slow,
-    Normal,
-    Fast,
-    Broken,
-    Instant
+    Slow=0,
+    Normal=1,
+    Fast=2,
+    Broken=3,
+    Instant=4
 }

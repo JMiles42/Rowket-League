@@ -7,6 +7,8 @@ using UnityEngine;
 public class TeamManager : Singleton<TeamManager>
 {
     public List<TeamInstance> teams = new List<TeamInstance>();
+    public List<PlayerInstance> players = new List<PlayerInstance>();
+
     public Action onGoal;
 
     public TeamInstance BlueTeam
@@ -14,6 +16,7 @@ public class TeamManager : Singleton<TeamManager>
         get { return teams[0]; }
         set { teams[0] = value; }
     }
+
     public TeamInstance RedTeam
     {
         get { return teams[1]; }
@@ -24,14 +27,17 @@ public class TeamManager : Singleton<TeamManager>
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.Enable();
     }
+
     private void OnDisable()
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.Disable();
     }
+
     public void GoalScored()
     {
-        if(onGoal != null) onGoal();
+        onGoal.Trigger();
     }
+
     private void Start()
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.score = 0;
@@ -42,57 +48,92 @@ public class TeamManager : Singleton<TeamManager>
         for (int i = 0, j = teams.Count; i < j; i++)
             if (teams[i].team.myTeam == type)
                 return teams[i].team;
+
         return null;
     }
 
-    public TeamInstance.PlayerInstance GetPlayerInstance(PlayerMoter pM)
+    public PlayerInstance GetPlayerInstance(PlayerMoter pM)
     {
-        for (int i = 0, j = teams.Count; i < j; i++)
-        {
-            for (int k = 0, l = teams[i].players.Count; k < l; k++)
-            {
-                var player = teams[i].players[k];
-                if (player.player == pM)
-                    return player;
-            }
-        }
+        for (int i = 0, j = players.Count; i < j; i++)
+            if (players[i].player == pM)
+                return players[i];
+
         return null;
+    }
+
+    public List<int> GetTeamPlayersIndecies(TeamType team)
+    {
+        var returnList = new List<int>();
+        for (int i = 0, j = players.Count; i < j; i++)
+            if (players[i].team == team)
+                returnList.Add(i);
+
+        return returnList;
     }
 
     public void TeamInit()
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.StartListening();
     }
+
     public void TeamStop()
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.StopListening();
     }
+
     public void OnValidate()
     {
         for (int i = 0, j = teams.Count; i < j; i++) teams[i].name = teams[i].team.myTeam + " Team";
     }
+
     [Serializable]
     public class TeamInstance
     {
         public string name;
         public Team team;
-        public List<PlayerInstance> players = new List<PlayerInstance>(4);
+    }
 
-        [Serializable]
-        public class PlayerInstance
+    [Serializable]
+    public class PlayerInstance
+    {
+        [SerializeField]
+        private PlayerMoter _player;
+
+        public PlayerMoter player
         {
-            public string name;
-            public PlayerMoter player;
-            public int Scores = 0;
-            public int BallHits = 0;
-            public void BallHit()
-            {
-                BallHits++;
-            }
-            public void ScoreGoal()
-            {
-                Scores++;
-            }
+            get { return _player; }
+            set { SetNewPlayerMoter(value); }
+        }
+
+        public TeamType team;
+        public int Scores = 0;
+        public int BallHits = 0;
+
+        public PlayerInstance()
+        {
+
+        }
+
+        public PlayerInstance(PlayerMoter __player)
+        {
+            _player = __player;
+            team = _player.myTeam;
+        }
+
+        public void SetNewPlayerMoter(PlayerMoter __player)
+        {
+            _player = __player;
+            team = _player.myTeam;
+        }
+
+        public void BallHit()
+        {
+            BallHits++;
+        }
+
+        public void ScoreGoal()
+        {
+            Scores++;
         }
     }
 }

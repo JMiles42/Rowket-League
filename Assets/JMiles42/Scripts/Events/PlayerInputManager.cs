@@ -58,17 +58,17 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 		{
 		    if (Input.GetButtonUp(key))
 		    {
-		        if(key.onKeyUp != null) key.onKeyUp();
+		        key.onKeyUp.Trigger();
 		        StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Up);
 		    }
 			else if (Input.GetButtonDown(key))
 			{
-			    if(key.onKeyDown != null) key.onKeyDown();
+			    key.onKeyDown.Trigger();
 			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Down);
 			}
 			else if (Input.GetButton(key))
 			{
-			    if(key.onKey != null) key.onKey();
+			    key.onKey.Trigger();
 			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Held);
 			}
 		}

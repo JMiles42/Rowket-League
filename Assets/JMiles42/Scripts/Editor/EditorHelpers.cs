@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -5,11 +6,13 @@ using UnityEngine;
 
 public class EditorHelpers : Editor
 {
-    public static Vector3 DrawVector3(string label, Vector3 vec, Vector3 defualtValue, bool allowTransformDrop = true)
+    //[Obsolete("Use property drawer instead")]
+    public static Vector3 DrawVector3(string label, Vector3 vec, Vector3 defualtValue, bool allowTransformDrop = false)
     {
         return DrawVector3(new GUIContent(label, "The vectors X,Y,Z values."), vec, defualtValue, allowTransformDrop);
     }
-    public static Vector3 DrawVector3(GUIContent label, Vector3 vec, Vector3 defualtValue, bool allowTransformDrop = true)
+    //[Obsolete("Use property drawer instead")]
+    public static Vector3 DrawVector3(GUIContent label, Vector3 vec, Vector3 defualtValue, bool allowTransformDrop = false)
     {
         EditorGUILayout.BeginHorizontal();
 
@@ -34,7 +37,7 @@ public class EditorHelpers : Editor
         var resetContent = new GUIContent("R", "Resets the vector to  " + defualtValue);
         if (GUILayout.Button(resetContent, GUILayout.Width(25))) vec = defualtValue;
         var copyContent = new GUIContent("C", "Copies the vectors data.");
-        if (GUILayout.Button(copyContent, GUILayout.Width(25))) CopyPaste.Copy(vec);
+        if (GUILayout.Button(copyContent, GUILayout.Width(25))) CopyPaste.EditorCopy(vec);
         var pasteContent = new GUIContent("P", "Pastes the vectors data.");
         if (GUILayout.Button(pasteContent, GUILayout.Width(25))) vec = CopyPaste.Paste<Vector3>();
 
@@ -44,19 +47,20 @@ public class EditorHelpers : Editor
 
     public static void Label(string label)
     {
-        EditorGUILayout.LabelField(label, GUILayout.Width(label.Length * 10 + 5));
+        EditorGUILayout.LabelField(label, GUILayout.Width(GetStringLengthinPix(label)));
     }
 
     public static object CopyPastObjectButtons(object obj)
     {
         GUIContent CopyContent = new GUIContent("Copy Data", "Copies the data.");
         GUIContent PasteContent = new GUIContent("Paste Data", "Pastes the data.");
-        if (GUILayout.Button(CopyContent)) CopyPaste.Copy(obj);
-        if (GUILayout.Button(PasteContent)) CopyPaste.Paste(ref obj);
+        if (GUILayout.Button(CopyContent)) CopyPaste.EditorCopy(obj);
+        if (GUILayout.Button(PasteContent)) CopyPaste.EditorPaste(ref obj);
         return obj;
     }
 
-    public static Vector3[] Vector3ArrayDrawer(Vector3[] array,Vector3 defualtValue,bool allowTransformDrop)
+    [Obsolete("CUSTOM EDITOR BASE & Use property drawer instead")]
+    public static Vector3[] Vector3ArrayDrawer(Vector3[] array,Vector3 defualtValue,bool allowTransformDrop = false)
     {
         GUIContent arrayLengthContent = new GUIContent("Array Length", "The length of the array");
         EditorGUILayout.BeginVertical("Box");
@@ -70,7 +74,7 @@ public class EditorHelpers : Editor
             else if (arrayLength > array.Length)
             {
                 var list = new Vector3[arrayLength];
-                var temp = array;
+                //var temp = array;
 
                 for (int i = 0, j = array.Length; i < j; i++)
                     list[i] = array[i];
@@ -80,7 +84,7 @@ public class EditorHelpers : Editor
             else if (arrayLength < array.Length)
             {
                 var list = new Vector3[arrayLength];
-                var temp = array;
+                //var temp = array;
 
                 for (int i = 0, j = arrayLength; i < j; i++)
                     list[i] = array[i];
@@ -102,5 +106,10 @@ public class EditorHelpers : Editor
 
         EditorGUILayout.EndVertical();
         return array;
+    }
+
+    public static float GetStringLengthinPix(string str)
+    {
+        return str.Length * 9;
     }
 }

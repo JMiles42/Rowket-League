@@ -18,11 +18,11 @@ public class ResetableObjectAdvanced : ResetableObjectBase
     }
     public override void Record()
     {
-        if (onRecord != null) onRecord();
+        onRecord.Trigger();
     }
 
     public override void Reset()
     {
-        if (onReset != null) onReset();
+        onReset.Trigger();
     }
 }

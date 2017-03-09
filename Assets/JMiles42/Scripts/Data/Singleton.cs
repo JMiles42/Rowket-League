@@ -8,8 +8,8 @@ using JetBrains.Annotations;
 //		http://devmag.org.za/2012/07/12/50-tips-for-working-with-unity-best-practices/
 namespace JMiles42.Data
 {
-	[Serializable]
-	[DisallowMultipleComponent]
+    [Serializable]
+    [DisallowMultipleComponent]
     public class Singleton<S> : JMilesBehaviour where S : JMilesBehaviour
     {
         protected static S instance;
@@ -18,7 +18,24 @@ namespace JMiles42.Data
             get
             {
                 if (instance) return instance;
-                instance = (S) FindObjectOfType(typeof(S));
+                instance = (S)FindObjectOfType(typeof(S));
+                if (!instance)
+                    Debug.LogError(typeof(S) + " is needed in the scene.");//Print error
+                return instance;
+            }
+        }
+    }
+    [Serializable]
+    [DisallowMultipleComponent]
+    public class SingletonRigidbody<S> : JMilesRigidbodyBehaviour where S : JMilesRigidbodyBehaviour
+    {
+        protected static S instance;
+        public static S Instance
+        {
+            get
+            {
+                if (instance) return instance;
+                instance = (S)FindObjectOfType(typeof(S));
                 if (!instance)
                     Debug.LogError(typeof(S) + " is needed in the scene.");//Print error
                 return instance;

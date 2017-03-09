@@ -2,33 +2,40 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-public class Ball : JMilesRigidbodyBehaviour, IResetable
+using JMiles42.Data;
+[RequireComponent(typeof(ResetableObjectAdvanced))]
+public class Ball : SingletonRigidbody<Ball>, IResetable
 {
-    private Vector3 startpos = Vector3.zero;
+    ResetableObjectAdvanced resetableObjectAdvanced;
+    private Vector3 startPos = Vector3.zero;
     private Quaternion startRot = new Quaternion();
     public PlayerMoter LastPlayerHit;
 
 
     void OnEnable()
     {
-        //PlayerInputManager.Instance.Jump.onKeyDown += Explode;
+        resetableObjectAdvanced = GetComponent<ResetableObjectAdvanced>();
+        resetableObjectAdvanced.onRecord += Record;
+        resetableObjectAdvanced.onRecord += Reset;
     }
 
     void OnDisable()
     {
-        //PlayerInputManager.Instance.Jump.onKeyDown -= Explode;
+        resetableObjectAdvanced.onRecord -= Record;
+        resetableObjectAdvanced.onRecord -= Reset;
     }
 
 
     public void Record()
     {
-        startpos = Position;
+        startPos = Position;
+        startRot = Rotation;
     }
 
     public void Reset()
     {
-        Position = startpos;
+        Position = startPos;
+        Rotation = startRot;
         rigidbody.ResetVelocity();
     }
     
@@ -48,11 +55,4 @@ public class Ball : JMilesRigidbodyBehaviour, IResetable
                 playerInstance.BallHit();
         }
     }
-
-    //void Explode()
-    //{
-    //    var cols = Physics.OverlapSphere(Position, 50);
-    //
-    //    foreach(var col in cols) col.GetComponent<Rigidbody>().AddExplosionForce(200,Position,50);
-    //}
 }

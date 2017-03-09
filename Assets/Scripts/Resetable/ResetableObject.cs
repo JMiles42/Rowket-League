@@ -7,6 +7,7 @@ public class ResetableObject : ResetableObjectBase
 {
     public static List<ResetableObject> ResetableObjects = new List<ResetableObject>();
     public Transform transformToReset;
+
     public Vector3 Pos;
     public Quaternion Rot;
 

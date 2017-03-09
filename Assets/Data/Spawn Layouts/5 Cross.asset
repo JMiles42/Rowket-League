@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: 5 Cross
   m_EditorClassIdentifier: 
   SpawnPointsAmounts: 5
+  transform: {fileID: 0}
   Positions:
   - {x: 10, y: 0, z: -60}
   - {x: -10, y: 0, z: -60}

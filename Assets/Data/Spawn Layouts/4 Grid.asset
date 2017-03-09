@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Name: 4 Grid
   m_EditorClassIdentifier: 
   SpawnPointsAmounts: 4
+  transform: {fileID: 0}
   Positions:
   - {x: 10, y: 0, z: -60}
   - {x: -10, y: 0, z: -60}

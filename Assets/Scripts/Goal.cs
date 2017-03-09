@@ -11,7 +11,7 @@ public class Goal : JMilesBehaviour
     {
         var playerInstance = TeamManager.Instance.GetPlayerInstance(FindObjectOfType<Ball>().LastPlayerHit);
         playerInstance.ScoreGoal();
-        if (onGoal != null) onGoal();
+        onGoal.Trigger();
     }
 
     private void OnCollisionEnter(Collision other)

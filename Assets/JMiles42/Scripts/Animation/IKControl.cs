@@ -3,7 +3,6 @@ using System;
 using System.Collections;
 
 [RequireComponent(typeof(Animator))]
-
 public class IKControl : MonoBehaviour
 {
 

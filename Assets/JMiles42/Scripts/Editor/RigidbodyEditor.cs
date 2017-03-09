@@ -3,10 +3,11 @@ using UnityEditor;
 using System.Collections;
 
 [CustomEditor(typeof(Rigidbody))]
+[CanEditMultipleObjects]
 public class RigidbodyEditor : Editor
 {
 	public override void OnInspectorGUI ()
-	{
+    {
 		var body = target as Rigidbody;
 
         EditorGUILayout.BeginHorizontal("Box");

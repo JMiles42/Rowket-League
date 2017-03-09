@@ -16,6 +16,7 @@ public class PlayerDisplayArrow : JMilesBehaviour
 
     private void OnEnable()
     {
+        //Makes sure there are no null Referances
         if (ArrowFill == null) ArrowFill = new SpriteRenderer();
         if (ArrowOutline == null) ArrowOutline = new SpriteRenderer();
         transform.localScale = minScale;

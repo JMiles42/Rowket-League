@@ -8,35 +8,42 @@ public class TransformEditor : Editor
 {
 	static bool scaleToggle;
     static float scaleAmount = 1;
-	public override void OnInspectorGUI ()
-	{
-		var transform = target as Transform;
 
+
+    public override void OnInspectorGUI()
+    {
+        var transform = target as Transform;
+        serializedObject.Update();
         EditorGUILayout.BeginHorizontal("Box");
         transform = EditorHelpers.CopyPastObjectButtons(transform) as Transform;
         EditorGUILayout.EndHorizontal();
 
-        EditorGUILayout.BeginVertical ("Box");
-        EditorGUILayout.BeginVertical ();
-        EditorGUILayout.BeginHorizontal ();
+        EditorGUILayout.BeginVertical("Box");
+        EditorGUILayout.BeginVertical();
+        EditorGUILayout.BeginHorizontal();
         GUIContent ResetContent = new GUIContent("Reset Transform", "Reset Transforms in global space");
         GUIContent ResetLocalContent = new GUIContent("Reset Local Transform", "Reset Transforms in local space");
-        if ( GUILayout.Button (ResetContent) ) transform.ResetPosRotScale();
-		if ( GUILayout.Button (ResetLocalContent) ) transform.ResetLocalPosRotScale();
-		EditorGUILayout.EndVertical ();
+        if (GUILayout.Button(ResetContent)) transform.ResetPosRotScale();
+        if (GUILayout.Button(ResetLocalContent)) transform.ResetLocalPosRotScale();
+        EditorGUILayout.EndVertical();
         EditorGUILayout.BeginHorizontal();
-		scaleToggle = EditorGUILayout.Toggle ("Scale Presets", scaleToggle);
-        if ( scaleToggle ) ScaleBtnsEnabled ();
-		EditorGUILayout.EndHorizontal ();
-		EditorGUILayout.EndHorizontal ();
-        EditorGUILayout.EndVertical ();
-        EditorHelpers.Label ("Local Transform");
+        scaleToggle = EditorGUILayout.Toggle("Scale Presets", scaleToggle);
+        if (scaleToggle) ScaleBtnsEnabled();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndHorizontal();
+        EditorGUILayout.EndVertical();
+
+
+        EditorHelpers.Label(transform.parent == null?"Transform":"Local Transform");
+
+        transform.localEulerAngles = EditorHelpers.DrawVector3("Rotation", transform.localEulerAngles, Vector3.zero);
+        transform.localPosition = EditorHelpers.DrawVector3("Position", transform.localPosition, Vector3.zero);
+        transform.localScale = EditorHelpers.DrawVector3("Scale   ", transform.localScale, Vector3.one);
         
-		transform.localEulerAngles = EditorHelpers.DrawVector3("Rotation", transform.localEulerAngles, Vector3.zero);
-		transform.localPosition = EditorHelpers.DrawVector3("Position", transform.localPosition, Vector3.zero);
-		transform.localScale = EditorHelpers.DrawVector3("Scale   ", transform.localScale, Vector3.one);
-	}
-	void ScaleBtnsEnabled()
+
+        serializedObject.ApplyModifiedProperties();
+    }
+    void ScaleBtnsEnabled()
     {
         EditorGUILayout.EndVertical();
         EditorGUILayout.BeginVertical();

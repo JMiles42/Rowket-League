@@ -1,0 +1,113 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ee1b1dcfb268f244a9dc07ef2951f1cc, type: 3}
+  m_Name: Names
+  m_EditorClassIdentifier: 
+  Strings:
+  - Ari
+  - Miu
+  - Fred
+  - Jordan
+  - Kim
+  - Ravi
+  - Bob
+  - Gayoung
+  - Minhee
+  - Hyoeun
+  - Jeonyoul
+  - Jae
+  - Gary
+  - Ji Hyo
+  - Haha
+  - Eunice
+  - Huihyeon
+  - Jenny
+  - Yebin
+  - Eunjin
+  - Chaeyeon
+  - Eunchae
+  - Exy
+  - Jin
+  - Suga
+  - J-Hope
+  - Rap Monster
+  - Jimin
+  - V
+  - Jungkook
+  - Tae-il
+  - B-Bomb
+  - Jae-hyo
+  - U-Kwon
+  - Park Kyung
+  - Zico
+  - P.O
+  - Xiumin
+  - Suho
+  - Lay
+  - Baekhyun
+  - Chen
+  - Chanyeol
+  - D.O.
+  - Kai
+  - Sehun
+  - J.Seph
+  - B.M
+  - Somin
+  - Jiwoo
+  - Matthew
+  - James
+  - Lenard
+  - Karissa
+  - Sunny
+  - Karena
+  - Ronnie
+  - Reed
+  - Herbert
+  - Stewart
+  - Jaye
+  - Araceli
+  - Carmelita
+  - Beverly
+  - Chere
+  - Mirta
+  - Kasie
+  - Deja
+  - Shizue
+  - Jacquelyne
+  - Randy
+  - Bobby
+  - Gabriel
+  - Lindsey
+  - Gregg
+  - Mitchel
+  - Albert
+  - Kirk
+  - Berry
+  - Aurelio
+  - Johnathon
+  - Abraham
+  - Dusty
+  - Anton
+  - Garry
+  - Chang
+  - Rodger
+  - Shane
+  - Hiram
+  - Herb
+  - Lucas
+  - Jasper
+  - Jaspar
+  - Stellar
+  - xXxPuckShootterZxXx
+  - Puck this game
+  - Ah Puck IT!
+  - I don't give a flying Puck
+  - I am a flying Puck

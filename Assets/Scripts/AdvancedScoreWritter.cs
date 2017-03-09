@@ -55,9 +55,9 @@ public class AdvancedScoreWritter : Singleton<AdvancedScoreWritter>
         sb.Append(": ");
         sb.Append(TeamManager.Instance.RedTeam.team.score);
 
-        for (int i = 0, j = TeamManager.Instance.RedTeam.players.Count; i < j; i++)
-            if (TeamManager.Instance.RedTeam.players[i].player.gameObject.activeInHierarchy)
-                sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.RedTeam.players[i].name, TeamManager.Instance.RedTeam.players[i].Scores);
+        var RedTeam = TeamManager.Instance.GetTeamPlayersIndecies(TeamType.Red);
+        for (int i = 0, j = RedTeam.Count; i < j; i++)
+            sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[RedTeam[i]].player.GetName(), TeamManager.Instance.players[RedTeam[i]].Scores);
 
         RedTeamScore.text = sb.ToString().Replace("||n","\n");
     }
@@ -67,10 +67,9 @@ public class AdvancedScoreWritter : Singleton<AdvancedScoreWritter>
         sb.Append(BlueTextString);
         sb.Append(": ");
         sb.Append(TeamManager.Instance.BlueTeam.team.score);
-
-        for (int i = 0, j = TeamManager.Instance.BlueTeam.players.Count; i < j; i++)
-            if (TeamManager.Instance.BlueTeam.players[i].player.gameObject.activeInHierarchy)
-                sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.BlueTeam.players[i].name, TeamManager.Instance.BlueTeam.players[i].Scores);
+        var BlueTeam = TeamManager.Instance.GetTeamPlayersIndecies(TeamType.Blue);
+        for (int i = 0, j = BlueTeam.Count; i < j; i++)
+            sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[BlueTeam[i]].player.GetName(), TeamManager.Instance.players[BlueTeam[i]].Scores);
 
         BlueTeamScore.text = sb.ToString().Replace("||n", "\n");
     }

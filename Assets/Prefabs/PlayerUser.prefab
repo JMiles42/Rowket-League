@@ -220,6 +220,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   myTeam: 0
   MyInput: {fileID: 11400000, guid: c4a56b189541a82488abb22df77f7fb6, type: 2}
+  playerName: Player
 --- !u!114 &114820283149519600
 MonoBehaviour:
   m_ObjectHideFlags: 1
