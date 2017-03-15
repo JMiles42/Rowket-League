@@ -4,12 +4,24 @@ using UnityEngine;
 
 public class PlayerCamera : JMilesBehaviour
 {
-    public void Start()
+    private Camera m_Camera;
+    public new Camera camera
     {
-        GetComponent<Camera>().pixelRect = SplitScreenCameraUtilities.SetCameraRect(SplitScreenCameraUtilities.CameraMode.ThreePlayerLowerMiddle);
+        get
+        {
+            if (!m_Camera)
+                m_Camera = GetComponent<Camera>();
+            return m_Camera;
+        }
+        set { m_Camera = value; }
     }
+
+    public static Transform overRidingLookAtTarget = null;
+    public float smoothing;
+
     private void LateUpdate()
     {
-        
+        if(overRidingLookAtTarget)
+            camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation,Quaternion.LookRotation(overRidingLookAtTarget.position),Time.deltaTime*smoothing);
     }
 }

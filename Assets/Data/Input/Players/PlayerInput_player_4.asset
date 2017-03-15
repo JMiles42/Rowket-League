@@ -13,7 +13,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   RotationSpeed: 5
   speed: 0
-  strength: 5.635605
+  strength: 5.7141304
   strengthMin: 5
   strengthMultiplyer: 100
   strengthMax: 2

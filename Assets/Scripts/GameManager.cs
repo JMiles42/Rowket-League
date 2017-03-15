@@ -6,6 +6,7 @@ using System.Linq;
 using UnityEngine;
 using Ran = UnityEngine.Random;
 using GameSettings = GameSettingsManagerMaster;
+using CamUtils = SplitScreenCamUtils;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -71,6 +72,7 @@ public class GameManager : Singleton<GameManager>
         GameSettings.Instance.BuildArrays();
         SpawnBall();
         SpawnPlayers();
+        SetUpCamera();
         StartCoroutine(Countdown());
     }
 
@@ -183,6 +185,119 @@ public class GameManager : Singleton<GameManager>
         newPlayerMoter.SetName(name);
         newPlayerMoter.OnSpawn();
         TeamManager.Instance.players.Add(new TeamManager.PlayerInstance(newPlayerMoter));
+    }
+
+
+    void SetUpCamera()
+    {
+        Camera.main.enabled = false;
+        var cameras = FindObjectsOfType<PlayerCamera>();
+        for (int i = cameras.Length - 1; i >= 0; i--)
+            cameras[i].camera.depth = 20 + i;
+        switch (cameras.Length)
+        {
+            case 1:
+                return;
+            case 12:
+                cameras[11].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveLower1000);
+                cameras[10].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveLower0100);
+                cameras[9].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveLower0010);
+                cameras[8].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveLower0001);
+                cameras[7].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveMiddl1000);
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveMiddl0100);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveMiddl0010);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveMiddl0001);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveUpper1000);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveUpper0100);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveUpper0010);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveUpper0001);
+                break;
+            case 11:
+                cameras[10].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.MiddleOfScreenMiny);
+                cameras[9].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper10000);
+                cameras[8].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper01000);
+                cameras[7].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00100);
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00010);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00001);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower10000);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower01000);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00100);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00010);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00001);
+                break;
+            case 10:
+                cameras[9].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper10000);
+                cameras[8].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper01000);
+                cameras[7].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00100);
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00010);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenUpper00001);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower10000);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower01000);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00100);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00010);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TenLower00001);
+                break;
+            case 9:
+                cameras[8].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper100);
+                cameras[7].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper010);
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper001);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineMiddl100);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineMiddl010);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineMiddl001);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower100);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower010);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower001);
+                break;
+            case 8:
+                cameras[7].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper100);
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper010);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineUpper001);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineMiddl100);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineMiddl001);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower100);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower010);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.NineLower001);
+                break;
+            case 7:
+                cameras[6].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.MiddleOfScreenSmall);
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixUpper10);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixUpper01);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixMiddl10);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixMiddl01);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixLower10);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixLower01);
+                break;
+            case 6:
+                cameras[5].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixUpper10);
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixUpper01);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixMiddl10);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixMiddl01);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixLower10);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.SixLower01);
+                break;
+            case 5:
+                cameras[4].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.MiddleOfScreen);
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerRightLower);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerRightUpper);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerLeftLower);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerLeftUpper);
+                break;
+            case 4:
+                cameras[3].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerRightLower);
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerRightUpper);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerLeftLower);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerLeftUpper);
+                break;
+            case 3:
+                cameras[2].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.ThreePlayerLowerMiddle);
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerRightUpper);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.FourPlayerLeftUpper);
+                break;
+            case 2:
+                cameras[1].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TwoPlayerLeft);
+                cameras[0].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TwoPlayerRight);
+                break;
+        }
     }
 
 

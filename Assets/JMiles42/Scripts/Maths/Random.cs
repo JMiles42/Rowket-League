@@ -1,75 +1,72 @@
 using UnityEngine;
 using System.Collections;
+using System.Text;
 using JMiles42.Maths;
+
 namespace JMiles42.Maths
 {
-	public static class RandomStrings
-	{
-		public const string ALLALPHA = "abcdefghijklmnopqrstuvwxyz";
-		public const string ALLNUMERIC = "1234567890";
-		public const string SYMBOLS = "!@#$%^&*()-_=+`~,<.>/?;:'";
-		public const string ALLCHARS = ALLALPHA+ALLNUMERIC;
-		public const string NUMERICSYMBOLS = SYMBOLS+ALLNUMERIC;
+    public static class RandomStrings
+    {
+        public const string ALLALPHA = "abcdefghijklmnopqrstuvwxyz";
+        public const string ALLNUMERIC = "1234567890";
+        public const string SYMBOLS = "!@#$%^&*()-_=+`~,<.>/?;:'";
+        public const string ALLCHARS = ALLALPHA + ALLNUMERIC;
+        public const string NUMERICSYMBOLS = SYMBOLS + ALLNUMERIC;
 
-		public static string GetRandomString(int length)
-		{
-			string s="";
-			System.Random rand = new System.Random(System.DateTime.UtcNow.Millisecond);
-			for( int i = 0; i < length; i++ )
-			{
-				s += ALLCHARS[rand.Next(ALLCHARS.Length)];
-			}
-			return s;
-		}
+        public static string GetRandomString(int length)
+        {
+            var s = new StringBuilder();
+            var rand = new System.Random(System.DateTime.UtcNow.Millisecond);
+            for (var i = 0; i < length; i++)
+                s.Append(ALLCHARS[rand.Next(ALLCHARS.Length)]);
+            return s.ToString();
+        }
 
-		public static string GetRandomString(int length, int seed)
-		{
-			string s="";
-			System.Random rand = new System.Random(seed);
-			for( int i = 0; i < length; i++ )
-			{
-				s += ALLCHARS[rand.Next(ALLCHARS.Length)];
-			}
-			return s;
-		}
+        public static string GetRandomString(int length, int seed)
+        {
+            var s = new StringBuilder();
+            var rand = new System.Random(seed);
+            for (var i = 0; i < length; i++)
+            {
+                s.Append(ALLCHARS[rand.Next(ALLCHARS.Length)]);
+            }
+            return s.ToString();
+        }
 
-		public static string GetRandomAltString(int length)
-		{
-			string s="";
-			System.Random rand = new System.Random(System.DateTime.UtcNow.Millisecond);
-			for( int i = 0; i < length; i++ )
-			{
-				if( Maths.IsOdd(i) )
-					s += ALLNUMERIC[rand.Next(ALLNUMERIC.Length)];
-				else
-					s += ALLALPHA[rand.Next(ALLALPHA.Length)];
-			}
-			return s;
-		}
+        public static string GetRandomAltString(int length)
+        {
+            var s = new StringBuilder();
+            var rand = new System.Random(System.DateTime.UtcNow.Millisecond);
+            for (var i = 0; i < length; i++)
+                s.Append(Maths.IsOdd(i)
+                    ? ALLNUMERIC[rand.Next(ALLNUMERIC.Length)]
+                    : ALLALPHA[rand.Next(ALLALPHA.Length)]);
 
-		public static string GetRandomAltString(int length, int seed)
-		{
-			string s="";
-			System.Random rand = new System.Random(seed);
-			for( int i = 0; i < length; i++ )
-			{
-				if(Maths.IsOdd(i))
-					s += ALLNUMERIC[rand.Next(ALLNUMERIC.Length)];
-				else
-					s += ALLALPHA[rand.Next(ALLALPHA.Length)];
-			}
-			return s;
-		}
-	}
-	public static class RandomBools
-	{
-		public static bool RandomBool()
-		{
-			return Maths.IsEven(System.DateTime.UtcNow.Millisecond);
-		}
-		public static bool RandomInvertedBool()
-		{
-			return Maths.IsOdd(System.DateTime.UtcNow.Millisecond);
-		}
-	}
+            return s.ToString();
+        }
+
+        public static string GetRandomAltString(int length, int seed)
+        {
+            var s = new StringBuilder();
+            var rand = new System.Random(seed);
+            for (int i = 0; i < length; i++)
+                s.Append(Maths.IsOdd(i)
+                    ? ALLNUMERIC[rand.Next(ALLNUMERIC.Length)]
+                    : ALLALPHA[rand.Next(ALLALPHA.Length)]);
+            return s.ToString();
+        }
+    }
+
+    public static class RandomBools
+    {
+        public static bool RandomBool()
+        {
+            return Maths.IsEven(System.DateTime.UtcNow.Millisecond);
+        }
+
+        public static bool RandomInvertedBool()
+        {
+            return Maths.IsOdd(System.DateTime.UtcNow.Millisecond);
+        }
+    }
 }

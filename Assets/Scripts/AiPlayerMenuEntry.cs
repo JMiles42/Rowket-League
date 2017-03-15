@@ -47,35 +47,33 @@ public class AiPlayerMenuEntry : JMilesBehaviour
 
     void GetAiAgressiveModeFromDropDown(int value)
     {
-        if (value == 5)
+        switch (value)
         {
-            aiAgressiveMode = AiAgressiveMode.PlayerOne;
-            AiReactionSpeed.myDropdown.interactable = false;
-            IsPlayer = true;
-        }
-        else if (value == 6)
-        {
-            aiAgressiveMode = AiAgressiveMode.PlayerTwo;
-            AiReactionSpeed.myDropdown.interactable = false;
-            IsPlayer = true;
-        }
-        else if (value == 7)
-        {
-            aiAgressiveMode = AiAgressiveMode.PlayerThree;
-            AiReactionSpeed.myDropdown.interactable = false;
-            IsPlayer = true;
-        }
-        else if (value == 8)
-        {
-            aiAgressiveMode = AiAgressiveMode.PlayerFour;
-            AiReactionSpeed.myDropdown.interactable = false;
-            IsPlayer = true;
-        }
-        else
-        {
-            IsPlayer = false;
-            AiReactionSpeed.myDropdown.interactable = Enabled;
-            aiAgressiveMode = (AiAgressiveMode) AiMode.myDropdown.value;
+            case 5:
+                aiAgressiveMode = AiAgressiveMode.PlayerOne;
+                AiReactionSpeed.myDropdown.interactable = false;
+                IsPlayer = true;
+                break;
+            case 6:
+                aiAgressiveMode = AiAgressiveMode.PlayerTwo;
+                AiReactionSpeed.myDropdown.interactable = false;
+                IsPlayer = true;
+                break;
+            case 7:
+                aiAgressiveMode = AiAgressiveMode.PlayerThree;
+                AiReactionSpeed.myDropdown.interactable = false;
+                IsPlayer = true;
+                break;
+            case 8:
+                aiAgressiveMode = AiAgressiveMode.PlayerFour;
+                AiReactionSpeed.myDropdown.interactable = false;
+                IsPlayer = true;
+                break;
+            default:
+                IsPlayer = false;
+                AiReactionSpeed.myDropdown.interactable = Enabled;
+                aiAgressiveMode = (AiAgressiveMode) AiMode.myDropdown.value;
+                break;
         }
     }
 

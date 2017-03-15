@@ -129,8 +129,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             newCam.gameObject.transform.parent = null;
         }
         cam.gameObject.SetActive(true);
-        cam.tag = "MainCamera";
-        Camera.main.tag = "Untagged";
+        //cam.tag = "MainCamera";
 
         if (arrow == null)
         {
