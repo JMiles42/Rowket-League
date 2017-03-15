@@ -36,10 +36,15 @@ public class GameManager : Singleton<GameManager>
 
     public Transform PlayersFolder;
     public float TimerMax;
+    public Transform lookAtScoreBoard;
 
     private void OnEnable()
     {
         onAnyGoal += GameOver;
+
+        onAnyGoal += delegate { PlayerCamera.overRidingLookAtTarget = lookAtScoreBoard; };
+        onGameStart += delegate { PlayerCamera.overRidingLookAtTarget = null; };
+
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
         if (startGameBtn)
