@@ -164,9 +164,15 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
             arrow.transform.rotation = Quaternion.LookRotation(newPosativeRotation);
             if (UserJump)
+            {
                 callingObject.onLaunchPlayer.Trigger(Vector3.up * GetMoveStrength() / 3);
+                UserJump = false;
+            }
             if (UserLaunch)
+            {
                 callingObject.onLaunchPlayer.Trigger(GetMoveFinalDirection(callingObject.transform));
+                UserLaunch = false;
+            }
             yield return null;
         }
         cam.transform.parent = callingObject.transform;
