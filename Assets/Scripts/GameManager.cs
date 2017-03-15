@@ -42,13 +42,13 @@ public class GameManager : Singleton<GameManager>
     {
         onAnyGoal += GameOver;
 
-        onAnyGoal += delegate { PlayerCamera.overRidingLookAtTarget = lookAtScoreBoard; };
-        onGameStart += delegate { PlayerCamera.overRidingLookAtTarget = null; };
+        PlayerMoterInputUser.lookAtTargetOverride = lookAtScoreBoard;
+        onAnyGoal += delegate { PlayerMoterInputUser.lookAtOverride = true; };
+        onGameStart += delegate { PlayerMoterInputUser.lookAtOverride = false; };
 
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
-        if (startGameBtn)
-            startGameBtn.onMouseClick += StartGame;
+        startGameBtn.onMouseClick += StartGame;
 
         var goals = FindObjectsOfType<Goal>();
         foreach (var goal in goals) goal.onGoal += CallGoal;
@@ -60,8 +60,7 @@ public class GameManager : Singleton<GameManager>
         onGameStart -= EnableInput;
         onGameEnd -= DisableInput;
 
-        if (startGameBtn)
-            startGameBtn.onMouseClick -= StartGame;
+        startGameBtn.onMouseClick -= StartGame;
 
         var goals = FindObjectsOfType<Goal>();
         foreach (var goal in goals) goal.onGoal -= CallGoal;
@@ -195,13 +194,13 @@ public class GameManager : Singleton<GameManager>
 
     void SetUpCamera()
     {
-        Camera.main.enabled = false;
         var cameras = FindObjectsOfType<PlayerCamera>();
         for (int i = cameras.Length - 1; i >= 0; i--)
             cameras[i].camera.depth = 20 + i;
         switch (cameras.Length)
         {
             case 1:
+                Camera.main.enabled = false;
                 return;
             case 12:
                 cameras[11].camera.rect = CamUtils.SetCameraRect(CamUtils.CameraMode.TelveLower1000);

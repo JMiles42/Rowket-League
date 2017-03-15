@@ -7,6 +7,8 @@ using UnityEngine.UI;
 [CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMoterInputUser : PlayerMoterInputBase
 {
+    public static Transform lookAtTargetOverride;
+    public static bool lookAtOverride = false;
     bool UserLaunch = false;
     bool UserJump = false;
     bool UserCoolingDown = false;
@@ -159,7 +161,10 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
             //Lerp the current values to the 
             cam.transform.position = Vector3.Lerp(cam.transform.position, newPosition, Time.deltaTime * FollowDamp);
-            cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
+            if (lookAtOverride)
+                cam.transform.LookAt(lookAtTargetOverride);
+            else
+                cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
 
             arrow.transform.rotation = Quaternion.LookRotation(newPosativeRotation);
             if (UserJump)

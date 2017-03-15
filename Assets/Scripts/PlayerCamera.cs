@@ -17,11 +17,12 @@ public class PlayerCamera : JMilesBehaviour
     }
 
     public static Transform overRidingLookAtTarget = null;
+    public static bool lookAtTarget = false;
     public float smoothing;
 
     private void LateUpdate()
     {
-        if(overRidingLookAtTarget)
+        if(lookAtTarget)
             camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation,Quaternion.LookRotation(overRidingLookAtTarget.position),Time.deltaTime*smoothing);
     }
 }
