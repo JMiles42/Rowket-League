@@ -2406,7 +2406,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 5a2bfc92cb5853e468a6836c04fa21fd, type: 2}
   - {fileID: 11400000, guid: 783feffc8767f82459db4a4b0a16f752, type: 2}
   - {fileID: 11400000, guid: 1bc459646682f8f428fd544659c00d01, type: 2}
-  InputUser: {fileID: 11400000, guid: c4a56b189541a82488abb22df77f7fb6, type: 2}
+  PlayerOneInput: {fileID: 11400000, guid: c4a56b189541a82488abb22df77f7fb6, type: 2}
+  PlayerTwoInput: {fileID: 11400000, guid: d02b3226b4d943c4a80b0029bcc1c8ea, type: 2}
   prefabMoter: {fileID: 114631365002529958, guid: 33f4d36daf796d64da7c4f5937b73c4d,
     type: 2}
   prefabBall: {fileID: 114020559865472024, guid: ba6557a4da887734e8de4fc8bf3a727b,

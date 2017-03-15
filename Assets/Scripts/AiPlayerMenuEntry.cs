@@ -49,7 +49,13 @@ public class AiPlayerMenuEntry : JMilesBehaviour
     {
         if (value == 5)
         {
-            aiAgressiveMode = AiAgressiveMode.Player;
+            aiAgressiveMode = AiAgressiveMode.PlayerOne;
+            AiReactionSpeed.myDropdown.interactable = false;
+            IsPlayer = true;
+        }
+        else if (value == 6)
+        {
+            aiAgressiveMode = AiAgressiveMode.PlayerTwo;
             AiReactionSpeed.myDropdown.interactable = false;
             IsPlayer = true;
         }

@@ -155,7 +155,8 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
 
 public enum AiAgressiveMode
 {
-    Player = -1,
+    PlayerTwo = -2,
+    PlayerOne = -1,
     BallOnly = 0,
     Defensive = 1,
     GoalShooter = 2,

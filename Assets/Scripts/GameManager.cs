@@ -23,7 +23,8 @@ public class GameManager : Singleton<GameManager>
     public SpawnLayout[] SpawnLayouts;
 
     public PlayerMoterInputAI[] AiInputSystems;
-    public PlayerMoterInputUser InputUser;
+    public PlayerMoterInputUser PlayerOneInput;
+    public PlayerMoterInputUser PlayerTwoInput;
 
     public PlayerMoter prefabMoter;
     public Ball prefabBall;
@@ -120,8 +121,13 @@ public class GameManager : Singleton<GameManager>
 
     public PlayerMoterInputBase GetInputClass(AiAgressiveMode mode, AiReactionTime time)
     {
-        if (mode == AiAgressiveMode.Player)
-            return InputUser;
+        switch (mode)
+        {
+            case AiAgressiveMode.PlayerOne:
+                return PlayerOneInput;
+            case AiAgressiveMode.PlayerTwo:
+                return PlayerTwoInput;
+        }
 
         for (int i = 0, j = AiInputSystems.Length; i < j; i++)
             if (AiInputSystems[i].AiMode == mode && AiInputSystems[i].ReactionTime == time)

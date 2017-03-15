@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[CreateAssetMenu(fileName = "InputUser", menuName = "Rowket/Input/User", order = 0)]
+[CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMoterInputUser : PlayerMoterInputBase
 {
     bool UserLaunch = false;

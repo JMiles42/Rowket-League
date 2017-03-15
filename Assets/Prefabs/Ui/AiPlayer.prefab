@@ -1673,7 +1673,9 @@ MonoBehaviour:
       m_Image: {fileID: 0}
     - m_Text: Goal Shooter
       m_Image: {fileID: 0}
-    - m_Text: Player
+    - m_Text: Player One
+      m_Image: {fileID: 0}
+    - m_Text: Player Two
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
