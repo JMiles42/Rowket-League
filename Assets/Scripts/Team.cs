@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 [Serializable]
@@ -27,12 +28,10 @@ public class Team : JMilesScriptableObject
     public void StartListening()
     {
         GetTeamsGoal().onGoal += TeamScored;
-        GetTeamsGoal().onGoal += TeamManager.Instance.GoalScored;
     }
     public void StopListening()
     {
         GetTeamsGoal().onGoal -= TeamScored;
-        GetTeamsGoal().onGoal -= TeamManager.Instance.GoalScored;
     }
     public void TeamScored()
     {
@@ -42,10 +41,7 @@ public class Team : JMilesScriptableObject
     public Goal GetTeamsGoal()
     {
         var goals = FindObjectsOfType<Goal>();
-        foreach (var goal in goals)
-            if (goal.myTeam == myTeam)
-                return goal;
-        return null;
+        return goals.FirstOrDefault(goal => goal.myTeam == myTeam);
     }
 }
 

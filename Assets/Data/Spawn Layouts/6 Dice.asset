@@ -9,11 +9,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f51810fc18691548880f922c1cb0ba1, type: 3}
-  m_Name: 3 Line
+  m_Name: 6 Dice
   m_EditorClassIdentifier: 
   Positions:
-  - {x: 20, y: 0, z: -50}
-  - {x: 10, y: 0, z: -50}
-  - {x: 0, y: 0, z: -50}
-  - {x: -10, y: 0, z: -50}
-  - {x: -20, y: 0, z: -50}
+  - {x: 5, y: 0, z: -50}
+  - {x: -5, y: 0, z: -50}
+  - {x: 5, y: 0, z: -30}
+  - {x: -5, y: 0, z: -30}
+  - {x: 5, y: 0, z: -40}
+  - {x: -5, y: 0, z: -40}

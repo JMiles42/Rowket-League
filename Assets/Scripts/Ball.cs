@@ -16,13 +16,13 @@ public class Ball : SingletonRigidbody<Ball>, IResetable
     {
         resetableObjectAdvanced = GetComponent<ResetableObjectAdvanced>();
         resetableObjectAdvanced.onRecord += Record;
-        resetableObjectAdvanced.onRecord += Reset;
+        resetableObjectAdvanced.onReset += Reset;
     }
 
     void OnDisable()
     {
         resetableObjectAdvanced.onRecord -= Record;
-        resetableObjectAdvanced.onRecord -= Reset;
+        resetableObjectAdvanced.onReset -= Reset;
     }
 
 

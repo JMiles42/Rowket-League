@@ -1,7 +1,11 @@
 using JMiles42.Data;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
+using Ran = UnityEngine.Random;
+using GameSettings = GameSettingsManagerMaster;
 
 public class GameManager : Singleton<GameManager>
 {
@@ -12,7 +16,7 @@ public class GameManager : Singleton<GameManager>
     public Action onGameInputEnable;
     public Action onGameInputDisable;
 
-    public Action onGoal;
+    public Action onAnyGoal;
 
     public StringListScriptableObject AiNames;
 
@@ -21,44 +25,62 @@ public class GameManager : Singleton<GameManager>
     public PlayerMoterInputAI[] AiInputSystems;
     public PlayerMoterInputUser InputUser;
 
+    public PlayerMoter prefabMoter;
+    public Ball prefabBall;
 
+    public ButtonClickEvent startGameBtn;
+
+    public Transform PlayersFolder;
     public float TimerMax;
 
-    void OnEnable()
+    private void OnEnable()
     {
-        onGoal += GameOver;
+        onAnyGoal += GameOver;
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
+        if (startGameBtn)
+            startGameBtn.onMouseClick += StartGame;
 
         var goals = FindObjectsOfType<Goal>();
-        foreach(var goal in goals) goal.onGoal += CallGoal;
+        foreach (var goal in goals) goal.onGoal += CallGoal;
     }
-    void OnDisable()
+
+    private void OnDisable()
     {
-        onGoal -= GameOver;
+        onAnyGoal -= GameOver;
         onGameStart -= EnableInput;
         onGameEnd -= DisableInput;
+
+        if (startGameBtn)
+            startGameBtn.onMouseClick -= StartGame;
 
         var goals = FindObjectsOfType<Goal>();
         foreach (var goal in goals) goal.onGoal -= CallGoal;
     }
-    void CallGoal()
+
+    private void CallGoal()
     {
-        onGoal.Trigger();
+        onAnyGoal.Trigger();
     }
+
     public void StartGame()
+    {
+        GameSettings.Instance.BuildArrays();
+        SpawnBall();
+        SpawnPlayers();
+        StartCoroutine(Countdown());
+    }
+
+    public void RestartGame()
     {
         StartCoroutine(Countdown());
     }
-    public void Start()
-    {
-        StartGame();
-    }
-    IEnumerator Countdown()
+
+    private IEnumerator Countdown()
     {
         onGameStartCountdown.Trigger();
         float timer = TimerMax;
-        while(timer > 0)
+        while (timer > 0)
         {
             timer -= Time.deltaTime;
             onGameCountdown.Trigger(timer);
@@ -67,38 +89,100 @@ public class GameManager : Singleton<GameManager>
         onGameCountdown.Trigger(0);
         onGameStart.Trigger();
     }
-    void EnableInput()
+
+    private void EnableInput()
     {
         onGameInputEnable.Trigger();
     }
-    void DisableInput()
+
+    private void DisableInput()
     {
         onGameInputDisable.Trigger();
     }
-    void GameOver()
+
+    private void GameOver()
     {
         StartCoroutine(GameEnd());
         onGameEnd.Trigger();
     }
-    void Restart()
+
+    private void Restart()
     {
-        foreach(var reset in ResetableObject.ResetableObjects) reset.Reset();
-        StartGame();
+        foreach (var reset in ResetableObjectBase.ResetableObjects) reset.Reset();
+        RestartGame();
     }
 
-    IEnumerator GameEnd()
+    private IEnumerator GameEnd()
     {
-        float timer = TimerMax*2;
-
-        while (timer > 0)
-        {
-            timer -= Time.deltaTime;
-            onGameCountdown.Trigger(timer);
-            yield return null;
-        }
-        onGameCountdown.Trigger(0);
-
+        yield return WaitForTimes.GetWaitForTime(3);
         Restart();
     }
 
+    public PlayerMoterInputBase GetInputClass(AiAgressiveMode mode, AiReactionTime time)
+    {
+        if (mode == AiAgressiveMode.Player)
+            return InputUser;
+
+        for (int i = 0, j = AiInputSystems.Length; i < j; i++)
+            if (AiInputSystems[i].AiMode == mode && AiInputSystems[i].ReactionTime == time)
+                return AiInputSystems[i];
+
+        return AiInputSystems[Ran.Range(0, AiInputSystems.Length)];
+    }
+
+    private void SpawnPlayers()
+    {
+        var redTeamAmount = GameSettings.Instance.RedTeamComposition.Length;
+        var blueTeamAmount = GameSettings.Instance.BlueTeamComposition.Length;
+
+        var biggestTeam = Mathf.Max(redTeamAmount, blueTeamAmount);
+
+        SpawnLayout layout = null;
+
+        {
+            var layouts = SpawnLayouts.Where(spawnLayout => spawnLayout.Positions.Length >= biggestTeam).ToList();
+            layout = layouts[Ran.Range(0, layouts.Count)];
+        }
+
+        for (int i = 0, j = biggestTeam; i < j; i++)
+        {
+            if (redTeamAmount > i)
+                SpawnPlayer(GameSettings.Instance.RedTeamComposition[i], layout.Positions[i],
+                    TeamManager.Instance.RedTeam,
+                    GameSettings.Instance.RedTeam[GameSettings.Instance.RedTeamComposition[i]].Name);
+            if (blueTeamAmount > i)
+                SpawnPlayer(GameSettings.Instance.BlueTeamComposition[i], -layout.Positions[i],
+                    TeamManager.Instance.BlueTeam,
+                    GameSettings.Instance.BlueTeam[GameSettings.Instance.BlueTeamComposition[i]].Name);
+        }
+    }
+
+    private void SpawnBall()
+    {
+        Instantiate(prefabBall.gameObject, new Vector3(0, 30, 0), Quaternion.identity);
+    }
+
+    private void SpawnPlayer(PlayerMoterInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
+    {
+        var newPlayer = Instantiate(prefabMoter.gameObject, pos, Quaternion.identity, PlayersFolder);
+        var newPlayerMoter = newPlayer.GetComponent<PlayerMoter>();
+        newPlayerMoter.SetInput(player);
+        newPlayerMoter.SetTeam(team.team.myTeam);
+        newPlayerMoter.SetName(name);
+        newPlayerMoter.OnSpawn();
+        TeamManager.Instance.players.Add(new TeamManager.PlayerInstance(newPlayerMoter));
+    }
+
+
+/*
+    public SpawnLayout layout;
+
+    private void OnDrawGizmos()
+    {
+        if (layout)
+            if(layout.Positions.Length > 0)
+                foreach (Vector3 v in layout.Positions)
+                    Gizmos.DrawSphere(v,1);
+    }
+*/
 }

@@ -27,13 +27,19 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
         get { return inputsToUse[3]; }
         set { inputsToUse[3] = value; }
     }
+    public InputAxis Fire1
+    {
+        get { return inputsToUse[4]; }
+        set { inputsToUse[4] = value; }
+    }
 
     public List<InputAxis> inputsToUse = new List<InputAxis>
     {
         new InputAxis("Horizontal"),
         new InputAxis("Vertical"),
         new InputAxis("MouseScroll"),
-        new InputAxis("Jump")
+        new InputAxis("Jump"),
+        new InputAxis("Fire1")
     };
     public Vector2 MousePos;
 
@@ -59,20 +65,26 @@ public class PlayerInputManager : Singleton<PlayerInputManager>
 		    if (Input.GetButtonUp(key))
 		    {
 		        key.onKeyUp.Trigger();
-		        StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Up);
+		        //StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Up);
 		    }
 			else if (Input.GetButtonDown(key))
 			{
 			    key.onKeyDown.Trigger();
-			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Down);
+			    //StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Down);
 			}
 			else if (Input.GetButton(key))
 			{
 			    key.onKey.Trigger();
-			    StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Held);
+			    //StaticUnityEventManager.TriggerEvent(key + PlayerInputDirections.Held);
 			}
 		}
 	}
+    public static InputAxis GetAxisFromString(string axis)
+    {
+        foreach (InputAxis input in Instance.inputsToUse)
+            if (input == axis) return input;
+        return null;
+    }
 }
 public enum PlayerInputDirections
 {

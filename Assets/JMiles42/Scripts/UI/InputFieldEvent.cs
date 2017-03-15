@@ -7,17 +7,20 @@ using UnityEngine.UI;
 public class InputFieldEvent : JMilesBehaviour
 {
     public InputField inputField;
-    public string Value
+
+    public string Text
     {
         get { return inputField.text; }
         set { inputField.text = value; }
     }
+
     public Action<string> onValueChangedValue;
     public Action<string> onEndEdit;
 
     private void OnEnable()
     {
-        if (inputField == null) inputField = GetComponent<InputField>();
+        if (inputField == null)
+            inputField = GetComponent<InputField>();
 
         inputField.onValueChanged.AddListener(ValueChanged);
         inputField.onEndEdit.AddListener(EndEdit);
@@ -29,12 +32,12 @@ public class InputFieldEvent : JMilesBehaviour
         inputField.onEndEdit.RemoveListener(EndEdit);
     }
 
-    void EndEdit(string value)
+    private void EndEdit(string value)
     {
         onEndEdit.Trigger(value);
     }
 
-    void ValueChanged(string value)
+    private void ValueChanged(string value)
     {
         onValueChangedValue.Trigger(value);
     }

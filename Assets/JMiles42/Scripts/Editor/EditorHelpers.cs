@@ -113,3 +113,60 @@ public class EditorHelpers : Editor
         return str.Length * 9;
     }
 }
+
+public class EditorString
+{
+    public readonly string String;
+    public readonly float Length;
+
+    public EditorString(string str)
+    {
+        String = str;
+        Length = EditorHelpers.GetStringLengthinPix(String);
+    }
+
+    public static implicit operator float(EditorString editorString)
+    {
+        return editorString.Length;
+    }
+
+    public static implicit operator string(EditorString editorString)
+    {
+        return editorString.String;
+    }
+}
+
+public class EditorEntry
+{
+    public SerializedProperty Property;
+    public readonly string String;
+    public readonly float Length;
+
+    public EditorEntry(string str,SerializedProperty prop)
+    {
+        Property = prop;
+        String = str;
+        Length = EditorHelpers.GetStringLengthinPix(String);
+    }
+    public EditorEntry(SerializedProperty prop)
+    {
+        Property = prop;
+        String = prop.displayName;
+        Length = EditorHelpers.GetStringLengthinPix(String);
+    }
+
+    public static implicit operator SerializedProperty(EditorEntry editorString)
+    {
+        return editorString.Property;
+    }
+
+    public static implicit operator float(EditorEntry editorString)
+    {
+        return editorString.Length;
+    }
+
+    public static implicit operator string(EditorEntry editorString)
+    {
+        return editorString.String;
+    }
+}

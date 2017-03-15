@@ -12,15 +12,14 @@ public class ResetableObjectAdvanced : ResetableObjectBase
     {
         Record();
     }
-    void OnEnable()
-    {
-        Record();
-    }
+
+    [ContextMenu("Record Object")]
     public override void Record()
     {
         onRecord.Trigger();
     }
 
+    [ContextMenu("Reset Object")]
     public override void Reset()
     {
         onReset.Trigger();

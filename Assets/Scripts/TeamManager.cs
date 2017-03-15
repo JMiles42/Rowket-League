@@ -6,10 +6,8 @@ using UnityEngine;
 
 public class TeamManager : Singleton<TeamManager>
 {
-    public List<TeamInstance> teams = new List<TeamInstance>();
+    public TeamInstance[] teams;
     public List<PlayerInstance> players = new List<PlayerInstance>();
-
-    public Action onGoal;
 
     public TeamInstance BlueTeam
     {
@@ -25,27 +23,22 @@ public class TeamManager : Singleton<TeamManager>
 
     private void OnEnable()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.Enable();
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.Enable();
     }
 
     private void OnDisable()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.Disable();
-    }
-
-    public void GoalScored()
-    {
-        onGoal.Trigger();
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.Disable();
     }
 
     private void Start()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.score = 0;
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.score = 0;
     }
 
     public Team GetTeam(TeamType type)
     {
-        for (int i = 0, j = teams.Count; i < j; i++)
+        for (int i = 0, j = teams.Length; i < j; i++)
             if (teams[i].team.myTeam == type)
                 return teams[i].team;
 
@@ -73,17 +66,17 @@ public class TeamManager : Singleton<TeamManager>
 
     public void TeamInit()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.StartListening();
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.StartListening();
     }
 
     public void TeamStop()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].team.StopListening();
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.StopListening();
     }
 
     public void OnValidate()
     {
-        for (int i = 0, j = teams.Count; i < j; i++) teams[i].name = teams[i].team.myTeam + " Team";
+        for (int i = 0, j = teams.Length; i < j; i++) teams[i].name = teams[i].team.myTeam + " Team";
     }
 
     [Serializable]
@@ -91,13 +84,13 @@ public class TeamManager : Singleton<TeamManager>
     {
         public string name;
         public Team team;
+        public Material mat;
     }
 
     [Serializable]
     public class PlayerInstance
     {
-        [SerializeField]
-        private PlayerMoter _player;
+        [SerializeField] private PlayerMoter _player;
 
         public PlayerMoter player
         {
@@ -111,7 +104,6 @@ public class TeamManager : Singleton<TeamManager>
 
         public PlayerInstance()
         {
-
         }
 
         public PlayerInstance(PlayerMoter __player)

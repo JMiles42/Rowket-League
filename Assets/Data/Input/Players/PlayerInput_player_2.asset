@@ -9,19 +9,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2f4e2c673db374b4ab8800bb10e86e68, type: 3}
-  m_Name: PlayerOne
+  m_Name: PlayerInput_player_2
   m_EditorClassIdentifier: 
-  UserSubmit: 0
-  UserCoolingDown: 0
   RotationSpeed: 5
-  rotation: {x: 0, y: 333.21622, z: 0}
   speed: 0
-  strength: 5
+  strength: 5.635605
   strengthMin: 5
   strengthMultiplyer: 100
   strengthMax: 2
   RotDamp: 10
   FollowDamp: 4
+  FollowDist: 5
+  InputAxis: Horizontal_player_2
+  InputLaunch: Launch_player_2
+  InputJump: Jump_player_2
   inputCooldown: 1
   ScaleMin: {x: 0.1, y: 0.1, z: 0.1}
   ScaleMax: {x: 0.5, y: 0.5, z: 1}

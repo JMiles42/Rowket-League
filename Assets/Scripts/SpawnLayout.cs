@@ -5,7 +5,6 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Spawn Layout", menuName = "Rowket/Spawn Layout", order = 0)]
 public class SpawnLayout : JMilesScriptableObject
 {
-    public int SpawnPointsAmounts;
     public Vector3[] Positions;
 
     public Vector3 GetSpawnPos(int index,bool redTeam = true)

@@ -10,13 +10,14 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public PlayerMoterInputBase MyInput;
     public string playerName = "";
     public static List<PlayerMoter> playerMoters = new List<PlayerMoter>();
+    public Renderer meshRender;
     public List<Coroutine> ActiveCoroutines = new List<Coroutine>();
 
     public Action<Vector3> onLaunchPlayer;
 
-    private void OnEnable()
+    //private void OnEnable()
+    public void OnSpawn()
     {
-        playerName = "";
         MyInput.Init(this);
         playerMoters.Add(this);
         GameManager.Instance.onGameStart += StartInput;
@@ -54,24 +55,21 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public string GetName()
     {
         if(playerName == "")
-            return (playerName = MyInput.GetName());
+            return playerName = MyInput.GetName();
         return playerName;
-
     }
 
     public static PlayerMoter GetClosestMoter(Vector3 pos)
     {
-        PlayerMoter closest = playerMoters[0];
-        var dist = Vector3.Distance(pos, closest.Position);
+        var closest = playerMoters[0];
+        float dist = Vector3.Distance(pos, closest.Position);
         for (int i = 0, j = playerMoters.Count; i < j; i++)
         {
             var other = playerMoters[i];
-            var dist1 = Vector3.Distance(pos, other.Position);
-            if (dist1 < dist)
-            {
-                closest = other;
-                dist = dist1;
-            }
+            float dist1 = Vector3.Distance(pos, other.Position);
+            if (!(dist1 < dist)) continue;
+            closest = other;
+            dist = dist1;
         }
         return closest;
     }
@@ -81,8 +79,8 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         if (playerMoters.Count == 0)
             return callingObject;
 
-        PlayerMoter closest = playerMoters[0];
-        var dist = Vector3.Distance(pos, closest.Position);
+        var closest = playerMoters[0];
+        float dist = Vector3.Distance(pos, closest.Position);
         for (int i = 0, j = playerMoters.Count; i < j; i++)
         {
             var other = playerMoters[i];
@@ -93,12 +91,10 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
                 break;
             }
 
-            var dist1 = Vector3.Distance(pos, other.Position);
-            if (dist1 < dist)
-            {
-                closest = other;
-                dist = dist1;
-            }
+            float dist1 = Vector3.Distance(pos, other.Position);
+            if (!(dist1 < dist)) continue;
+            closest = other;
+            dist = dist1;
         }
         return closest;
     }
@@ -108,8 +104,8 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         if (playerMoters.Count == 0)
             return callingObject;
 
-        PlayerMoter closest = playerMoters[0];
-        var dist = Vector3.Distance(pos, closest.Position);
+        var closest = playerMoters[0];
+        float dist = Vector3.Distance(pos, closest.Position);
         for (int i = 0, j = playerMoters.Count; i < j; i++)
         {
             var other = playerMoters[i];
@@ -120,19 +116,46 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
                 else break;
             }
 
-            var dist1 = Vector3.Distance(pos, other.Position);
-            if (dist1 < dist)
-            {
-                closest = other;
-                dist = dist1;
-            }
+            float dist1 = Vector3.Distance(pos, other.Position);
+            if (!(dist1 < dist)) continue;
+            closest = other;
+            dist = dist1;
         }
         return closest;
     }
 
+    public void SetTeam(TeamType myNewTeam)
+    {
+        if (myNewTeam == TeamType.Blue)
+        {
+            myTeam = myNewTeam;
+            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.BlueTeam.mat};
+        }
+        else
+        {
+            myTeam = myNewTeam;
+            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.RedTeam.mat};
+        }
+    }
+
+    public void SetInput(PlayerMoterInputBase input)
+    {
+        MyInput = input;
+        SetGOName();
+    }
+
+    public void SetName(string str)
+    {
+        playerName = str;
+    }
+
     private void OnValidate()
     {
-        gameObject.name = myTeam.ToString()[0] + " : " + GetName() + " : " + MyInput;
+        SetGOName();
+    }
 
+    private void SetGOName()
+    {
+        gameObject.name = myTeam.ToString()[0] + " : " + GetName() + " : " + MyInput;
     }
 }

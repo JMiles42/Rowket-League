@@ -10,9 +10,11 @@ public class AiPlayerMenuEntry : JMilesBehaviour
     public DropDownEvent AiReactionSpeed;
     public ButtonClickEvent ButtonClick;
     public InputFieldEvent Inputfield;
+    private bool IsPlayer;
     [SerializeField] private AiAgressiveMode aiAgressiveMode = AiAgressiveMode.BallOnly;
     [SerializeField] private AiReactionTime aiReactionTime = AiReactionTime.Normal;
 
+    private const string ENABLED_STR = "Active", DISABLED_STR = "In-Active";
     private void OnEnable()
     {
         ButtonClick.onMouseClick += OnButtonClicked;
@@ -23,7 +25,7 @@ public class AiPlayerMenuEntry : JMilesBehaviour
         AiMode.myDropdown.interactable = Enabled;
         AiReactionSpeed.myDropdown.interactable = Enabled;
         Inputfield.inputField.interactable = Enabled;
-        ButtonClick.myButton.SetText(Enabled ? "Enabled" : "Disabled");
+        ButtonClick.myButton.SetText(Enabled ? ENABLED_STR : DISABLED_STR);
     }
 
     private void OnDisable()
@@ -31,7 +33,6 @@ public class AiPlayerMenuEntry : JMilesBehaviour
         ButtonClick.onMouseClick -= OnButtonClicked;
         AiMode.onValueChanged-= GetAiAgressiveModeFromDropDown;
         AiReactionSpeed.onValueChanged-= GetAiReactionTimeFromDropDown;
-
     }
 
     private void OnButtonClicked()
@@ -41,27 +42,33 @@ public class AiPlayerMenuEntry : JMilesBehaviour
         AiMode.myDropdown.interactable = Enabled;
         AiReactionSpeed.myDropdown.interactable = Enabled;
         Inputfield.inputField.interactable = Enabled;
-        ButtonClick.myButton.SetText(Enabled ? "Enabled" : "Disabled");
+        ButtonClick.myButton.SetText(Enabled ? ENABLED_STR : DISABLED_STR);
     }
 
     void GetAiAgressiveModeFromDropDown(int value)
     {
         if (value == 5)
         {
-            AiReactionSpeed.myDropdown.gameObject.SetActive(false);
-            Inputfield.inputField.gameObject.SetActive(true);
             aiAgressiveMode = AiAgressiveMode.Player;
+            AiReactionSpeed.myDropdown.interactable = false;
+            IsPlayer = true;
         }
         else
         {
-            AiReactionSpeed.myDropdown.gameObject.SetActive(true);
+            IsPlayer = false;
+            AiReactionSpeed.myDropdown.interactable = Enabled;
             aiAgressiveMode = (AiAgressiveMode) AiMode.myDropdown.value;
-            Inputfield.inputField.gameObject.SetActive(false);
         }
     }
 
     void GetAiReactionTimeFromDropDown(int value)
     {
         aiReactionTime = (AiReactionTime) value;
+    }
+
+    public PlayerDetails GetPlayerDetails()
+    {
+        var pD = new PlayerDetails(aiReactionTime,aiAgressiveMode,Enabled,IsPlayer,Inputfield.Text);
+        return pD;
     }
 }
