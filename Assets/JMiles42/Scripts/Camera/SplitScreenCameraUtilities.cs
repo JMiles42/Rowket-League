@@ -13,6 +13,12 @@ public static class SplitScreenCameraUtilities
                 return new Rect(0f, 0f, 0.5f, 1);
             case CameraMode.TwoPlayerRight:
                 return new Rect(0.5f, 0f, 0.5f, 1);
+            case CameraMode.TwoPlayerUpper:
+                return new Rect(0f, 0f, 1f, 0.5f);
+            case CameraMode.TwoPlayerLower:
+                return new Rect(0.5f, 0f, 1f, 0.5f);
+            case CameraMode.ThreePlayerLowerMiddle:
+                return new Rect(0.25f, 0.5f, 0.5f, 0.5f);
             case CameraMode.FourPlayerLeftUpper:
                 return new Rect(0f, 0f, 0.5f, 0.5f);
             case CameraMode.FourPlayerLeftLower:
@@ -21,16 +27,19 @@ public static class SplitScreenCameraUtilities
                 return new Rect(0.5f, 0f, 0.5f, 0.5f);
             case CameraMode.FourPlayerRightLower:
                 return new Rect(0.5f, 0.5f, 0.5f, 0.5f);
-            case CameraMode.FullScreen:
             default:
                 return new Rect(0f, 0f, 1f, 1f);
         }
     }
+
     public enum CameraMode
     {
         FullScreen,
         TwoPlayerLeft,
         TwoPlayerRight,
+        TwoPlayerUpper,
+        TwoPlayerLower,
+        ThreePlayerLowerMiddle,
         FourPlayerLeftUpper,
         FourPlayerLeftLower,
         FourPlayerRightUpper,

@@ -25,6 +25,8 @@ public class GameManager : Singleton<GameManager>
     public PlayerMoterInputAI[] AiInputSystems;
     public PlayerMoterInputUser PlayerOneInput;
     public PlayerMoterInputUser PlayerTwoInput;
+    public PlayerMoterInputUser PlayerThreeInput;
+    public PlayerMoterInputUser PlayerFourInput;
 
     public PlayerMoter prefabMoter;
     public Ball prefabBall;
@@ -127,6 +129,10 @@ public class GameManager : Singleton<GameManager>
                 return PlayerOneInput;
             case AiAgressiveMode.PlayerTwo:
                 return PlayerTwoInput;
+            case AiAgressiveMode.PlayerThree:
+                return PlayerThreeInput;
+            case AiAgressiveMode.PlayerFour:
+                return PlayerFourInput;
         }
 
         for (int i = 0, j = AiInputSystems.Length; i < j; i++)
