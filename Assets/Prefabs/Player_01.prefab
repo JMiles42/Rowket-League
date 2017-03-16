@@ -621,9 +621,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ee321510ddc7674099448aa945e3d31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myTeam: 0
   render: {fileID: 137286554300246048}
-  anim: {fileID: 95814378605450212}
+  animator: {fileID: 95814378605450212}
 --- !u!137 &137286554300246048
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

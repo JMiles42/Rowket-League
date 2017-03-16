@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Spectator : JMilesBehaviour
 {
@@ -22,9 +19,7 @@ public class Spectator : JMilesBehaviour
         GameManager.Instance.onGameStart += EndChear;
         TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal += StartChear;
 
-        render.material = myTeam == TeamType.Blue
-            ? TeamManager.Instance.BlueTeam.mat
-            : TeamManager.Instance.RedTeam.mat;
+        render.material = myTeam == TeamType.Blue ? TeamManager.Instance.BlueTeam.mat : TeamManager.Instance.RedTeam.mat;
     }
 
     void OnDisable()

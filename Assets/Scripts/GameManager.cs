@@ -38,7 +38,7 @@ public class GameManager : Singleton<GameManager>
     public float TimerMax;
     public Transform lookAtScoreBoard;
 
-    private void OnEnable()
+    void OnEnable()
     {
         onAnyGoal += GameOver;
 
@@ -51,10 +51,11 @@ public class GameManager : Singleton<GameManager>
         startGameBtn.onMouseClick += StartGame;
 
         var goals = FindObjectsOfType<Goal>();
-        foreach (var goal in goals) goal.onGoal += CallGoal;
+        foreach (var goal in goals)
+            goal.onGoal += CallAnyGoal;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         onAnyGoal -= GameOver;
         onGameStart -= EnableInput;
@@ -63,10 +64,11 @@ public class GameManager : Singleton<GameManager>
         startGameBtn.onMouseClick -= StartGame;
 
         var goals = FindObjectsOfType<Goal>();
-        foreach (var goal in goals) goal.onGoal -= CallGoal;
+        foreach (var goal in goals)
+            goal.onGoal -= CallAnyGoal;
     }
 
-    private void CallGoal()
+    void CallAnyGoal()
     {
         onAnyGoal.Trigger();
     }
@@ -129,6 +131,7 @@ public class GameManager : Singleton<GameManager>
 
     public PlayerMoterInputBase GetInputClass(AiAgressiveMode mode, AiReactionTime time)
     {
+        //Check if it is a player
         switch (mode)
         {
             case AiAgressiveMode.PlayerOne:
@@ -156,31 +159,29 @@ public class GameManager : Singleton<GameManager>
         var biggestTeam = Mathf.Max(redTeamAmount, blueTeamAmount);
 
         SpawnLayout layout = null;
-
+        //TODO: Make a method that returns layout
         {
             var layouts = SpawnLayouts.Where(spawnLayout => spawnLayout.Positions.Length >= biggestTeam).ToList();
             layout = layouts[Ran.Range(0, layouts.Count)];
         }
 
-        for (int i = 0, j = biggestTeam; i < j; i++)
+        for (var i = 0; i < biggestTeam; i++)
         {
             if (redTeamAmount > i)
-                SpawnPlayer(GameSettings.Instance.RedTeamComposition[i], layout.Positions[i],
-                    TeamManager.Instance.RedTeam,
+                SpawnPlayer(GameSettings.Instance.RedTeamComposition[i], layout.Positions[i], TeamManager.Instance.RedTeam,
                     GameSettings.Instance.RedTeam[GameSettings.Instance.RedTeamComposition[i]].Name);
             if (blueTeamAmount > i)
-                SpawnPlayer(GameSettings.Instance.BlueTeamComposition[i], -layout.Positions[i],
-                    TeamManager.Instance.BlueTeam,
+                SpawnPlayer(GameSettings.Instance.BlueTeamComposition[i], -layout.Positions[i], TeamManager.Instance.BlueTeam,
                     GameSettings.Instance.BlueTeam[GameSettings.Instance.BlueTeamComposition[i]].Name);
         }
     }
 
-    private void SpawnBall()
+    void SpawnBall()
     {
         Instantiate(prefabBall.gameObject, new Vector3(0, 30, 0), Quaternion.identity);
     }
 
-    private void SpawnPlayer(PlayerMoterInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
+    void SpawnPlayer(PlayerMoterInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
     {
         var newPlayer = Instantiate(prefabMoter.gameObject, pos, Quaternion.identity, PlayersFolder);
         var newPlayerMoter = newPlayer.GetComponent<PlayerMoter>();
@@ -195,8 +196,10 @@ public class GameManager : Singleton<GameManager>
     void SetUpCamera()
     {
         var cameras = FindObjectsOfType<CameraLookAtTargetOverride>();
-        for (int i = cameras.Length - 1; i >= 0; i--)
+        for (var i = cameras.Length - 1; i >= 0; i--)
             cameras[i].camera.depth = 20 + i;
+
+        //Setup the differant camers screen size
         switch (cameras.Length)
         {
             case 1:
@@ -303,17 +306,16 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
+    //Used for making it easy to see where the spawn points are while editing them
+    /*
+        public SpawnLayout layout;
 
-
-/*
-    public SpawnLayout layout;
-
-    private void OnDrawGizmos()
-    {
-        if (layout)
-            if(layout.Positions.Length > 0)
-                foreach (Vector3 v in layout.Positions)
-                    Gizmos.DrawSphere(v,1);
-    }
-*/
+        private void OnDrawGizmos()
+        {
+            if (layout)
+                if(layout.Positions.Length > 0)
+                    foreach (Vector3 v in layout.Positions)
+                        Gizmos.DrawSphere(v,1);
+        }
+    */
 }

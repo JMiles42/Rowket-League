@@ -7,7 +7,8 @@ public class MainCamFollow : JMilesBehaviour
     void LateUpdate()
     {
         if (!target)
-            target = FindObjectOfType<Ball>().transform;
+            if(FindObjectOfType<Ball>())
+                target = FindObjectOfType<Ball>().transform;
         if (target)
             transform.LookAt(target);
     }

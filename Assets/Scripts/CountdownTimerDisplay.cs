@@ -10,21 +10,15 @@ public class CountdownTimerDisplay : JMilesBehaviour
 
     void OnEnable()
     {
-
-        if (GameManager.Instance)
-        {
-            GameManager.Instance.onGameCountdown += UpdateDisplay;
-            GameManager.Instance.onGameStartCountdown += ShowCounter;
-        }
+        GameManager.Instance.onGameCountdown += UpdateDisplay;
+        GameManager.Instance.onGameStartCountdown += ShowCounter;
     }
 
     void OnDisable()
     {
-        if (GameManager.Instance)
-        {
-            GameManager.Instance.onGameCountdown -= UpdateDisplay;
-            GameManager.Instance.onGameStartCountdown -= ShowCounter;
-        }
+        if (!GameManager.Instance) return;
+        GameManager.Instance.onGameCountdown -= UpdateDisplay;
+        GameManager.Instance.onGameStartCountdown -= ShowCounter;
     }
 
     void UpdateDisplay(float time)
@@ -43,13 +37,13 @@ public class CountdownTimerDisplay : JMilesBehaviour
         StartCoroutine(FlashThenHideUi(0.2f, 5));
     }
 
-    IEnumerator FlashThenHideUi(float flashintervel, int times = 3)
+    IEnumerator FlashThenHideUi(float flashInterval, int times = 3)
     {
         for (int i = 0; i < times; i++)
         {
-            yield return WaitForTimes.GetWaitForTime(flashintervel);
+            yield return WaitForTimes.GetWaitForTime(flashInterval);
             HideCounter();
-            for (int j = 0; j < 5; j++)
+            for (var j = 0; j < 5; j++)
                 yield return null;
             ShowCounter();
         }
