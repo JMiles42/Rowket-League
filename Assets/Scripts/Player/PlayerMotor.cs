@@ -2,6 +2,10 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This is the motor that applys movment to all the players in game.
+/// The MyInput variable does all the caculations on when/where to move
+/// </summary>
 public class PlayerMotor : JMilesRigidbodyBehaviour
 {
     public TeamType myTeam;
@@ -13,7 +17,6 @@ public class PlayerMotor : JMilesRigidbodyBehaviour
 
     public Action<Vector3> onLaunchPlayer;
 
-    //private void OnEnable()
     public void OnSpawn()
     {
         MyInput.Init(this);
@@ -22,12 +25,14 @@ public class PlayerMotor : JMilesRigidbodyBehaviour
         GameManager.Instance.onGameEnd += EndInput;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         playerMotors.Remove(this);
+#if !UNITY_EDITOR
         GameManager.Instance.onGameStart -= StartInput;
         GameManager.Instance.onGameEnd -= EndInput;
         EndInput();
+#endif
     }
 
     public void StartInput()
@@ -49,10 +54,11 @@ public class PlayerMotor : JMilesRigidbodyBehaviour
 
     public string GetName()
     {
-        if(playerName == "")
+        if (playerName == "")
             return playerName = MyInput.GetName();
         return playerName;
     }
+
     /// <summary>
     /// Gets the closest player motor to the pos passed to
     /// </summary>
@@ -138,15 +144,15 @@ public class PlayerMotor : JMilesRigidbodyBehaviour
     //TODO:move to another component
     public void SetTeam(TeamType myNewTeam)
     {
-        if (myNewTeam == TeamType.Blue)
+        if (myNewTeam == TeamType.TeamTwo)
         {
             myTeam = myNewTeam;
-            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.BlueTeam.mat};
+            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.TeamOne.mat};
         }
         else
         {
             myTeam = myNewTeam;
-            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.RedTeam.mat};
+            meshRender.materials = new[] {meshRender.material, TeamManager.Instance.TeamTwo.mat};
         }
     }
 

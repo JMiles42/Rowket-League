@@ -160,9 +160,9 @@ namespace JMiles42.Maths
 		/// This will build a color from three float values.
 		/// You can also change the alpha.
 		/// </summary>
-		/// <param name="valueRed">Red</param>
+		/// <param name="valueRed">TeamOne</param>
 		/// <param name="valueGreen">Green</param>
-		/// <param name="valueBlue">Blue</param>
+		/// <param name="valueBlue">TeamTwo</param>
 		/// <param name="valueAlpha">Alpha</param>
 		/// <returns>The built color from values passed to it</returns>
 		public static Color BuildColourInt255 (byte valueRed, byte valueGreen, byte valueBlue, byte valueAlpha = 255)
@@ -182,9 +182,9 @@ namespace JMiles42.Maths
 		/// This will build a color from three float values.
 		/// You can also change the alpha.
 		/// </summary>
-		/// <param name="valueRed">Red</param>
+		/// <param name="valueRed">TeamOne</param>
 		/// <param name="valueGreen">Green</param>
-		/// <param name="valueBlue">Blue</param>
+		/// <param name="valueBlue">TeamTwo</param>
 		/// <param name="valueAlpha">Alpha</param>
 		/// <returns>The built color from values passed to it</returns>
 		public static Color BuildColourNoAlpha (float valueRed, float valueGreen, float valueBlue, float valueAlpha = 1f)

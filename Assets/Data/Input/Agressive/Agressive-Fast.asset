@@ -12,5 +12,4 @@ MonoBehaviour:
   m_Name: Agressive-Fast
   m_EditorClassIdentifier: 
   ReactionTime: 2
-  AiMode: 3
-  MoveDir: {x: 1515.3313, y: 1303.4595, z: 69.02671}
+  AiMoterMode: 3

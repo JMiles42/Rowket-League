@@ -1,18 +1,21 @@
 ﻿using UnityEngine;
 
+/// <summary>
+/// Used for the spectators to trigger there animations and material colour
+/// </summary>
 public class Spectator : JMilesBehaviour
 {
-    TeamType myTeam;
+    private TeamType myTeam;
     public Renderer render;
     public Animator animator;
 
-    const string cheer = "cheer";
-    const string jump = "jump";
+    private const string cheer = "cheer";
+    private const string jump = "jump";
 
-    void OnEnable()
+    private void OnEnable()
     {
         //Choose my team
-        myTeam = JMiles42.Maths.RandomBools.RandomBool() ? TeamType.Blue : TeamType.Red;
+        myTeam = JMiles42.Maths.RandomBools.RandomBool() ? TeamType.TeamTwo : TeamType.TeamOne;
         //Set if my cheer animation is a jump
         animator.SetBool(jump, JMiles42.Maths.RandomBools.RandomBool());
 
@@ -21,22 +24,24 @@ public class Spectator : JMilesBehaviour
         TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal += StartCheer;
 
         //Set my color
-        render.material = myTeam == TeamType.Blue ? TeamManager.Instance.BlueTeam.mat : TeamManager.Instance.RedTeam.mat;
+        render.material = myTeam == TeamType.TeamTwo ? TeamManager.Instance.TeamOne.mat : TeamManager.Instance.TeamTwo.mat;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
+#if !UNITY_EDITOR
         GameManager.Instance.onGameStartCountdown -= StartCheer;
         GameManager.Instance.onGameStart -= EndCheer;
         TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal -= StartCheer;
+    #endif
     }
 
-    void StartCheer()
+    private void StartCheer()
     {
         animator.SetBool(cheer, true);
     }
 
-    void EndCheer()
+    private void EndCheer()
     {
         animator.SetBool(cheer, false);
     }

@@ -11,8 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: Defensive-Fast
   m_EditorClassIdentifier: 
-  nam: Defensive-Fast
   ReactionTime: 2
-  ReactionStrength: 500
-  AiMode: 1
-  MoveDir: {x: 0.7943643, y: -0.4846501, z: 0.60724765}
+  AiMoterMode: 1

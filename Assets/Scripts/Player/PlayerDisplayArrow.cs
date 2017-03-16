@@ -1,6 +1,9 @@
 using System;
 using UnityEngine;
 
+/// <summary>
+/// This class controls how the arrow reacts/changes.
+/// </summary>
 public class PlayerDisplayArrow : JMilesBehaviour
 {
     public Vector3 minScale;
@@ -27,6 +30,7 @@ public class PlayerDisplayArrow : JMilesBehaviour
         TEST = scale;
     }
 }
+
 [Serializable]
 public struct LerpableColour
 {
@@ -41,6 +45,6 @@ public struct LerpableColour
 
     public Color GetColor(float time)
     {
-        return Color.Lerp(MinColour,MaxColour,time);
+        return Color.Lerp(MinColour, MaxColour, time);
     }
 }

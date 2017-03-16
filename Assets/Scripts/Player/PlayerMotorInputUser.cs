@@ -1,25 +1,30 @@
 using System.Collections;
 using UnityEngine;
 
+/// <summary>
+/// This is the players input, it uses three differant Input Axis, to do the movement
+/// TODO: Sepperate the camera from the Coroutine that all the movement is caculated
+/// </summary>
 [CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMotorInputUser : PlayerMotorInputBase
 {
     //Set overriding camera look target for all instances of this class
     //Set by the Game master
     public static Transform lookAtTargetOverride;
+
     public static bool lookAtOverride = false;
 
-    bool UserLaunch = false;
-    bool UserJump = false;
-    bool UserCoolingDown = false;
-    bool UserCoolingDownJump = false;
+    private bool userLaunch;
+    private bool userJump;
+    private bool userCoolingDown;
+    private bool userCoolingDownJump;
     public float RotationSpeed = 5;
 
-    Vector3 rotation = Vector3.zero;
+    private Vector3 rotation = Vector3.zero;
 
     public float speed;
-    public float strength = 0;
-    public float strengthMin = 0;
+    public float strength;
+    public float strengthMin;
     public float strengthMultiplyer = 4;
     public float strengthMax = 2;
 
@@ -29,6 +34,7 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
 
     //Strings for the three differant input axis to be listening to
     public string InputAxis;
+
     public string InputLaunch;
     public string InputJump;
 
@@ -39,9 +45,9 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
 
     public GameObject ArrowPrefab;
     public GameObject CameraPrefab;
-    bool runBefore = false;
+    private bool runBefore;
 
-    void HorizontalPressed()
+    private void HorizontalPressed()
     {
         rotation += Vector3.up * PlayerInputManager.Instance.Horizontal;
     }
@@ -54,12 +60,12 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
     public override void Enable(PlayerMotor callingObject)
     {
         Disable();
-        UserCoolingDown = false;
+        userCoolingDown = false;
         PlayerInputManager.GetAxisFromString(InputAxis).onKey += HorizontalPressed;
         PlayerInputManager.GetAxisFromString(InputLaunch).onKeyDown += LaunchPressed;
         PlayerInputManager.GetAxisFromString(InputJump).onKeyDown += JumpPressed;
-        UserLaunch = false;
-        UserJump = false;
+        userLaunch = false;
+        userJump = false;
         if (runBefore) return;
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(InputSession()));
         runBefore = true;
@@ -82,35 +88,35 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(PlayerUnique(callingObject)));
     }
 
-    void LaunchPressed()
+    private void LaunchPressed()
     {
-        if (UserCoolingDown) return;
-        UserLaunch = true;
+        if (userCoolingDown) return;
+        userLaunch = true;
         PlayerInputManager.Instance.StartCoroutine(InputDelay());
     }
 
-    void JumpPressed()
+    private void JumpPressed()
     {
-        if (UserCoolingDownJump) return;
-        UserJump = true;
+        if (userCoolingDownJump) return;
+        userJump = true;
         PlayerInputManager.Instance.StartCoroutine(InputDelayJump());
     }
 
-    IEnumerator InputDelay()
+    private IEnumerator InputDelay()
     {
-        UserCoolingDown = true;
+        userCoolingDown = true;
         yield return WaitForTimes.GetWaitForTime(inputCooldown);
-        UserCoolingDown = false;
+        userCoolingDown = false;
     }
 
-    IEnumerator InputDelayJump()
+    private IEnumerator InputDelayJump()
     {
-        UserCoolingDownJump = true;
+        userCoolingDownJump = true;
         yield return WaitForTimes.GetWaitForTime(inputCooldown);
-        UserCoolingDownJump = false;
+        userCoolingDownJump = false;
     }
 
-    IEnumerator InputSession()
+    private IEnumerator InputSession()
     {
         while (true)
         {
@@ -119,7 +125,7 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
         }
     }
 
-    IEnumerator PlayerUnique(PlayerMotor callingObject)
+    private IEnumerator PlayerUnique(PlayerMotor callingObject)
     {
         var cam = callingObject.GetComponentInChildren<Camera>();
         var arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();
@@ -144,7 +150,7 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
 
         while (true)
         {
-            arrow.gameObject.SetActive(!UserCoolingDown);
+            arrow.gameObject.SetActive(!userCoolingDown);
             arrow.SetScale((strength - strengthMin) / strengthMax);
             //Stores result to sav multiple calls
             var MoveDirection = rotation;
@@ -166,15 +172,15 @@ public class PlayerMotorInputUser : PlayerMotorInputBase
                 cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
 
             arrow.transform.rotation = Quaternion.LookRotation(newPositiveRotation);
-            if (UserJump)
+            if (userJump)
             {
                 callingObject.onLaunchPlayer.Trigger(Vector3.up * GetMoveStrength() / 3);
-                UserJump = false;
+                userJump = false;
             }
-            if (UserLaunch)
+            if (userLaunch)
             {
                 callingObject.onLaunchPlayer.Trigger(GetMoveFinalDirection(callingObject.transform));
-                UserLaunch = false;
+                userLaunch = false;
             }
             yield return null;
         }

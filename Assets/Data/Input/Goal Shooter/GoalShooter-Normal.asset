@@ -11,8 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: GoalShooter-Normal
   m_EditorClassIdentifier: 
-  nam: GoalShooter-Normal
   ReactionTime: 1
-  ReactionStrength: 500
-  AiMode: 2
-  MoveDir: {x: -192.13168, y: 20.846695, z: -461.1408}
+  AiMoterMode: 2

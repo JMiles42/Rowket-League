@@ -2,6 +2,9 @@ using System;
 using System.Linq;
 using UnityEngine;
 
+/// <summary>
+/// Team statistics, and data
+/// </summary>
 [Serializable]
 [CreateAssetMenu(fileName = "Team", menuName = "Rowket/Team", order = 0)]
 public class Team : JMilesScriptableObject
@@ -9,6 +12,7 @@ public class Team : JMilesScriptableObject
     public TeamType myTeam;
     public int score;
     public Color myTeamColour;
+    public Material mat;
 
     public void Enable()
     {
@@ -17,7 +21,7 @@ public class Team : JMilesScriptableObject
     }
 
 #if !UNITY_EDITOR
-    public void Disable()
+    private void Disable()
     {
         StopListening();
     }
@@ -49,6 +53,6 @@ public class Team : JMilesScriptableObject
 [Serializable]
 public enum TeamType
 {
-    Red,
-    Blue
+    TeamOne,
+    TeamTwo
 }

@@ -4,19 +4,23 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
+/// <summary>
+/// Used to display both teams to the scoreboard
+/// </summary>
 public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
 {
     public Text TeamOneScore;
-    public string TeamOneString = "<color=red>Red Score</color>";
+    public string TeamOneString = "<color=red>TeamOne Score</color>";
 
     public Text TeamTwoScore;
-    public string TeamTwoString = "<color=blue>Blue Score</color>";
+    public string TeamTwoString = "<color=blue>TeamTwo Score</color>";
 
     public string scoreEntryPerLine = "||n<size=100>{0}: {1}</size>";
     public Text Title;
     public RenderTexture screenTexture;
     public float fadeTime = 1;
-    void OnEnable()
+
+    private void OnEnable()
     {
         SetTextAlpha(0);
         GameManager.Instance.onGameStart += DisplayActivate;
@@ -25,21 +29,23 @@ public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
         DisplayDeactivate();
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
+#if !UNITY_EDITOR
         GameManager.Instance.onGameStart -= DisplayActivate;
         GameManager.Instance.onAnyGoal -= UpdateDisplay;
         GameManager.Instance.onGameStart -= UpdateDisplay;
+#endif
     }
 
-    void ChangeDisplayActive(bool value = true)
+    private void ChangeDisplayActive(bool value = true)
     {
         TeamOneScore.DOFade(value ? 1 : 0, fadeTime);
         TeamTwoScore.DOFade(value ? 1 : 0, fadeTime);
         Title.DOFade(value ? 1 : 0, fadeTime / 2);
     }
 
-    void SetTextAlpha(float alpha)
+    private void SetTextAlpha(float alpha)
     {
         var col = TeamOneScore.color;
         col.a = alpha;
@@ -53,54 +59,52 @@ public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
         col.a = alpha;
         Title.color = col;
     }
-    void DisplayDeactivate()
+
+    private void DisplayDeactivate()
     {
         ChangeDisplayActive(false);
     }
 
-    void DisplayActivate()
+    private void DisplayActivate()
     {
         ChangeDisplayActive();
     }
 
     public void UpdateDisplay()
     {
-        DisplayTeamOne();
-        DisplayTeamTwo();
+        DisplayTeam(TeamType.TeamOne, TeamOneScore);
+        DisplayTeam(TeamType.TeamTwo, TeamTwoScore);
     }
 
-    public void DisplayTeamOne()
+    private void DisplayTeam(TeamType teamType,Text text)
     {
         var sb = new StringBuilder();
-        sb.Append(TeamOneString);
-        sb.Append(": ");
-        sb.Append(TeamManager.Instance.RedTeam.team.score);
+        //Add the very team specific text to the stringbuilder
+        switch (teamType)
+        {
+            case TeamType.TeamOne:
+                sb.Append(TeamOneString);
+                sb.Append(": ");
+                sb.Append(TeamManager.Instance.TeamOne.team.score);
+                break;
+            case TeamType.TeamTwo:
+                sb.Append(TeamTwoString);
+                sb.Append(": ");
+                sb.Append(TeamManager.Instance.TeamTwo.team.score);
+                break;
+        }
 
-        var RedTeam = TeamManager.Instance.GetTeamPlayersIndex(TeamType.Red);
-
-        //Adds each players name & score to the StringBuilder
-        for (int i = 0, j = RedTeam.Count; i < j; i++)
-            sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[RedTeam[i]].player.GetName(),
-                TeamManager.Instance.players[RedTeam[i]].Scores);
-
-        //Replaces custom line break due to Unity escaping the line breaks in editor
-        TeamOneScore.text = sb.ToString().Replace("||n", "\n");
-    }
-
-    public void DisplayTeamTwo()
-    {
-        var sb = new StringBuilder();
-        sb.Append(TeamTwoString);
-        sb.Append(": ");
-        sb.Append(TeamManager.Instance.BlueTeam.team.score);
-        var BlueTeam = TeamManager.Instance.GetTeamPlayersIndex(TeamType.Blue);
+        //Get the indeices of teamTypes team, to itterate the master array
+        var TeamIndecies = TeamManager.Instance.GetTeamPlayersIndex(teamType);
 
         //Adds each players name & score to the StringBuilder
-        for (int i = 0, j = BlueTeam.Count; i < j; i++)
-            sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[BlueTeam[i]].player.GetName(),
-                TeamManager.Instance.players[BlueTeam[i]].Scores);
+        //Using the scoreEntryPerLine config option
+        for (int i = 0, j = TeamIndecies.Count; i < j; i++)
+            sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[TeamIndecies[i]].player.GetName(),
+                TeamManager.Instance.players[TeamIndecies[i]].Scores);
 
         //Replaces custom line break due to Unity escaping the line breaks in editor
-        TeamTwoScore.text = sb.ToString().Replace("||n", "\n");
+        //Tried to keep similar syntax
+        text.text = sb.ToString().Replace("||n", "\n");
     }
 }

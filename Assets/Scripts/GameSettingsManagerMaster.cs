@@ -1,29 +1,30 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using JMiles42.Data;
 using UnityEngine;
 
+/// <summary>
+/// Controls the Game settings menu
+/// </summary>
 public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
 {
     public GameObject SettingsPanel;
     public ButtonClickEvent playGameButton;
 
-    public AiPlayerMenuEntry[] RedEntries;
-    public AiPlayerMenuEntry[] BlueEntries;
+    public SettingsMenuEntry[] TeamOneEntries;
+    public SettingsMenuEntry[] TeamTwoEntries;
 
-    public PlayerDetails[] RedTeam;
-    public PlayerDetails[] BlueTeam;
+    public PlayerDetails[] TeamOne;
+    public PlayerDetails[] TeamTwo;
 
-    public PlayerFinalDetails[] RedTeamComposition;
-    public PlayerFinalDetails[] BlueTeamComposition;
+    public PlayerFinalDetails[] TeamOneComposition;
+    public PlayerFinalDetails[] TeamTwoComposition;
 
-    void OnEnable()
+    private void OnEnable()
     {
         playGameButton.onMouseClick += PlayGame;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         playGameButton.onMouseClick -= PlayGame;
     }
@@ -31,51 +32,55 @@ public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
     public void BuildArrays()
     {
         //Create the empty arrays
-        RedTeam = new PlayerDetails[RedEntries.Length];
-        BlueTeam = new PlayerDetails[BlueEntries.Length];
+        TeamOne = new PlayerDetails[TeamOneEntries.Length];
+        TeamTwo = new PlayerDetails[TeamTwoEntries.Length];
 
-        //Store how many Red team members are active
-        var EnabledRed = 0;
+        //Store how many TeamOne team members are active
+        var TeamTwoEnabled = 0;
         //
-        for (int i = 0, j = RedEntries.Length; i < j; i++)
+        for (int i = 0, j = TeamTwoEntries.Length; i < j; i++)
         {
-            RedTeam[i] = RedEntries[i].GetPlayerDetails();
-            if (RedTeam[i].Enabled)
-                EnabledRed++;
+            TeamTwo[i] = TeamTwoEntries[i].GetPlayerDetails();
+            if (TeamTwo[i].Enabled)
+                TeamTwoEnabled++;
         }
 
-        //Store how many Blue team members are active
-        var EnabledBlue = 0;
-        for (int i = 0, j = BlueEntries.Length; i < j; i++)
+        //Store how many TeamTwo team members are active
+        var TeamOneEnabled = 0;
+        for (int i = 0, j = TeamOneEntries.Length; i < j; i++)
         {
-            BlueTeam[i] = BlueEntries[i].GetPlayerDetails();
-            if (BlueTeam[i].Enabled)
-                EnabledBlue++;
+            TeamOne[i] = TeamOneEntries[i].GetPlayerDetails();
+            if (TeamOne[i].Enabled)
+                TeamOneEnabled++;
         }
 
         //Setup the final arrays to there needed length
-        RedTeamComposition = new PlayerFinalDetails[EnabledRed];
-        BlueTeamComposition = new PlayerFinalDetails[EnabledBlue];
+        TeamOneComposition = new PlayerFinalDetails[TeamOneEnabled];
+        TeamTwoComposition = new PlayerFinalDetails[TeamTwoEnabled];
 
 
         //Setup the active players ready for the game manager to spawn them
         var currentIndex = 0;
-        for (int i = 0, j = RedTeam.Length; i < j; i++)
+        for (int i = 0, j = TeamOne.Length; i < j; i++)
         {
-            if (RedTeam[i].Disabled) continue;
-            RedTeamComposition[currentIndex] = new PlayerFinalDetails(i, GameManager.Instance.GetInputClass(RedTeam[i].aiMode, RedTeam[i].aiReaction));
+            if (TeamOne[i].Disabled) continue;
+            TeamOneComposition[currentIndex] = new PlayerFinalDetails(i,
+                GameManager.Instance.GetInputClass(TeamOne[i].AiMoterMode, TeamOne[i].aiReaction));
             currentIndex++;
         }
+
         currentIndex = 0;
-        for (int i = 0, j = BlueTeam.Length; i < j; i++)
+
+        for (int i = 0, j = TeamTwo.Length; i < j; i++)
         {
-            if (BlueTeam[i].Disabled) continue;
-            BlueTeamComposition[currentIndex] = new PlayerFinalDetails(i, GameManager.Instance.GetInputClass(BlueTeam[i].aiMode, BlueTeam[i].aiReaction));
+            if (TeamTwo[i].Disabled) continue;
+            TeamTwoComposition[currentIndex] = new PlayerFinalDetails(i,
+                GameManager.Instance.GetInputClass(TeamTwo[i].AiMoterMode, TeamTwo[i].aiReaction));
             currentIndex++;
         }
     }
 
-    void PlayGame()
+    private void PlayGame()
     {
         SettingsPanel.SetActive(false);
     }
@@ -92,7 +97,7 @@ public struct PlayerDetails
     }
 
     public bool IsPlayer;
-    public AiAggressiveMode aiMode;
+    public InputMoterMode AiMoterMode;
     public AiReactionTime aiReaction;
     public string Name;
 
@@ -101,17 +106,16 @@ public struct PlayerDetails
         Name = "";
         Enabled = false;
         IsPlayer = isPlayer;
-        aiMode = AiAggressiveMode.BallOnly;
+        AiMoterMode = InputMoterMode.BallOnly;
         aiReaction = AiReactionTime.Normal;
     }
 
-    public PlayerDetails(AiReactionTime reaction, AiAggressiveMode mode, bool enabled, bool isPlayer = false,
-        string name = "")
+    public PlayerDetails(AiReactionTime reaction, InputMoterMode moterMode, bool enabled, string name = "")
     {
         Name = name;
         Enabled = enabled;
-        IsPlayer = isPlayer;
-        aiMode = mode;
+        IsPlayer = GameManager.GetIsPlayer(moterMode);
+        AiMoterMode = moterMode;
         aiReaction = reaction;
     }
 }

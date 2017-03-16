@@ -1,11 +1,14 @@
-﻿public class SetRandomNameInputField : JMilesBehaviour
+﻿/// <summary>
+/// Sets the input feilds value to an entry in the StringList
+/// </summary>
+public class SetRandomNameInputField : JMilesBehaviour
 {
     public InputFieldEvent inputField;
-    public StringListScriptableObject NameList;
+    public StringListScriptableObject stringList;
 
-    void Start()
+    private void Start()
     {
         if (inputField.Text == "")
-            inputField.Text = NameList.GetRandomEntry();
+            inputField.Text = stringList.GetRandomEntry();
     }
 }

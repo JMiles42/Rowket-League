@@ -107,7 +107,7 @@ public class PlayerDetailsEditor : PropertyDrawer
         var Enabled = new EditorEntry("Enabled", property.FindPropertyRelative("Enabled"));
         var IsPlayer = new EditorEntry("Is Player", property.FindPropertyRelative("IsPlayer"));
         var Name = new EditorEntry(property.FindPropertyRelative("Name"));
-        var aiMode = new EditorEntry("Mode", property.FindPropertyRelative("aiMode"));
+        var aiMode = new EditorEntry("Mode", property.FindPropertyRelative("AiMoterMode"));
         var aiReaction = new EditorEntry("Reaction", property.FindPropertyRelative("aiReaction"));
 
         float halfRowWidth = position.width / 2;

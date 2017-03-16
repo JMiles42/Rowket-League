@@ -4,23 +4,25 @@ using JMiles42.Data;
 [RequireComponent(typeof(ResetableObjectAdvanced))]
 public class Ball : SingletonRigidbody<Ball>, IResetable
 {
-    ResetableObjectAdvanced resetableObjectAdvanced;
-    Vector3 startPos = Vector3.zero;
-    Quaternion startRot;
+    private ResetableObjectAdvanced resetableObjectAdvanced;
+    private Vector3 startPos = Vector3.zero;
+    private Quaternion startRot;
     public PlayerMotor LastPlayerHit;
 
 
-    void OnEnable()
+    private void OnEnable()
     {
         resetableObjectAdvanced = GetComponent<ResetableObjectAdvanced>();
         resetableObjectAdvanced.onRecord += Record;
         resetableObjectAdvanced.onReset += Reset;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
+#if !UNITY_EDITOR
         resetableObjectAdvanced.onRecord -= Record;
         resetableObjectAdvanced.onReset -= Reset;
+    #endif
     }
 
 
@@ -37,12 +39,12 @@ public class Ball : SingletonRigidbody<Ball>, IResetable
         rigidbody.ResetVelocity();
     }
     
-    void Start ()
+    private void Start ()
 	{
 	    rigidbody.velocity = Vector3.down * 20f;
 	}
 
-    void OnCollisionEnter(Collision other)
+    private void OnCollisionEnter(Collision other)
     {
         var playerMotor = other.gameObject.GetComponentInParent<PlayerMotor>();
         if (playerMotor == null) return;

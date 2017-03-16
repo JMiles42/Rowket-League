@@ -1,14 +1,15 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// The Advanced Resetable Object, calls events when triggered, meaning any other class can subscribe to it
+/// </summary>
 public class ResetableObjectAdvanced : ResetableObjectBase
 {
     public Action onRecord;
     public Action onReset;
 
-    void Start()
+    private void Start()
     {
         Record();
     }

@@ -1,13 +1,15 @@
 using JMiles42.Data;
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Ran = UnityEngine.Random;
 using GameSettings = GameSettingsManagerMaster;
 using CamUtils = SplitScreenCamUtils;
 
+/// <summary>
+/// The game manager, Controls the gamemode, and misc game logic
+/// </summary>
 public class GameManager : Singleton<GameManager>
 {
     public Action<float> onGameCountdown;
@@ -38,13 +40,13 @@ public class GameManager : Singleton<GameManager>
     public float TimerMax;
     public Transform lookAtScoreBoard;
 
-    void OnEnable()
+    private void OnEnable()
     {
         onAnyGoal += GameOver;
 
         PlayerMotorInputUser.lookAtTargetOverride = lookAtScoreBoard;
-        onAnyGoal += delegate { PlayerMotorInputUser.lookAtOverride = true; };
-        onGameStart += delegate { PlayerMotorInputUser.lookAtOverride = false; };
+        onAnyGoal += () => { PlayerMotorInputUser.lookAtOverride = true; };
+        onGameStart += () => { PlayerMotorInputUser.lookAtOverride = false; };
 
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
@@ -55,7 +57,7 @@ public class GameManager : Singleton<GameManager>
             goal.onGoal += CallAnyGoal;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
         onAnyGoal -= GameOver;
         onGameStart -= EnableInput;
@@ -68,7 +70,7 @@ public class GameManager : Singleton<GameManager>
             goal.onGoal -= CallAnyGoal;
     }
 
-    void CallAnyGoal()
+    private void CallAnyGoal()
     {
         onAnyGoal.Trigger();
     }
@@ -129,23 +131,23 @@ public class GameManager : Singleton<GameManager>
         Restart();
     }
 
-    public PlayerMotorInputBase GetInputClass(AiAggressiveMode mode, AiReactionTime time)
+    public PlayerMotorInputBase GetInputClass(InputMoterMode moterMode, AiReactionTime time)
     {
         //Check if it is a player
-        switch (mode)
+        switch (moterMode)
         {
-            case AiAggressiveMode.PlayerOne:
+            case InputMoterMode.PlayerOne:
                 return PlayerOneInput;
-            case AiAggressiveMode.PlayerTwo:
+            case InputMoterMode.PlayerTwo:
                 return PlayerTwoInput;
-            case AiAggressiveMode.PlayerThree:
+            case InputMoterMode.PlayerThree:
                 return PlayerThreeInput;
-            case AiAggressiveMode.PlayerFour:
+            case InputMoterMode.PlayerFour:
                 return PlayerFourInput;
         }
 
         for (int i = 0, j = AiInputSystems.Length; i < j; i++)
-            if (AiInputSystems[i].AiMode == mode && AiInputSystems[i].ReactionTime == time)
+            if (AiInputSystems[i].AiMoterMode == moterMode && AiInputSystems[i].ReactionTime == time)
                 return AiInputSystems[i];
 
         return AiInputSystems[Ran.Range(0, AiInputSystems.Length)];
@@ -153,53 +155,57 @@ public class GameManager : Singleton<GameManager>
 
     private void SpawnPlayers()
     {
-        var redTeamAmount = GameSettings.Instance.RedTeamComposition.Length;
-        var blueTeamAmount = GameSettings.Instance.BlueTeamComposition.Length;
+        int TeamOneAmount = GameSettings.Instance.TeamOneComposition.Length;
+        int TeamTwoAmount = GameSettings.Instance.TeamTwoComposition.Length;
 
-        var biggestTeam = Mathf.Max(redTeamAmount, blueTeamAmount);
+        int biggestTeam = Mathf.Max(TeamTwoAmount, TeamOneAmount);
 
-        SpawnLayout layout = null;
+        SpawnLayout _layout;
         //TODO: Make a method that returns layout
         {
             var layouts = SpawnLayouts.Where(spawnLayout => spawnLayout.Positions.Length >= biggestTeam).ToList();
-            layout = layouts[Ran.Range(0, layouts.Count)];
+            _layout = layouts[Ran.Range(0, layouts.Count)];
         }
 
         for (var i = 0; i < biggestTeam; i++)
         {
-            if (redTeamAmount > i)
-                SpawnPlayer(GameSettings.Instance.RedTeamComposition[i], layout.Positions[i], TeamManager.Instance.RedTeam,
-                    GameSettings.Instance.RedTeam[GameSettings.Instance.RedTeamComposition[i]].Name);
-            if (blueTeamAmount > i)
-                SpawnPlayer(GameSettings.Instance.BlueTeamComposition[i], -layout.Positions[i], TeamManager.Instance.BlueTeam,
-                    GameSettings.Instance.BlueTeam[GameSettings.Instance.BlueTeamComposition[i]].Name);
+            if (TeamOneAmount > i)
+                SpawnPlayer(GameSettings.Instance.TeamOneComposition[i], -_layout.Positions[i],
+                    TeamManager.Instance.TeamOne,
+                    GameSettings.Instance.TeamOne[GameSettings.Instance.TeamOneComposition[i]].Name);
+            if (TeamTwoAmount > i)
+                SpawnPlayer(GameSettings.Instance.TeamTwoComposition[i], _layout.Positions[i],
+                    TeamManager.Instance.TeamTwo,
+                    GameSettings.Instance.TeamTwo[GameSettings.Instance.TeamTwoComposition[i]].Name);
         }
     }
 
-    void SpawnBall()
+    private void SpawnBall()
     {
         Instantiate(prefabBall.gameObject, new Vector3(0, 30, 0), Quaternion.identity);
     }
 
-    void SpawnPlayer(PlayerMotorInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
+    private void SpawnPlayer(PlayerMotorInputBase player, Vector3 pos, TeamManager.TeamInstance team, string _name = "")
     {
         var newPlayer = Instantiate(prefabMotor.gameObject, pos, Quaternion.identity, PlayersFolder);
         var newPlayerMotor = newPlayer.GetComponent<PlayerMotor>();
         newPlayerMotor.SetInput(player);
         newPlayerMotor.SetTeam(team.team.myTeam);
-        newPlayerMotor.SetName(name);
+        newPlayerMotor.SetName(_name);
         newPlayerMotor.OnSpawn();
         TeamManager.Instance.players.Add(new TeamManager.PlayerInstance(newPlayerMotor));
     }
 
 
-    void SetUpCamera()
+    private void SetUpCamera()
     {
         var cameras = FindObjectsOfType<CameraLookAtTargetOverride>();
         for (var i = cameras.Length - 1; i >= 0; i--)
             cameras[i].camera.depth = 20 + i;
 
         //Setup the differant camers screen size
+
+        //How many player cameras are there
         switch (cameras.Length)
         {
             case 1:
@@ -306,16 +312,34 @@ public class GameManager : Singleton<GameManager>
                 break;
         }
     }
-    //Used for making it easy to see where the spawn points are while editing them
-    /*
-        public SpawnLayout layout;
 
-        private void OnDrawGizmos()
+    public static bool GetIsPlayer(InputMoterMode mode)
+    {
+        switch (mode)
         {
-            if (layout)
-                if(layout.Positions.Length > 0)
-                    foreach (Vector3 v in layout.Positions)
-                        Gizmos.DrawSphere(v,1);
+            case InputMoterMode.PlayerOne:
+                return true;
+            case InputMoterMode.PlayerTwo:
+                return true;
+            case InputMoterMode.PlayerThree:
+                return true;
+            case InputMoterMode.PlayerFour:
+                return true;
+            default:
+                return false;
         }
-    */
+    }
+#if UNITY_EDITOR
+    //Used for making it easy to see where the spawn points are while editing them
+    public SpawnLayout layout;
+
+    private void OnDrawGizmos()
+    {
+        if (!layout) return;
+        if (layout.Positions.Length <= 0) return;
+
+        foreach (var v in layout.Positions)
+            Gizmos.DrawSphere(v, 1);
+    }
+#endif
 }

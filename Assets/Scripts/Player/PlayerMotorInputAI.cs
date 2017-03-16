@@ -3,12 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// This is the main AI class that does all the AI caculations
+/// TODO: Seperate the ai into more classes
+/// </summary>
 [CreateAssetMenu(fileName = "InputAI", menuName = "Rowket/Input/AI", order = 0)]
 public class PlayerMotorInputAI : PlayerMotorInputBase
 {
     public AiReactionTime ReactionTime;
     public const float ReactionStrength = 2000;
-    public AiAggressiveMode AiMode;
+    public InputMoterMode AiMoterMode;
 
     public static float GetReactionTime(AiReactionTime reaction)
     {
@@ -42,7 +46,7 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
     public override void Disable(PlayerMotor callingObject)
     {
         if (callingObject.ActiveCoroutines.Count <= 0) return;
-        for (var i = callingObject.ActiveCoroutines.Count - 1; i > 0; i--)
+        for (int i = callingObject.ActiveCoroutines.Count - 1; i > 0; i--)
         {
             callingObject.StopRoutine(callingObject.ActiveCoroutines[i]);
             callingObject.ActiveCoroutines.RemoveAt(i);
@@ -59,17 +63,20 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
         return ReactionStrength;
     }
 
-    IEnumerator AiUnique(PlayerMotor callingObject)
+    private IEnumerator AiUnique(PlayerMotor callingObject)
     {
         var ball = FindObjectOfType<Ball>();
+        // ReSharper disable once RedundantAssignment
+        //Resharper seams to think this value is never used
         var finalRotation = Vector3.zero;
         var team = TeamManager.Instance.GetTeam(callingObject.myTeam);
         var goal = team.GetTeamsGoal();
+
+        yield return WaitForTimes.GetWaitForTime(GetReactionTime());
+
         while (true)
         {
-            yield return WaitForTimes.GetWaitForTime(GetReactionTime());
-
-            var ballDist = Vector3.Distance(ball.Position, callingObject.Position);
+            float ballDist = Vector3.Distance(ball.Position, callingObject.Position);
 
             var BallToGoalDirection = GetDirection(goal.Position, ball.Position);
             var PlayerToGoalDirection = GetDirection(goal.Position, callingObject.Position);
@@ -77,29 +84,29 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
 
             //Debug.Log(PlayerToGoalDirection);
 
-            switch (AiMode)
+            switch (AiMoterMode)
             {
-                case AiAggressiveMode.BallOnly:
+                case InputMoterMode.BallOnly:
                     //
                     //Aim for the ball no matter what
                     //
                     finalRotation = AimForObject(ball.Position, callingObject);
                     break;
-                case AiAggressiveMode.Defensive:
+                case InputMoterMode.Defensive:
                     //
                     //Make the Ai aim to keep the ball away from the goal while staying close to there goal
                     //
                     //TODO:Impliment Defensive AI
                     finalRotation = AimForObject(ball.Position, callingObject);
                     break;
-                case AiAggressiveMode.GoalShooter:
+                case InputMoterMode.GoalShooter:
                     //
                     //Make the Ai aim to get behind the ball then shoot for the goal
                     //
                     finalRotation = AimForObject(ball.Position - (BallToGoalDirection), callingObject);
                     //myRot = AimForObject((ball.Position + (-BallToGoalDirection * 2))+Vector3.up * 2, callingObject);
                     break;
-                case AiAggressiveMode.BallFollower:
+                case InputMoterMode.BallFollower:
                     //
                     //Make the Ai aim to get behind the ball then shoot for the goal
                     //
@@ -108,14 +115,15 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
                                           (PlayerToBallDirection + PlayerToGoalDirection).normalized).normalized * 5),
                         callingObject);
                     break;
-                case AiAggressiveMode.Aggressive:
+                case InputMoterMode.Aggressive:
                     //
                     //Aim for the closest none team mate
                     //
                     var otherMotor =
                         PlayerMotor.GetClosestMotor(callingObject.Position, callingObject, callingObject.myTeam);
                     var motorDist = Vector3.Distance(otherMotor.Position, callingObject.Position);
-                    finalRotation = AimForObject(ballDist < motorDist ? ball.Position : otherMotor.Position, callingObject);
+                    finalRotation = AimForObject(ballDist < motorDist ? ball.Position : otherMotor.Position,
+                        callingObject);
                     break;
                 default:
                     //
@@ -128,6 +136,8 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
             finalRotation.z /= 4;
             //var rot = callingObject.transform.TransformDirection(Quaternion.Euler(myRot) * callingObject.transform.forward * GetMoveStrength());
             callingObject.HitPuck(finalRotation * GetMoveStrength());
+
+            yield return WaitForTimes.GetWaitForTime(GetReactionTime());
         }
     }
 
@@ -147,17 +157,24 @@ public class PlayerMotorInputAI : PlayerMotorInputBase
     }
 }
 
-public enum AiAggressiveMode
+/// <summary>
+///
+/// </summary>
+public enum InputMoterMode
 {
-    PlayerFour = -4,
-    PlayerThree = -3,
-    PlayerTwo = -2,
-    PlayerOne = -1,
+    //PlayerFour = -4,
+    //PlayerThree = -3,
+    //PlayerTwo = -2,
+    //PlayerOne = -1,
     BallOnly = 0,
     Defensive = 1,
     GoalShooter = 2,
     Aggressive = 3,
     BallFollower = 4,
+    PlayerOne,
+    PlayerTwo,
+    PlayerThree,
+    PlayerFour,
 }
 
 public enum AiReactionTime

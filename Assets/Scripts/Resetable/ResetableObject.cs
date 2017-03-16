@@ -1,13 +1,27 @@
 using UnityEngine;
 
+/// <summary>
+/// The most basic resetable oject class, only saves Rotation & Position
+/// </summary>
 public class ResetableObject : ResetableObjectBase
 {
+    /// <summary>
+    /// Transform to save/reset
+    /// if null it will reset the attached object
+    /// </summary>
     public Transform transformToReset;
 
+    /// <summary>
+    /// Saved Position
+    /// </summary>
     public Vector3 Pos;
+
+    /// <summary>
+    /// Saved Rotation
+    /// </summary>
     public Quaternion Rot;
 
-    void Start()
+    private void Start()
     {
         if (transformToReset == null) transformToReset = transform;
         Record();
@@ -26,12 +40,14 @@ public class ResetableObject : ResetableObjectBase
         ResetableObjects.Remove(this);
     }
 
+    [ContextMenu("Record Object")]
     public override void Record()
     {
         Pos = transformToReset.position;
         Rot = transformToReset.rotation;
     }
 
+    [ContextMenu("Reset Object")]
     public override void Reset()
     {
         transformToReset.position = Pos;

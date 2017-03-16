@@ -3,27 +3,32 @@ using System.Collections.Generic;
 using JMiles42.Data;
 using UnityEngine;
 
+/// <summary>
+/// Team manager, controls most of the team logic
+/// </summary>
 public class TeamManager : Singleton<TeamManager>
 {
-    public TeamInstance[] teams = {new TeamInstance("Blue"),new TeamInstance("Red")};
+    public TeamInstance[] teams = {new TeamInstance("Pink"), new TeamInstance("Black")};
     public List<PlayerInstance> players = new List<PlayerInstance>();
 
-    public TeamInstance BlueTeam
+    public TeamInstance TeamOne
     {
         get { return teams[0]; }
         set { teams[0] = value; }
     }
-    public TeamInstance RedTeam
+
+    public TeamInstance TeamTwo
     {
         get { return teams[1]; }
         set { teams[1] = value; }
     }
 
-    void OnEnable()
+    private void OnEnable()
     {
         for (int i = 0, j = teams.Length; i < j; i++)
             teams[i].team.Enable();
     }
+
 #if !UNITY_EDITOR
     void OnDisable()
     {
@@ -31,7 +36,8 @@ public class TeamManager : Singleton<TeamManager>
             teams[i].team.Disable();
     }
 #endif
-    void Start()
+
+    private void Start()
     {
         for (int i = 0, j = teams.Length; i < j; i++)
             teams[i].team.score = 0;
@@ -74,12 +80,6 @@ public class TeamManager : Singleton<TeamManager>
             teams[i].team.StopListening();
     }
 
-    public void OnValidate()
-    {
-        for (int i = 0, j = teams.Length; i < j; i++)
-            teams[i].name = teams[i].team.myTeam + " Team";
-    }
-
     [Serializable]
     public class TeamInstance
     {
@@ -96,7 +96,7 @@ public class TeamManager : Singleton<TeamManager>
     [Serializable]
     public class PlayerInstance
     {
-        [SerializeField] PlayerMotor _player;
+        [SerializeField] private PlayerMotor _player;
 
         public PlayerMotor player
         {
@@ -105,11 +105,12 @@ public class TeamManager : Singleton<TeamManager>
         }
 
         public TeamType team;
-        public int Scores = 0;
-        public int BallHits = 0;
+        public int Scores;
+        public int BallHits;
 
         public PlayerInstance()
         {
+
         }
 
         public PlayerInstance(PlayerMotor __player)

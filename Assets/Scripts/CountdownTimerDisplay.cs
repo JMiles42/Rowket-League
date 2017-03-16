@@ -7,20 +7,21 @@ public class CountdownTimerDisplay : JMilesBehaviour
     public Text textToUpdate;
     public string timeFormat;
 
-    void OnEnable()
+    private void OnEnable()
     {
         GameManager.Instance.onGameCountdown += UpdateDisplay;
         GameManager.Instance.onGameStartCountdown += ShowCounter;
     }
 
-    void OnDisable()
+    private void OnDisable()
     {
-        if (!GameManager.Instance) return;
+#if !UNITY_EDITOR
         GameManager.Instance.onGameCountdown -= UpdateDisplay;
         GameManager.Instance.onGameStartCountdown -= ShowCounter;
+    #endif
     }
 
-    void UpdateDisplay(float time)
+    private void UpdateDisplay(float time)
     {
         ShowCounter();
         if (time > 0) textToUpdate.text = time.ToString(timeFormat);
@@ -31,12 +32,12 @@ public class CountdownTimerDisplay : JMilesBehaviour
         }
     }
 
-    void StartGoUi()
+    private void StartGoUi()
     {
         StartCoroutine(FlashThenHideUi(0.2f, 5));
     }
 
-    IEnumerator FlashThenHideUi(float flashInterval, int times = 3)
+    private IEnumerator FlashThenHideUi(float flashInterval, int times = 3)
     {
         //Fade and show the counter UI
         for (int i = 0; i < times; i++)
@@ -48,12 +49,12 @@ public class CountdownTimerDisplay : JMilesBehaviour
         HideCounter();
     }
 
-    void ShowCounter()
+    private void ShowCounter()
     {
         textToUpdate.enabled = true;
     }
 
-    void HideCounter()
+    private void HideCounter()
     {
         textToUpdate.enabled = false;
     }

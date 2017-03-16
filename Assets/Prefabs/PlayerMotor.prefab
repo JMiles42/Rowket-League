@@ -55,7 +55,7 @@ GameObject:
   - component: {fileID: 54691946345630646}
   - component: {fileID: 114631365002529958}
   m_Layer: 0
-  m_Name: PlayerMotor
+  m_Name: 'T : Player : '
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

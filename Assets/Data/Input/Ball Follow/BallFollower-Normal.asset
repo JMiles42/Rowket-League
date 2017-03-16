@@ -11,8 +11,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
   m_Name: BallFollower-Normal
   m_EditorClassIdentifier: 
-  nam: BallFollower-Normal
   ReactionTime: 1
-  ReactionStrength: 500
-  AiMode: 4
-  MoveDir: {x: 0, y: -0.2, z: 0}
+  AiMoterMode: 4

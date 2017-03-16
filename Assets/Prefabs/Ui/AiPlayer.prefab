@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 114234172746962658}
   - component: {fileID: 114520308891132564}
   - component: {fileID: 114141249980619922}
-  - component: {fileID: 114360761097176286}
   m_Layer: 5
   m_Name: InputField
   m_TagString: Untagged
@@ -163,8 +162,9 @@ GameObject:
   - component: {fileID: 222128405923796894}
   - component: {fileID: 114750373767635080}
   - component: {fileID: 114610699285181410}
-  - component: {fileID: 114701213753222774}
   - component: {fileID: 114963142409724014}
+  - component: {fileID: 114701213753222774}
+  - component: {fileID: 114498718353778134}
   m_Layer: 5
   m_Name: AiPlayer
   m_TagString: Untagged
@@ -1197,19 +1197,6 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.ScrollRect+ScrollRectEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
---- !u!114 &114360761097176286
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1068390284225704}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e3339f59e520804492a3ab93624bd97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  inputField: {fileID: 114520308891132564}
-  NameList: {fileID: 11400000, guid: e2eca42ef0219ae48bd6470497a8c89a, type: 2}
 --- !u!114 &114392054711461532
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1412,6 +1399,19 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: Option A
+--- !u!114 &114498718353778134
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1291903470297186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e3339f59e520804492a3ab93624bd97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputField: {fileID: 114520308891132564}
+  stringList: {fileID: 11400000, guid: e2eca42ef0219ae48bd6470497a8c89a, type: 2}
 --- !u!114 &114520308891132564
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1572,11 +1572,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enabled: 0
-  AiMode: {fileID: 114307877061488576}
-  AiReactionSpeed: {fileID: 114529125309369726}
-  ButtonClick: {fileID: 114341293384899454}
-  Inputfield: {fileID: 114520308891132564}
-  aiAgressiveMode: 0
+  inputMoterDropDown: {fileID: 114307877061488576}
+  aiReactionSpeedDropDown: {fileID: 114529125309369726}
+  inputfield: {fileID: 114520308891132564}
+  buttonClick: {fileID: 114341293384899454}
+  _inputMoterMode: 0
   aiReactionTime: 1
 --- !u!114 &114710963542584190
 MonoBehaviour:
