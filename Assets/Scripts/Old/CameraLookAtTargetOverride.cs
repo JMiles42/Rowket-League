@@ -15,7 +15,6 @@ public class CameraLookAtTargetOverride : JMilesBehaviour
         }
         set { m_Camera = value; }
     }
-
     public static Transform overRidingLookAtTarget = null;
     public static bool lookAtTarget = false;
     public float smoothing;

@@ -4,8 +4,11 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMoterInputUser : PlayerMoterInputBase
 {
+    //Set overriding camera look target for all instances of this class
+    //Set by the Game master
     public static Transform lookAtTargetOverride;
     public static bool lookAtOverride = false;
+
     bool UserLaunch = false;
     bool UserJump = false;
     bool UserCoolingDown = false;
@@ -24,6 +27,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     public float FollowDamp = 2;
     public float FollowDist = 5;
 
+    //Strings for the three differant input axis to be listening to
     public string InputAxis;
     public string InputLaunch;
     public string InputJump;

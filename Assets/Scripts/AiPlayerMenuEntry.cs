@@ -43,6 +43,7 @@ public class AiPlayerMenuEntry : JMilesBehaviour
 
     void GetAiAggressiveModeFromDropDown(int value)
     {
+        //These values are where these modes show up in the dropdown box UI
         switch (value)
         {
             case 5:
