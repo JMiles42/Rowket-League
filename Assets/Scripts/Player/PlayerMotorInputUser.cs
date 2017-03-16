@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
-public class PlayerMoterInputUser : PlayerMoterInputBase
+public class PlayerMotorInputUser : PlayerMotorInputBase
 {
     //Set overriding camera look target for all instances of this class
     //Set by the Game master
@@ -51,7 +51,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         return strength * (strengthMultiplyer * (1 + strength));
     }
 
-    public override void Enable(PlayerMoter callingObject)
+    public override void Enable(PlayerMotor callingObject)
     {
         Disable();
         UserCoolingDown = false;
@@ -65,7 +65,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         runBefore = true;
     }
 
-    public override void Disable(PlayerMoter callingObject)
+    public override void Disable(PlayerMotor callingObject)
     {
         Disable();
     }
@@ -77,7 +77,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         PlayerInputManager.GetAxisFromString(InputJump).onKeyDown -= JumpPressed;
     }
 
-    public override void Init(PlayerMoter callingObject)
+    public override void Init(PlayerMotor callingObject)
     {
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(PlayerUnique(callingObject)));
     }
@@ -119,7 +119,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         }
     }
 
-    IEnumerator PlayerUnique(PlayerMoter callingObject)
+    IEnumerator PlayerUnique(PlayerMotor callingObject)
     {
         var cam = callingObject.GetComponentInChildren<Camera>();
         var arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();

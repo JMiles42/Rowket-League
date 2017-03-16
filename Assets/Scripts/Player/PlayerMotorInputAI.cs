@@ -4,7 +4,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "InputAI", menuName = "Rowket/Input/AI", order = 0)]
-public class PlayerMoterInputAI : PlayerMoterInputBase
+public class PlayerMotorInputAI : PlayerMotorInputBase
 {
     public AiReactionTime ReactionTime;
     public const float ReactionStrength = 2000;
@@ -34,12 +34,12 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         return GetReactionTime(ReactionTime);
     }
 
-    public override void Enable(PlayerMoter callingObject)
+    public override void Enable(PlayerMotor callingObject)
     {
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(AiUnique(callingObject)));
     }
 
-    public override void Disable(PlayerMoter callingObject)
+    public override void Disable(PlayerMotor callingObject)
     {
         if (callingObject.ActiveCoroutines.Count <= 0) return;
         for (var i = callingObject.ActiveCoroutines.Count - 1; i > 0; i--)
@@ -50,7 +50,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         callingObject.ActiveCoroutines = new List<Coroutine>();
     }
 
-    public override void Init(PlayerMoter callingObject)
+    public override void Init(PlayerMotor callingObject)
     {
     }
 
@@ -59,7 +59,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         return ReactionStrength;
     }
 
-    IEnumerator AiUnique(PlayerMoter callingObject)
+    IEnumerator AiUnique(PlayerMotor callingObject)
     {
         var ball = FindObjectOfType<Ball>();
         var finalRotation = Vector3.zero;
@@ -112,10 +112,10 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
                     //
                     //Aim for the closest none team mate
                     //
-                    var otherMoter =
-                        PlayerMoter.GetClosestMoter(callingObject.Position, callingObject, callingObject.myTeam);
-                    var moterDist = Vector3.Distance(otherMoter.Position, callingObject.Position);
-                    finalRotation = AimForObject(ballDist < moterDist ? ball.Position : otherMoter.Position, callingObject);
+                    var otherMotor =
+                        PlayerMotor.GetClosestMotor(callingObject.Position, callingObject, callingObject.myTeam);
+                    var motorDist = Vector3.Distance(otherMotor.Position, callingObject.Position);
+                    finalRotation = AimForObject(ballDist < motorDist ? ball.Position : otherMotor.Position, callingObject);
                     break;
                 default:
                     //
@@ -131,7 +131,7 @@ public class PlayerMoterInputAI : PlayerMoterInputBase
         }
     }
 
-    private static Vector3 AimForObject(Vector3 target, PlayerMoter callingObject)
+    private static Vector3 AimForObject(Vector3 target, PlayerMotor callingObject)
     {
         return (target - callingObject.Position).normalized;
     }

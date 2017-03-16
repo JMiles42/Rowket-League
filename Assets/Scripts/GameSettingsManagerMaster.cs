@@ -120,9 +120,9 @@ public struct PlayerDetails
 public struct PlayerFinalDetails
 {
     public int detailsIndex;
-    public PlayerMoterInputBase input;
+    public PlayerMotorInputBase input;
 
-    public PlayerFinalDetails(int pD, PlayerMoterInputBase pIB)
+    public PlayerFinalDetails(int pD, PlayerMotorInputBase pIB)
     {
         detailsIndex = pD;
         input = pIB;
@@ -133,7 +133,7 @@ public struct PlayerFinalDetails
         return pFD.detailsIndex;
     }
 
-    public static implicit operator PlayerMoterInputBase(PlayerFinalDetails pFD)
+    public static implicit operator PlayerMotorInputBase(PlayerFinalDetails pFD)
     {
         return pFD.input;
     }

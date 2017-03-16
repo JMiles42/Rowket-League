@@ -7,7 +7,7 @@ public class Ball : SingletonRigidbody<Ball>, IResetable
     ResetableObjectAdvanced resetableObjectAdvanced;
     Vector3 startPos = Vector3.zero;
     Quaternion startRot;
-    public PlayerMoter LastPlayerHit;
+    public PlayerMotor LastPlayerHit;
 
 
     void OnEnable()
@@ -44,10 +44,10 @@ public class Ball : SingletonRigidbody<Ball>, IResetable
 
     void OnCollisionEnter(Collision other)
     {
-        var playerMoter = other.gameObject.GetComponentInParent<PlayerMoter>();
-        if (playerMoter == null) return;
-        LastPlayerHit = playerMoter;
-        var playerInstance = TeamManager.Instance.GetPlayerInstance(playerMoter);
+        var playerMotor = other.gameObject.GetComponentInParent<PlayerMotor>();
+        if (playerMotor == null) return;
+        LastPlayerHit = playerMotor;
+        var playerInstance = TeamManager.Instance.GetPlayerInstance(playerMotor);
         if( playerInstance != null )
             playerInstance.BallHit();
     }

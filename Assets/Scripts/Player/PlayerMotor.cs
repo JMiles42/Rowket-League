@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoter : JMilesRigidbodyBehaviour
+public class PlayerMotor : JMilesRigidbodyBehaviour
 {
     public TeamType myTeam;
-    public PlayerMoterInputBase MyInput;
+    public PlayerMotorInputBase MyInput;
     public string playerName = "";
-    public static List<PlayerMoter> playerMoters = new List<PlayerMoter>();
+    public static List<PlayerMotor> playerMotors = new List<PlayerMotor>();
     public Renderer meshRender;
     public List<Coroutine> ActiveCoroutines = new List<Coroutine>();
 
@@ -17,14 +17,14 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public void OnSpawn()
     {
         MyInput.Init(this);
-        playerMoters.Add(this);
+        playerMotors.Add(this);
         GameManager.Instance.onGameStart += StartInput;
         GameManager.Instance.onGameEnd += EndInput;
     }
 
     void OnDisable()
     {
-        playerMoters.Remove(this);
+        playerMotors.Remove(this);
         GameManager.Instance.onGameStart -= StartInput;
         GameManager.Instance.onGameEnd -= EndInput;
         EndInput();
@@ -54,17 +54,17 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         return playerName;
     }
     /// <summary>
-    /// Gets the closest player moter to the pos passed to
+    /// Gets the closest player motor to the pos passed to
     /// </summary>
-    /// <param name="pos">Position to get closest moter to</param>
-    /// <returns>Player moter closest to pos</returns>
-    public static PlayerMoter GetClosestMoter(Vector3 pos)
+    /// <param name="pos">Position to get closest motor to</param>
+    /// <returns>Player motor closest to pos</returns>
+    public static PlayerMotor GetClosestMotor(Vector3 pos)
     {
-        var closest = playerMoters[0];
+        var closest = playerMotors[0];
         float dist = Vector3.Distance(pos, closest.Position);
-        for (int i = 0, j = playerMoters.Count; i < j; i++)
+        for (int i = 0, j = playerMotors.Count; i < j; i++)
         {
-            var other = playerMoters[i];
+            var other = playerMotors[i];
             float dist1 = Vector3.Distance(pos, other.Position);
             if (!(dist1 < dist)) continue;
             closest = other;
@@ -74,21 +74,21 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     }
 
     /// <summary>
-    /// Gets the closest player moter to the pos passed to
+    /// Gets the closest player motor to the pos passed to
     /// </summary>
-    /// <param name="pos">Position to get closest moter to</param>
+    /// <param name="pos">Position to get closest motor to</param>
     /// <param name="callingObject">Pass along caller, to make it not find its self</param>
-    /// <returns>Player moter closest to pos</returns>
-    public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject)
+    /// <returns>Player motor closest to pos</returns>
+    public static PlayerMotor GetClosestMotor(Vector3 pos, PlayerMotor callingObject)
     {
-        if (playerMoters.Count == 0)
+        if (playerMotors.Count == 0)
             return callingObject;
 
-        var closest = playerMoters[0];
+        var closest = playerMotors[0];
         float dist = Vector3.Distance(pos, closest.Position);
-        for (int i = 0, j = playerMoters.Count; i < j; i++)
+        for (int i = 0, j = playerMotors.Count; i < j; i++)
         {
-            var other = playerMoters[i];
+            var other = playerMotors[i];
             if (callingObject == other)
             {
                 if (i < j)
@@ -105,22 +105,22 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
 
     /// <summary>
-    /// Gets the closest player moter to the pos passed to
+    /// Gets the closest player motor to the pos passed to
     /// </summary>
-    /// <param name="pos">Position to get closest moter to</param>
+    /// <param name="pos">Position to get closest motor to</param>
     /// <param name="callingObject">Pass along caller, to make it not find its self</param>
     /// <param name="team">Team to ignore</param>
-    /// <returns>Player moter closest to pos</returns>
-    public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject, TeamType team)
+    /// <returns>Player motor closest to pos</returns>
+    public static PlayerMotor GetClosestMotor(Vector3 pos, PlayerMotor callingObject, TeamType team)
     {
-        if (playerMoters.Count == 0)
+        if (playerMotors.Count == 0)
             return callingObject;
 
-        var closest = playerMoters[0];
+        var closest = playerMotors[0];
         float dist = Vector3.Distance(pos, closest.Position);
-        for (int i = 0, j = playerMoters.Count; i < j; i++)
+        for (int i = 0, j = playerMotors.Count; i < j; i++)
         {
-            var other = playerMoters[i];
+            var other = playerMotors[i];
             if (callingObject == other || callingObject.myTeam == team)
             {
                 if (i < j)
@@ -150,7 +150,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         }
     }
 
-    public void SetInput(PlayerMoterInputBase input)
+    public void SetInput(PlayerMotorInputBase input)
     {
         MyInput = input;
         SetGameobjectName();

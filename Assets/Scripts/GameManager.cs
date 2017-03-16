@@ -23,13 +23,13 @@ public class GameManager : Singleton<GameManager>
 
     public SpawnLayout[] SpawnLayouts;
 
-    public PlayerMoterInputAI[] AiInputSystems;
-    public PlayerMoterInputUser PlayerOneInput;
-    public PlayerMoterInputUser PlayerTwoInput;
-    public PlayerMoterInputUser PlayerThreeInput;
-    public PlayerMoterInputUser PlayerFourInput;
+    public PlayerMotorInputAI[] AiInputSystems;
+    public PlayerMotorInputUser PlayerOneInput;
+    public PlayerMotorInputUser PlayerTwoInput;
+    public PlayerMotorInputUser PlayerThreeInput;
+    public PlayerMotorInputUser PlayerFourInput;
 
-    public PlayerMoter prefabMoter;
+    public PlayerMotor prefabMotor;
     public Ball prefabBall;
 
     public ButtonClickEvent startGameBtn;
@@ -42,9 +42,9 @@ public class GameManager : Singleton<GameManager>
     {
         onAnyGoal += GameOver;
 
-        PlayerMoterInputUser.lookAtTargetOverride = lookAtScoreBoard;
-        onAnyGoal += delegate { PlayerMoterInputUser.lookAtOverride = true; };
-        onGameStart += delegate { PlayerMoterInputUser.lookAtOverride = false; };
+        PlayerMotorInputUser.lookAtTargetOverride = lookAtScoreBoard;
+        onAnyGoal += delegate { PlayerMotorInputUser.lookAtOverride = true; };
+        onGameStart += delegate { PlayerMotorInputUser.lookAtOverride = false; };
 
         onGameStart += EnableInput;
         onGameEnd += DisableInput;
@@ -129,7 +129,7 @@ public class GameManager : Singleton<GameManager>
         Restart();
     }
 
-    public PlayerMoterInputBase GetInputClass(AiAggressiveMode mode, AiReactionTime time)
+    public PlayerMotorInputBase GetInputClass(AiAggressiveMode mode, AiReactionTime time)
     {
         //Check if it is a player
         switch (mode)
@@ -181,15 +181,15 @@ public class GameManager : Singleton<GameManager>
         Instantiate(prefabBall.gameObject, new Vector3(0, 30, 0), Quaternion.identity);
     }
 
-    void SpawnPlayer(PlayerMoterInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
+    void SpawnPlayer(PlayerMotorInputBase player, Vector3 pos, TeamManager.TeamInstance team, string name = "")
     {
-        var newPlayer = Instantiate(prefabMoter.gameObject, pos, Quaternion.identity, PlayersFolder);
-        var newPlayerMoter = newPlayer.GetComponent<PlayerMoter>();
-        newPlayerMoter.SetInput(player);
-        newPlayerMoter.SetTeam(team.team.myTeam);
-        newPlayerMoter.SetName(name);
-        newPlayerMoter.OnSpawn();
-        TeamManager.Instance.players.Add(new TeamManager.PlayerInstance(newPlayerMoter));
+        var newPlayer = Instantiate(prefabMotor.gameObject, pos, Quaternion.identity, PlayersFolder);
+        var newPlayerMotor = newPlayer.GetComponent<PlayerMotor>();
+        newPlayerMotor.SetInput(player);
+        newPlayerMotor.SetTeam(team.team.myTeam);
+        newPlayerMotor.SetName(name);
+        newPlayerMotor.OnSpawn();
+        TeamManager.Instance.players.Add(new TeamManager.PlayerInstance(newPlayerMotor));
     }
 
 

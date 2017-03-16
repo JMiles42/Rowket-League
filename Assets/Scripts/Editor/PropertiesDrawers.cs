@@ -54,7 +54,7 @@ public class PlayerInstanceDrawer : PropertyDrawer
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
-        var player = new EditorEntry("Moter", property.FindPropertyRelative("_player"));
+        var player = new EditorEntry("Motor", property.FindPropertyRelative("_player"));
         var team = new EditorEntry("Team", property.FindPropertyRelative("team"));
         var Scores = new EditorEntry("Scores", property.FindPropertyRelative("Scores"));
         var BallHits = new EditorEntry("Ball Hits", property.FindPropertyRelative("BallHits"));

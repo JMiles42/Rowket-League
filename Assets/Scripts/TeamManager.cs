@@ -45,7 +45,7 @@ public class TeamManager : Singleton<TeamManager>
         return null;
     }
 
-    public PlayerInstance GetPlayerInstance(PlayerMoter pM)
+    public PlayerInstance GetPlayerInstance(PlayerMotor pM)
     {
         for (int i = 0, j = players.Count; i < j; i++)
             if (players[i].player == pM)
@@ -96,12 +96,12 @@ public class TeamManager : Singleton<TeamManager>
     [Serializable]
     public class PlayerInstance
     {
-        [SerializeField] PlayerMoter _player;
+        [SerializeField] PlayerMotor _player;
 
-        public PlayerMoter player
+        public PlayerMotor player
         {
             get { return _player; }
-            set { SetNewPlayerMoter(value); }
+            set { SetNewPlayerMotor(value); }
         }
 
         public TeamType team;
@@ -112,13 +112,13 @@ public class TeamManager : Singleton<TeamManager>
         {
         }
 
-        public PlayerInstance(PlayerMoter __player)
+        public PlayerInstance(PlayerMotor __player)
         {
             _player = __player;
             team = _player.myTeam;
         }
 
-        public void SetNewPlayerMoter(PlayerMoter __player)
+        public void SetNewPlayerMotor(PlayerMotor __player)
         {
             _player = __player;
             team = _player.myTeam;
