@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerMoter : JMilesRigidbodyBehaviour
 {
@@ -24,7 +22,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         GameManager.Instance.onGameEnd += EndInput;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         playerMoters.Remove(this);
         GameManager.Instance.onGameStart -= StartInput;
@@ -46,10 +44,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     public void HitPuck(Vector3 dir)
     {
-        //Debug.Log("Hit in :" + dir);
         rigidbody.AddForce(dir, ForceMode.Impulse);
-        //var currentRotation = Quaternion.Euler(MyInput.GetMoveDirection());
-        //rigidbody.AddForce(transform.TransformDirection((currentRotation * transform.forward) * MyInput.GetMoveStrength()), ForceMode.Impulse);
     }
 
     public string GetName()
@@ -58,7 +53,11 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
             return playerName = MyInput.GetName();
         return playerName;
     }
-
+    /// <summary>
+    /// Gets the closest player moter to the pos passed to
+    /// </summary>
+    /// <param name="pos">Position to get closest moter to</param>
+    /// <returns>Player moter closest to pos</returns>
     public static PlayerMoter GetClosestMoter(Vector3 pos)
     {
         var closest = playerMoters[0];
@@ -74,6 +73,12 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         return closest;
     }
 
+    /// <summary>
+    /// Gets the closest player moter to the pos passed to
+    /// </summary>
+    /// <param name="pos">Position to get closest moter to</param>
+    /// <param name="callingObject">Pass along caller, to make it not find its self</param>
+    /// <returns>Player moter closest to pos</returns>
     public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject)
     {
         if (playerMoters.Count == 0)
@@ -88,7 +93,6 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
             {
                 if (i < j)
                     continue;
-                break;
             }
 
             float dist1 = Vector3.Distance(pos, other.Position);
@@ -99,7 +103,15 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         return closest;
     }
 
-    public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject,TeamType team)
+
+    /// <summary>
+    /// Gets the closest player moter to the pos passed to
+    /// </summary>
+    /// <param name="pos">Position to get closest moter to</param>
+    /// <param name="callingObject">Pass along caller, to make it not find its self</param>
+    /// <param name="team">Team to ignore</param>
+    /// <returns>Player moter closest to pos</returns>
+    public static PlayerMoter GetClosestMoter(Vector3 pos, PlayerMoter callingObject, TeamType team)
     {
         if (playerMoters.Count == 0)
             return callingObject;
@@ -113,7 +125,6 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
             {
                 if (i < j)
                     continue;
-                else break;
             }
 
             float dist1 = Vector3.Distance(pos, other.Position);
@@ -124,6 +135,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
         return closest;
     }
 
+    //TODO:move to another component
     public void SetTeam(TeamType myNewTeam)
     {
         if (myNewTeam == TeamType.Blue)
@@ -141,7 +153,7 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
     public void SetInput(PlayerMoterInputBase input)
     {
         MyInput = input;
-        SetGOName();
+        SetGameobjectName();
     }
 
     public void SetName(string str)
@@ -151,10 +163,10 @@ public class PlayerMoter : JMilesRigidbodyBehaviour
 
     private void OnValidate()
     {
-        SetGOName();
+        SetGameobjectName();
     }
 
-    private void SetGOName()
+    private void SetGameobjectName()
     {
         gameObject.name = myTeam.ToString()[0] + " : " + GetName() + " : " + MyInput;
     }

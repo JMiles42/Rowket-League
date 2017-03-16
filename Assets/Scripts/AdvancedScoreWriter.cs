@@ -1,5 +1,6 @@
 using JMiles42.Data;
 using System.Text;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,9 +15,10 @@ public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
     public string scoreEntryPerLine = "||n<size=100>{0}: {1}</size>";
     public Text Title;
     public RenderTexture screenTexture;
-
+    public float fadeTime = 1;
     void OnEnable()
     {
+        SetTextAlpha(0);
         GameManager.Instance.onGameStart += DisplayActivate;
         GameManager.Instance.onAnyGoal += UpdateDisplay;
         GameManager.Instance.onGameStart += UpdateDisplay;
@@ -32,11 +34,25 @@ public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
 
     void ChangeDisplayActive(bool value = true)
     {
-        RedTeamScore.gameObject.SetActive(value);
-        BlueTeamScore.gameObject.SetActive(value);
-        Title.gameObject.SetActive(value);
+        RedTeamScore.DOFade(value ? 1 : 0, fadeTime);
+        BlueTeamScore.DOFade(value ? 1 : 0, fadeTime);
+        Title.DOFade(value ? 1 : 0, fadeTime / 2);
     }
 
+    void SetTextAlpha(float alpha)
+    {
+        var col = RedTeamScore.color;
+        col.a = alpha;
+        RedTeamScore.color = col;
+
+        col = BlueTeamScore.color;
+        col.a = alpha;
+        BlueTeamScore.color = col;
+
+        col = Title.color;
+        col.a = alpha;
+        Title.color = col;
+    }
     void DisplayDeactivate()
     {
         ChangeDisplayActive(false);

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class AiPlayerMenuEntry : JMilesBehaviour
 {
@@ -10,16 +7,15 @@ public class AiPlayerMenuEntry : JMilesBehaviour
     public DropDownEvent AiReactionSpeed;
     public ButtonClickEvent ButtonClick;
     public InputFieldEvent Inputfield;
-    private bool IsPlayer;
-    [SerializeField] private AiAgressiveMode aiAgressiveMode = AiAgressiveMode.BallOnly;
-    [SerializeField] private AiReactionTime aiReactionTime = AiReactionTime.Normal;
+    bool IsPlayer;
+    [SerializeField] AiAggressiveMode aiAggressiveMode = AiAggressiveMode.BallOnly;
+    [SerializeField] AiReactionTime aiReactionTime = AiReactionTime.Normal;
 
-    private const string ENABLED_STR = "Active", DISABLED_STR = "In-Active";
-    private void OnEnable()
+    const string ENABLED_STR = "Active", DISABLED_STR = "In-Active";
+    void OnEnable()
     {
         ButtonClick.onMouseClick += OnButtonClicked;
-
-        AiMode.onValueChanged+= GetAiAgressiveModeFromDropDown;
+        AiMode.onValueChanged+= GetAiAggressiveModeFromDropDown;
         AiReactionSpeed.onValueChanged+= GetAiReactionTimeFromDropDown;
 
         AiMode.myDropdown.interactable = Enabled;
@@ -28,14 +24,14 @@ public class AiPlayerMenuEntry : JMilesBehaviour
         ButtonClick.myButton.SetText(Enabled ? ENABLED_STR : DISABLED_STR);
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         ButtonClick.onMouseClick -= OnButtonClicked;
-        AiMode.onValueChanged-= GetAiAgressiveModeFromDropDown;
+        AiMode.onValueChanged-= GetAiAggressiveModeFromDropDown;
         AiReactionSpeed.onValueChanged-= GetAiReactionTimeFromDropDown;
     }
 
-    private void OnButtonClicked()
+    void OnButtonClicked()
     {
         Enabled = !Enabled;
 
@@ -45,34 +41,34 @@ public class AiPlayerMenuEntry : JMilesBehaviour
         ButtonClick.myButton.SetText(Enabled ? ENABLED_STR : DISABLED_STR);
     }
 
-    void GetAiAgressiveModeFromDropDown(int value)
+    void GetAiAggressiveModeFromDropDown(int value)
     {
         switch (value)
         {
             case 5:
-                aiAgressiveMode = AiAgressiveMode.PlayerOne;
+                aiAggressiveMode = AiAggressiveMode.PlayerOne;
                 AiReactionSpeed.myDropdown.interactable = false;
                 IsPlayer = true;
                 break;
             case 6:
-                aiAgressiveMode = AiAgressiveMode.PlayerTwo;
+                aiAggressiveMode = AiAggressiveMode.PlayerTwo;
                 AiReactionSpeed.myDropdown.interactable = false;
                 IsPlayer = true;
                 break;
             case 7:
-                aiAgressiveMode = AiAgressiveMode.PlayerThree;
+                aiAggressiveMode = AiAggressiveMode.PlayerThree;
                 AiReactionSpeed.myDropdown.interactable = false;
                 IsPlayer = true;
                 break;
             case 8:
-                aiAgressiveMode = AiAgressiveMode.PlayerFour;
+                aiAggressiveMode = AiAggressiveMode.PlayerFour;
                 AiReactionSpeed.myDropdown.interactable = false;
                 IsPlayer = true;
                 break;
             default:
                 IsPlayer = false;
                 AiReactionSpeed.myDropdown.interactable = Enabled;
-                aiAgressiveMode = (AiAgressiveMode) AiMode.myDropdown.value;
+                aiAggressiveMode = (AiAggressiveMode) AiMode.myDropdown.value;
                 break;
         }
     }
@@ -84,7 +80,7 @@ public class AiPlayerMenuEntry : JMilesBehaviour
 
     public PlayerDetails GetPlayerDetails()
     {
-        var pD = new PlayerDetails(aiReactionTime,aiAgressiveMode,Enabled,IsPlayer,Inputfield.Text);
+        var pD = new PlayerDetails(aiReactionTime,aiAggressiveMode,Enabled,IsPlayer,Inputfield.Text);
         return pD;
     }
 }

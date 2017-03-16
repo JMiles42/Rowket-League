@@ -14,7 +14,7 @@ public class LocalizationWindow : EditorWindow
     {
         // Get existing open window or if none, make a new one:
         LocalizationWindow window = (LocalizationWindow)GetWindow (typeof (LocalizationWindow));
-        localizationMaster = Resources.Load(LocalizationMaster.DefualtLocation) as LocalizationMaster;
+        localizationMaster = Resources.Load(LocalizationMaster.DefaultLocation) as LocalizationMaster;
         window.Show();
     }
 
@@ -114,7 +114,7 @@ public class LocalizationWindow : EditorWindow
         else
         {
             GUILayout.Label("WARNING \n Localization Master NOT Found In Resources Folder.", EditorStyles.boldLabel);
-            localizationMaster = Resources.Load(LocalizationMaster.DefualtLocation) as LocalizationMaster;
+            localizationMaster = Resources.Load(LocalizationMaster.DefaultLocation) as LocalizationMaster;
         }
 
 

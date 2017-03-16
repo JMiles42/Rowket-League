@@ -1,6 +1,3 @@
-using System;
-using UnityEngine;
-
 public abstract class PlayerMoterInputBase : JMilesScriptableObject
 {
     public abstract void Enable(PlayerMoter callingObject);

@@ -1,7 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using JetBrains.Annotations;
 using UnityEngine;
 
 public class PlayerDisplayArrow : JMilesBehaviour
@@ -16,7 +13,7 @@ public class PlayerDisplayArrow : JMilesBehaviour
 
     private void OnEnable()
     {
-        //Makes sure there are no null Referances
+        //Makes sure there are no null References
         if (ArrowFill == null) ArrowFill = new SpriteRenderer();
         if (ArrowOutline == null) ArrowOutline = new SpriteRenderer();
         transform.localScale = minScale;

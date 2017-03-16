@@ -1,8 +1,5 @@
-using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 [CreateAssetMenu(fileName = "PlayerOneInput", menuName = "Rowket/Input/User", order = 0)]
 public class PlayerMoterInputUser : PlayerMoterInputBase
@@ -15,7 +12,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
     bool UserCoolingDownJump = false;
     public float RotationSpeed = 5;
 
-    private Vector3 rotation = Vector3.zero;
+    Vector3 rotation = Vector3.zero;
 
     public float speed;
     public float strength = 0;
@@ -38,9 +35,9 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
 
     public GameObject ArrowPrefab;
     public GameObject CameraPrefab;
-    private bool runBefore = false;
+    bool runBefore = false;
 
-    private void HorizontalPressed()
+    void HorizontalPressed()
     {
         rotation += Vector3.up * PlayerInputManager.Instance.Horizontal;
     }
@@ -81,35 +78,35 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         callingObject.ActiveCoroutines.Add(callingObject.StartRoutine(PlayerUnique(callingObject)));
     }
 
-    private void LaunchPressed()
+    void LaunchPressed()
     {
         if (UserCoolingDown) return;
         UserLaunch = true;
         PlayerInputManager.Instance.StartCoroutine(InputDelay());
     }
 
-    private void JumpPressed()
+    void JumpPressed()
     {
         if (UserCoolingDownJump) return;
         UserJump = true;
         PlayerInputManager.Instance.StartCoroutine(InputDelayJump());
     }
 
-    private IEnumerator InputDelay()
+    IEnumerator InputDelay()
     {
         UserCoolingDown = true;
         yield return WaitForTimes.GetWaitForTime(inputCooldown);
         UserCoolingDown = false;
     }
 
-    private IEnumerator InputDelayJump()
+    IEnumerator InputDelayJump()
     {
         UserCoolingDownJump = true;
         yield return WaitForTimes.GetWaitForTime(inputCooldown);
         UserCoolingDownJump = false;
     }
 
-    private IEnumerator InputSession()
+    IEnumerator InputSession()
     {
         while (true)
         {
@@ -118,20 +115,17 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         }
     }
 
-    private IEnumerator PlayerUnique(PlayerMoter callingObject)
+    IEnumerator PlayerUnique(PlayerMoter callingObject)
     {
-        bool update = true;
-        Camera cam = callingObject.GetComponentInChildren<Camera>();
-
-        PlayerDisplayArrow arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();
+        var cam = callingObject.GetComponentInChildren<Camera>();
+        var arrow = callingObject.GetComponentInChildren<PlayerDisplayArrow>();
         if (cam == null)
         {
-            GameObject newCam = Instantiate(CameraPrefab);
+            var newCam = Instantiate(CameraPrefab);
             cam = newCam.GetComponent<Camera>();
             newCam.gameObject.transform.parent = null;
         }
         cam.gameObject.SetActive(true);
-        //cam.tag = "MainCamera";
 
         if (arrow == null)
         {
@@ -143,11 +137,12 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
         arrow.gameObject.SetActive(true);
 
         cam.transform.parent = null;
-        while (update)
+
+        while (true)
         {
             arrow.gameObject.SetActive(!UserCoolingDown);
             arrow.SetScale((strength - strengthMin) / strengthMax);
-            //Stores resualt to sav multiple calls
+            //Stores result to sav multiple calls
             var MoveDirection = rotation;
             var currentRotation = Quaternion.Euler(MoveDirection);
             //Set the positon of the camera to "behind the players look direction"
@@ -156,7 +151,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             //Get the camera looking at the player
             var newRotation = Quaternion.LookRotation(callingObject.transform.position -
                                                       (cam.transform.position + (Vector3.down * FollowDist)));
-            var newPosativeRotation =
+            var newPositiveRotation =
                 callingObject.transform.TransformDirection((currentRotation * callingObject.transform.forward));
 
             //Lerp the current values to the 
@@ -166,7 +161,7 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             else
                 cam.transform.rotation = Quaternion.Lerp(cam.transform.rotation, newRotation, Time.deltaTime * RotDamp);
 
-            arrow.transform.rotation = Quaternion.LookRotation(newPosativeRotation);
+            arrow.transform.rotation = Quaternion.LookRotation(newPositiveRotation);
             if (UserJump)
             {
                 callingObject.onLaunchPlayer.Trigger(Vector3.up * GetMoveStrength() / 3);
@@ -179,7 +174,6 @@ public class PlayerMoterInputUser : PlayerMoterInputBase
             }
             yield return null;
         }
-        cam.transform.parent = callingObject.transform;
     }
 
     public Vector3 GetMoveFinalDirection(Transform t)

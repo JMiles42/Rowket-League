@@ -92,7 +92,7 @@ public struct PlayerDetails
     }
 
     public bool IsPlayer;
-    public AiAgressiveMode aiMode;
+    public AiAggressiveMode aiMode;
     public AiReactionTime aiReaction;
     public string Name;
 
@@ -101,11 +101,11 @@ public struct PlayerDetails
         Name = "";
         Enabled = false;
         IsPlayer = isPlayer;
-        aiMode = AiAgressiveMode.BallOnly;
+        aiMode = AiAggressiveMode.BallOnly;
         aiReaction = AiReactionTime.Normal;
     }
 
-    public PlayerDetails(AiReactionTime reaction, AiAgressiveMode mode, bool enabled, bool isPlayer = false,
+    public PlayerDetails(AiReactionTime reaction, AiAggressiveMode mode, bool enabled, bool isPlayer = false,
         string name = "")
     {
         Name = name;

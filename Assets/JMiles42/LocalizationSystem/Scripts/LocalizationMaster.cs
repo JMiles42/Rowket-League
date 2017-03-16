@@ -10,7 +10,7 @@ using UnityEngine;
 public class LocalizationMaster : JMilesScriptableObject
 {
     public const string englishID = "_en";
-    public const string DefualtLocation = "Localization Master";
+    public const string DefaultLocation = "Localization Master";
     public const string fileID = ".lang";
     public static string fullPath {get {return Application.streamingAssetsPath + "/Localization/"; } } 
     public static string englishPath { get { return fullPath + englishID; } }

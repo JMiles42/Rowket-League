@@ -129,18 +129,18 @@ public class GameManager : Singleton<GameManager>
         Restart();
     }
 
-    public PlayerMoterInputBase GetInputClass(AiAgressiveMode mode, AiReactionTime time)
+    public PlayerMoterInputBase GetInputClass(AiAggressiveMode mode, AiReactionTime time)
     {
         //Check if it is a player
         switch (mode)
         {
-            case AiAgressiveMode.PlayerOne:
+            case AiAggressiveMode.PlayerOne:
                 return PlayerOneInput;
-            case AiAgressiveMode.PlayerTwo:
+            case AiAggressiveMode.PlayerTwo:
                 return PlayerTwoInput;
-            case AiAgressiveMode.PlayerThree:
+            case AiAggressiveMode.PlayerThree:
                 return PlayerThreeInput;
-            case AiAgressiveMode.PlayerFour:
+            case AiAggressiveMode.PlayerFour:
                 return PlayerFourInput;
         }
 

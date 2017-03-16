@@ -1,14 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using JMiles42.Data;
+
 [RequireComponent(typeof(ResetableObjectAdvanced))]
 public class Ball : SingletonRigidbody<Ball>, IResetable
 {
     ResetableObjectAdvanced resetableObjectAdvanced;
-    private Vector3 startPos = Vector3.zero;
-    private Quaternion startRot = new Quaternion();
+    Vector3 startPos = Vector3.zero;
+    Quaternion startRot;
     public PlayerMoter LastPlayerHit;
 
 
@@ -44,15 +42,13 @@ public class Ball : SingletonRigidbody<Ball>, IResetable
 	    rigidbody.velocity = Vector3.down * 20f;
 	}
 
-    private void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
         var playerMoter = other.gameObject.GetComponentInParent<PlayerMoter>();
-        if (playerMoter != null)
-        {
-            LastPlayerHit = playerMoter;
-            var playerInstance = TeamManager.Instance.GetPlayerInstance(playerMoter);
-            if( playerInstance != null )
-                playerInstance.BallHit();
-        }
+        if (playerMoter == null) return;
+        LastPlayerHit = playerMoter;
+        var playerInstance = TeamManager.Instance.GetPlayerInstance(playerMoter);
+        if( playerInstance != null )
+            playerInstance.BallHit();
     }
 }

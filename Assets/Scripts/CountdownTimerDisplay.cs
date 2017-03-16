@@ -38,6 +38,7 @@ public class CountdownTimerDisplay : JMilesBehaviour
 
     IEnumerator FlashThenHideUi(float flashInterval, int times = 3)
     {
+        //Fade and show the counter UI
         for (int i = 0; i < times; i++)
         {
             var fade1 = textToUpdate.DOFade(0, flashInterval);

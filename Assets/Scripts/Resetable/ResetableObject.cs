@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ResetableObject : ResetableObjectBase
@@ -10,7 +7,7 @@ public class ResetableObject : ResetableObjectBase
     public Vector3 Pos;
     public Quaternion Rot;
 
-    private void Start()
+    void Start()
     {
         if (transformToReset == null) transformToReset = transform;
         Record();
