@@ -1,6 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -18,21 +16,23 @@ public class Team : JMilesScriptableObject
         StartListening();
     }
 
+#if !UNITY_EDITOR
     public void Disable()
     {
-#if !UNITY_EDITOR
         StopListening();
-#endif
     }
+#endif
 
     public void StartListening()
     {
         GetTeamsGoal().onGoal += TeamScored;
     }
+
     public void StopListening()
     {
         GetTeamsGoal().onGoal -= TeamScored;
     }
+
     public void TeamScored()
     {
         score++;
@@ -40,6 +40,7 @@ public class Team : JMilesScriptableObject
 
     public Goal GetTeamsGoal()
     {
+        //Find all goal, then find the one that has the same team
         var goals = FindObjectsOfType<Goal>();
         return goals.FirstOrDefault(goal => goal.myTeam == myTeam);
     }

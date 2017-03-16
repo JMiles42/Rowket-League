@@ -1,34 +1,30 @@
 using JMiles42.Data;
-using System.Collections;
-using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AdvancedScoreWritter : Singleton<AdvancedScoreWritter>
+public class AdvancedScoreWriter : Singleton<AdvancedScoreWriter>
 {
     public Text RedTeamScore;
     public string RedTextString = "<color=red>Red Score</color>";
+
     public Text BlueTeamScore;
     public string BlueTextString = "<color=blue>Blue Score</color>";
+
     public string scoreEntryPerLine = "||n<size=100>{0}: {1}</size>";
     public Text Title;
     public RenderTexture screenTexture;
 
     void OnEnable()
     {
-        DisplayDeactivate();
-        UpdateDisplay();
-
-        if (!GameManager.Instance) return;
         GameManager.Instance.onGameStart += DisplayActivate;
         GameManager.Instance.onAnyGoal += UpdateDisplay;
         GameManager.Instance.onGameStart += UpdateDisplay;
+        DisplayDeactivate();
     }
 
     void OnDisable()
     {
-        if (!GameManager.Instance) return;
         GameManager.Instance.onGameStart -= DisplayActivate;
         GameManager.Instance.onAnyGoal -= UpdateDisplay;
         GameManager.Instance.onGameStart -= UpdateDisplay;
@@ -59,30 +55,32 @@ public class AdvancedScoreWritter : Singleton<AdvancedScoreWritter>
 
     public void DisplayRedTeam()
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.Append(RedTextString);
         sb.Append(": ");
         sb.Append(TeamManager.Instance.RedTeam.team.score);
 
-        var RedTeam = TeamManager.Instance.GetTeamPlayersIndecies(TeamType.Red);
+        var RedTeam = TeamManager.Instance.GetTeamPlayersIndex(TeamType.Red);
         for (int i = 0, j = RedTeam.Count; i < j; i++)
             sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[RedTeam[i]].player.GetName(),
                 TeamManager.Instance.players[RedTeam[i]].Scores);
 
+        //Replaces custom line break due to Unity escaping the line breaks in editor
         RedTeamScore.text = sb.ToString().Replace("||n", "\n");
     }
 
     public void DisplayBlueTeam()
     {
-        StringBuilder sb = new StringBuilder();
+        var sb = new StringBuilder();
         sb.Append(BlueTextString);
         sb.Append(": ");
         sb.Append(TeamManager.Instance.BlueTeam.team.score);
-        var BlueTeam = TeamManager.Instance.GetTeamPlayersIndecies(TeamType.Blue);
+        var BlueTeam = TeamManager.Instance.GetTeamPlayersIndex(TeamType.Blue);
         for (int i = 0, j = BlueTeam.Count; i < j; i++)
             sb.AppendFormat(scoreEntryPerLine, TeamManager.Instance.players[BlueTeam[i]].player.GetName(),
                 TeamManager.Instance.players[BlueTeam[i]].Scores);
 
+        //Replaces custom line break due to Unity escaping the line breaks in editor
         BlueTeamScore.text = sb.ToString().Replace("||n", "\n");
     }
 }

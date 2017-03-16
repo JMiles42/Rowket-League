@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -36,13 +34,13 @@ public class ScoreDisplay : MonoBehaviour
     {
         if (!TeamManager.Instance) return;
         var goal = TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal();
-        if(goal) goal.onGoal -= UpdateDisplay;
+        if (goal) goal.onGoal -= UpdateDisplay;
     }
 
     private void UpdateDisplay()
     {
         Team team = TeamManager.Instance.GetTeam(myTeam);
-        myTextDisplay.text = string.Format("{0}",team.score);
+        myTextDisplay.text = string.Format("{0}", team.score);
         myTextDisplay.color = team.myTeamColour;
     }
 }

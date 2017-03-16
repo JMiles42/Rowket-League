@@ -1208,7 +1208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e3339f59e520804492a3ab93624bd97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inputFeild: {fileID: 114520308891132564}
+  inputField: {fileID: 114520308891132564}
   NameList: {fileID: 11400000, guid: e2eca42ef0219ae48bd6470497a8c89a, type: 2}
 --- !u!114 &114392054711461532
 MonoBehaviour:

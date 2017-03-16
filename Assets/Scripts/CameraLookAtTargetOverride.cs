@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerCamera : JMilesBehaviour
+public class CameraLookAtTargetOverride : JMilesBehaviour
 {
-    private Camera m_Camera;
+    Camera m_Camera;
     public new Camera camera
     {
         get
@@ -20,7 +20,7 @@ public class PlayerCamera : JMilesBehaviour
     public static bool lookAtTarget = false;
     public float smoothing;
 
-    private void LateUpdate()
+    void LateUpdate()
     {
         if(lookAtTarget)
             camera.transform.rotation = Quaternion.Lerp(camera.transform.rotation,Quaternion.LookRotation(overRidingLookAtTarget.position),Time.deltaTime*smoothing);

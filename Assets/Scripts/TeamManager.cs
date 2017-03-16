@@ -1,12 +1,11 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using JMiles42.Data;
 using UnityEngine;
 
 public class TeamManager : Singleton<TeamManager>
 {
-    public TeamInstance[] teams;
+    public TeamInstance[] teams = {new TeamInstance("Blue"),new TeamInstance("Red")};
     public List<PlayerInstance> players = new List<PlayerInstance>();
 
     public TeamInstance BlueTeam
@@ -14,26 +13,28 @@ public class TeamManager : Singleton<TeamManager>
         get { return teams[0]; }
         set { teams[0] = value; }
     }
-
     public TeamInstance RedTeam
     {
         get { return teams[1]; }
         set { teams[1] = value; }
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.Enable();
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].team.Enable();
     }
-
-    private void OnDisable()
+#if !UNITY_EDITOR
+    void OnDisable()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.Disable();
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].team.Disable();
     }
-
-    private void Start()
+#endif
+    void Start()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.score = 0;
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].team.score = 0;
     }
 
     public Team GetTeam(TeamType type)
@@ -41,7 +42,6 @@ public class TeamManager : Singleton<TeamManager>
         for (int i = 0, j = teams.Length; i < j; i++)
             if (teams[i].team.myTeam == type)
                 return teams[i].team;
-
         return null;
     }
 
@@ -50,33 +50,34 @@ public class TeamManager : Singleton<TeamManager>
         for (int i = 0, j = players.Count; i < j; i++)
             if (players[i].player == pM)
                 return players[i];
-
         return null;
     }
 
-    public List<int> GetTeamPlayersIndecies(TeamType team)
+    public List<int> GetTeamPlayersIndex(TeamType team)
     {
         var returnList = new List<int>();
         for (int i = 0, j = players.Count; i < j; i++)
             if (players[i].team == team)
                 returnList.Add(i);
-
         return returnList;
     }
 
     public void TeamInit()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.StartListening();
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].team.StartListening();
     }
 
     public void TeamStop()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].team.StopListening();
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].team.StopListening();
     }
 
     public void OnValidate()
     {
-        for (int i = 0, j = teams.Length; i < j; i++) teams[i].name = teams[i].team.myTeam + " Team";
+        for (int i = 0, j = teams.Length; i < j; i++)
+            teams[i].name = teams[i].team.myTeam + " Team";
     }
 
     [Serializable]
@@ -85,12 +86,17 @@ public class TeamManager : Singleton<TeamManager>
         public string name;
         public Team team;
         public Material mat;
+
+        public TeamInstance(string _name)
+        {
+            name = _name;
+        }
     }
 
     [Serializable]
     public class PlayerInstance
     {
-        [SerializeField] private PlayerMoter _player;
+        [SerializeField] PlayerMoter _player;
 
         public PlayerMoter player
         {

@@ -194,7 +194,7 @@ public class GameManager : Singleton<GameManager>
 
     void SetUpCamera()
     {
-        var cameras = FindObjectsOfType<PlayerCamera>();
+        var cameras = FindObjectsOfType<CameraLookAtTargetOverride>();
         for (int i = cameras.Length - 1; i >= 0; i--)
             cameras[i].camera.depth = 20 + i;
         switch (cameras.Length)

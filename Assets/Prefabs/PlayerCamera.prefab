@@ -104,6 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d49102dbd346aaa42b4d2a0ceb3d8593, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothing: 3
 --- !u!114 &114924058001841928
 MonoBehaviour:
   m_ObjectHideFlags: 1

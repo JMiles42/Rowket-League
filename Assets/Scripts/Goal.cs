@@ -7,20 +7,24 @@ public class Goal : JMilesBehaviour
 
     public Action onGoal;
 
-    private void GoalScored()
+    void GoalScored()
     {
-        var playerInstance = TeamManager.Instance.GetPlayerInstance(FindObjectOfType<Ball>().LastPlayerHit);
-        playerInstance.ScoreGoal();
+        var ball = FindObjectOfType<Ball>();
+        if (ball)
+        {
+            var playerInstance = TeamManager.Instance.GetPlayerInstance(ball.LastPlayerHit);
+            playerInstance.ScoreGoal();
+        }
         onGoal.Trigger();
     }
 
-    private void OnCollisionEnter(Collision other)
+    void OnCollisionEnter(Collision other)
     {
         if (other.gameObject.GetComponent<Ball>())
             GoalScored();
     }
 
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<Ball>())
             GoalScored();

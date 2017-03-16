@@ -1,13 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MainCamFollow : JMilesBehaviour
 {
+    public Transform target;
+
     void LateUpdate()
     {
-        var target = FindObjectOfType<Ball>();
+        if (!target)
+            target = FindObjectOfType<Ball>().transform;
         if (target)
-            transform.LookAt(target.transform);
+            transform.LookAt(target);
     }
 }

@@ -7,16 +7,16 @@ public class Spectator : JMilesBehaviour
 {
     TeamType myTeam;
     public Renderer render;
-    public Animator anim;
+    public Animator animator;
 
-    private const string chear = "chear";
-    private const string jump = "jump";
+    const string chear = "chear";
+    const string jump = "jump";
 
-    private void OnEnable()
+    void OnEnable()
     {
         myTeam = JMiles42.Maths.RandomBools.RandomBool() ? TeamType.Blue : TeamType.Red;
 
-        anim.SetBool(jump, JMiles42.Maths.RandomBools.RandomBool());
+        animator.SetBool(jump, JMiles42.Maths.RandomBools.RandomBool());
 
         GameManager.Instance.onGameStartCountdown += StartChear;
         GameManager.Instance.onGameStart += EndChear;
@@ -27,7 +27,7 @@ public class Spectator : JMilesBehaviour
             : TeamManager.Instance.RedTeam.mat;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         GameManager.Instance.onGameStartCountdown -= StartChear;
         GameManager.Instance.onGameStart -= EndChear;
@@ -36,11 +36,11 @@ public class Spectator : JMilesBehaviour
 
     void StartChear()
     {
-        anim.SetBool(chear, true);
+        animator.SetBool(chear, true);
     }
 
     void EndChear()
     {
-        anim.SetBool(chear, false);
+        animator.SetBool(chear, false);
     }
 }

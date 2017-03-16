@@ -11,10 +11,10 @@ public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
 
     public AiPlayerMenuEntry[] RedEntries;
     public AiPlayerMenuEntry[] BlueEntries;
-
+#if UNITY_EDITOR
     public PlayerDetails[] RedTeam;
     public PlayerDetails[] BlueTeam;
-
+#endif
     public PlayerFinalDetails[] RedTeamComposition;
     public PlayerFinalDetails[] BlueTeamComposition;
 
@@ -30,9 +30,16 @@ public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
 
     public void BuildArrays()
     {
+        //Create the empty array
+#if UNITY_EDITOR
         RedTeam = new PlayerDetails[RedEntries.Length];
-
-        int EnabledRed = 0;
+        BlueTeam = new PlayerDetails[BlueEntries.Length];
+#else
+        var RedTeam = new PlayerDetails[RedEntries.Length];
+        var BlueTeam = new PlayerDetails[BlueEntries.Length];
+#endif
+        //Store how many Red team members are active
+        var EnabledRed = 0;
         for (int i = 0, j = RedEntries.Length; i < j; i++)
         {
             RedTeam[i] = RedEntries[i].GetPlayerDetails();
@@ -40,8 +47,8 @@ public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
                 EnabledRed++;
         }
 
-        int EnabledBlue = 0;
-        BlueTeam = new PlayerDetails[BlueEntries.Length];
+
+        var EnabledBlue = 0;
         for (int i = 0, j = BlueEntries.Length; i < j; i++)
         {
             BlueTeam[i] = BlueEntries[i].GetPlayerDetails();
@@ -51,7 +58,7 @@ public class GameSettingsManagerMaster : Singleton<GameSettingsManagerMaster>
         RedTeamComposition = new PlayerFinalDetails[EnabledRed];
         BlueTeamComposition = new PlayerFinalDetails[EnabledBlue];
 
-        int currentIndex = 0;
+        var currentIndex = 0;
         for (int i = 0, j = RedTeam.Length; i < j; i++)
         {
             if (RedTeam[i].Disabled) continue;
