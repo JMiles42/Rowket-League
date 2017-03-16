@@ -393,13 +393,13 @@ InputManager:
     m_Name: Horizontal_player_3
     descriptiveName: 
     descriptiveNegativeName: 
-    negativeButton: left
-    positiveButton: right
+    negativeButton: 
+    positiveButton: 
     altNegativeButton: 
     altPositiveButton: 
-    gravity: 3
-    dead: 0.001
-    sensitivity: 3
+    gravity: 0
+    dead: 0
+    sensitivity: 0.1
     snap: 1
     invert: 0
     type: 1

@@ -1,6 +1,5 @@
 using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using DG.Tweening;
 using UnityEngine.UI;
 
 public class CountdownTimerDisplay : JMilesBehaviour
@@ -41,11 +40,9 @@ public class CountdownTimerDisplay : JMilesBehaviour
     {
         for (int i = 0; i < times; i++)
         {
-            yield return WaitForTimes.GetWaitForTime(flashInterval);
-            HideCounter();
-            for (var j = 0; j < 5; j++)
-                yield return null;
-            ShowCounter();
+            var fade1 = textToUpdate.DOFade(0, flashInterval);
+            yield return fade1.WaitForCompletion();
+            textToUpdate.DOFade(1, flashInterval/2);
         }
         HideCounter();
     }

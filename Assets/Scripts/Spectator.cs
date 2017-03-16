@@ -6,36 +6,38 @@ public class Spectator : JMilesBehaviour
     public Renderer render;
     public Animator animator;
 
-    const string chear = "chear";
+    const string cheer = "cheer";
     const string jump = "jump";
 
     void OnEnable()
     {
+        //Choose my team
         myTeam = JMiles42.Maths.RandomBools.RandomBool() ? TeamType.Blue : TeamType.Red;
-
+        //Set if my cheer animation is a jump
         animator.SetBool(jump, JMiles42.Maths.RandomBools.RandomBool());
 
-        GameManager.Instance.onGameStartCountdown += StartChear;
-        GameManager.Instance.onGameStart += EndChear;
-        TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal += StartChear;
+        GameManager.Instance.onGameStartCountdown += StartCheer;
+        GameManager.Instance.onGameStart += EndCheer;
+        TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal += StartCheer;
 
+        //Set my color
         render.material = myTeam == TeamType.Blue ? TeamManager.Instance.BlueTeam.mat : TeamManager.Instance.RedTeam.mat;
     }
 
     void OnDisable()
     {
-        GameManager.Instance.onGameStartCountdown -= StartChear;
-        GameManager.Instance.onGameStart -= EndChear;
-        TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal -= StartChear;
+        GameManager.Instance.onGameStartCountdown -= StartCheer;
+        GameManager.Instance.onGameStart -= EndCheer;
+        TeamManager.Instance.GetTeam(myTeam).GetTeamsGoal().onGoal -= StartCheer;
     }
 
-    void StartChear()
+    void StartCheer()
     {
-        animator.SetBool(chear, true);
+        animator.SetBool(cheer, true);
     }
 
-    void EndChear()
+    void EndCheer()
     {
-        animator.SetBool(chear, false);
+        animator.SetBool(cheer, false);
     }
 }

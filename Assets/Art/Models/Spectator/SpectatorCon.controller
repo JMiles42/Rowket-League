@@ -8,7 +8,7 @@ AnimatorController:
   m_Name: SpectatorCon
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: chear
+  - m_Name: cheer
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -125,7 +125,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: chear
+    m_ConditionEvent: cheer
     m_EventTreshold: 0
   - m_ConditionMode: 2
     m_ConditionEvent: jump
@@ -152,7 +152,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: chear
+    m_ConditionEvent: cheer
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102363693306488626}
@@ -197,7 +197,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: chear
+    m_ConditionEvent: cheer
     m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: jump
