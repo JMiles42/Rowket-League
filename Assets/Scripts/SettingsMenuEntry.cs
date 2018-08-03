@@ -20,6 +20,9 @@ public class SettingsMenuEntry: JMilesBehaviour
 		AiReactionSpeed.myDropdown.interactable =  Enabled;
 		Inputfield.inputField.interactable      =  Enabled;
 		ButtonClick.myButton.SetText(Enabled? ENABLED_STR : DISABLED_STR);
+		AiMode.myDropdown.value = (int) aiAggressiveMode;
+		GetInputMotorModeFromDropDown(AiMode.myDropdown.value);
+		AiReactionSpeed.myDropdown.value = (int) aiReactionTime;
 	}
 
 	private void OnDisable()

@@ -608,7 +608,7 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 0
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 
@@ -814,6 +814,7 @@ MonoBehaviour:
   m_PreferredHeight: 28
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
+  m_LayoutPriority: 1
 --- !u!114 &114152686203550284
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1288,6 +1289,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: 0
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114415127803251486
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1533,6 +1535,7 @@ MonoBehaviour:
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!114 &114681038504188884
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1571,13 +1574,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c344e9976cb01344bbcfafa2b893705c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Enabled: 0
-  inputMoterDropDown: {fileID: 114307877061488576}
-  aiReactionSpeedDropDown: {fileID: 114529125309369726}
-  inputfield: {fileID: 114520308891132564}
-  buttonClick: {fileID: 114341293384899454}
-  _inputMoterMode: 0
-  aiReactionTime: 1
+  Enabled: 1
+  AiMode: {fileID: 114307877061488576}
+  AiReactionSpeed: {fileID: 114529125309369726}
+  ButtonClick: {fileID: 114341293384899454}
+  Inputfield: {fileID: 114520308891132564}
+  aiAggressiveMode: 0
+  aiReactionTime: 0
 --- !u!114 &114710963542584190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1610,7 +1613,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Ball Only
+  m_Text: User (A,D,LCTRL,Space)
 --- !u!114 &114750373767635080
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1679,7 +1682,7 @@ MonoBehaviour:
   m_CaptionImage: {fileID: 0}
   m_ItemText: {fileID: 114490757320047052}
   m_ItemImage: {fileID: 0}
-  m_Value: 0
+  m_Value: 5
   m_Options:
     m_Options:
     - m_Text: Ball Only
@@ -1723,6 +1726,7 @@ MonoBehaviour:
   m_PreferredHeight: 28
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
+  m_LayoutPriority: 1
 --- !u!114 &114813078538414606
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2002,6 +2006,7 @@ MonoBehaviour:
   m_PreferredHeight: 28
   m_FlexibleWidth: -1
   m_FlexibleHeight: 0
+  m_LayoutPriority: 1
 --- !u!222 &222000606741179746
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -2731,7 +2736,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1291903470297186}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
