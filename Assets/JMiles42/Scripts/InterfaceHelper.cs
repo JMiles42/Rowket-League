@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using Component = UnityEngine.Component;
-using Object = UnityEngine.Object;
+
 //
 //
 // This is not mine, I did not make this

@@ -1,9 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IResetable
+﻿public interface IResetable
 {
-    void Record();
-    void Reset();
+	void Record();
+	void Reset();
 }

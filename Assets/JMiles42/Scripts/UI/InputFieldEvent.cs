@@ -1,44 +1,39 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 using UnityEngine.UI;
 
-public class InputFieldEvent : JMilesBehaviour
+public class InputFieldEvent: JMilesBehaviour
 {
-    public InputField inputField;
+	public InputField     inputField;
+	public Action<string> onValueChangedValue;
+	public Action<string> onEndEdit;
+	public string Text
+	{
+		get { return inputField.text; }
+		set { inputField.text = value; }
+	}
 
-    public string Text
-    {
-        get { return inputField.text; }
-        set { inputField.text = value; }
-    }
+	private void OnEnable()
+	{
+		if(inputField == null)
+			inputField = GetComponent<InputField>();
 
-    public Action<string> onValueChangedValue;
-    public Action<string> onEndEdit;
+		inputField.onValueChanged.AddListener(ValueChanged);
+		inputField.onEndEdit.AddListener(EndEdit);
+	}
 
-    private void OnEnable()
-    {
-        if (inputField == null)
-            inputField = GetComponent<InputField>();
+	private void OnDisable()
+	{
+		inputField.onValueChanged.RemoveListener(ValueChanged);
+		inputField.onEndEdit.RemoveListener(EndEdit);
+	}
 
-        inputField.onValueChanged.AddListener(ValueChanged);
-        inputField.onEndEdit.AddListener(EndEdit);
-    }
+	private void EndEdit(string value)
+	{
+		onEndEdit.Trigger(value);
+	}
 
-    private void OnDisable()
-    {
-        inputField.onValueChanged.RemoveListener(ValueChanged);
-        inputField.onEndEdit.RemoveListener(EndEdit);
-    }
-
-    private void EndEdit(string value)
-    {
-        onEndEdit.Trigger(value);
-    }
-
-    private void ValueChanged(string value)
-    {
-        onValueChangedValue.Trigger(value);
-    }
+	private void ValueChanged(string value)
+	{
+		onValueChangedValue.Trigger(value);
+	}
 }

@@ -1,32 +1,31 @@
-﻿using System.Collections;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System;
 using UnityEngine.UI;
 
-public class SliderEvent : JMilesBehaviour
+public class SliderEvent: JMilesBehaviour
 {
-    public Slider slider;
-    public float Value
-    {
-        get { return slider.value; }
-        set { slider.value = value; }
-    }
-    public Action<float> onValueChanged;
+	public Slider        slider;
+	public Action<float> onValueChanged;
+	public float Value
+	{
+		get { return slider.value; }
+		set { slider.value = value; }
+	}
 
-    private void OnEnable()
-    {
-        if (slider == null) slider = GetComponent<Slider>();
-        slider.onValueChanged.AddListener(ValueChanged);
-    }
+	private void OnEnable()
+	{
+		if(slider == null)
+			slider = GetComponent<Slider>();
 
-    private void OnDisable()
-    {
-        slider.onValueChanged.RemoveListener(ValueChanged);
-    }
+		slider.onValueChanged.AddListener(ValueChanged);
+	}
 
-    void ValueChanged(float value)
-    {
-        onValueChanged.Trigger(value);
-    }
+	private void OnDisable()
+	{
+		slider.onValueChanged.RemoveListener(ValueChanged);
+	}
+
+	private void ValueChanged(float value)
+	{
+		onValueChanged.Trigger(value);
+	}
 }

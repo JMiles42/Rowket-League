@@ -1,9 +1,9 @@
-///		This work is licensed under a Creative Commons Attribution 3.0 Unported License.
-///		http://creativecommons.org/licenses/by/3.0/deed.en_GB
-///		You are free:
-///		to copy, distribute, display, and perform the work
-///		to make derivative works
-///		to make commercial use of the work
+//		This work is licensed under a Creative Commons Attribution 3.0 Unported License.
+//		http://creativecommons.org/licenses/by/3.0/deed.en_GB
+//		You are free:
+//		to copy, distribute, display, and perform the work
+//		to make derivative works
+//		to make commercial use of the work
 //Please note. I DID NOT MAKE THIS
 /*
 namespace JMiles42.Effects.Glitch
@@ -67,3 +67,4 @@ namespace JMiles42.Effects.Glitch
 	}
 }
 */
+

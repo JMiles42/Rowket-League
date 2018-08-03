@@ -1,12 +1,12 @@
 #if UNITY_EDITOR
 using UnityEditor;
 
-public class BuildBundles 
+public class BuildBundles
 {
 	[MenuItem("Assets/Build Assest Bundles")]
-	static void BuildAssestsBundles()
+	private static void BuildAssestsBundles()
 	{
-		BuildPipeline.BuildAssetBundles("Assests/Asset Bundles",BuildAssetBundleOptions.ForceRebuildAssetBundle,BuildTarget.StandaloneWindows64);
+		BuildPipeline.BuildAssetBundles("Assests/Asset Bundles", BuildAssetBundleOptions.ForceRebuildAssetBundle, BuildTarget.StandaloneWindows64);
 	}
 }
 #endif

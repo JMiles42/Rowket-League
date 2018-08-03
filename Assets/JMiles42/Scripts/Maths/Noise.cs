@@ -1,35 +1,43 @@
 using UnityEngine;
+
 namespace JMiles42.Maths
 {
-	#region Noise
+
+#region Noise
 	public class Noise
 	{
-		#region ReturnNoiseInt
+
+#region ReturnNoiseInt
 		/// <summary>
-		/// Randomise value by amount.
+		///     Randomise value by amount.
 		/// </summary>
 		/// <param name="value">Value to Randomize.</param>
 		/// <param name="amount">Amount to Randomize.</param>
 		/// <returns>Value +/- Amount</returns>
-		public static int ReturnNoise (int value, int amount)
+		public static int ReturnNoise(int value, int amount)
 		{
-			int f = Random.Range (value-amount, value+amount);
-			return ( f );
+			var f = Random.Range(value - amount, value + amount);
+
+			return f;
 		}
-		#endregion
-		#region ReturnNoiseFloat
+#endregion
+
+#region ReturnNoiseFloat
 		/// <summary>
-		/// Randomise value by amount.
+		///     Randomise value by amount.
 		/// </summary>
 		/// <param name="value">Value to Randomize.</param>
 		/// <param name="amount">Amount to Randomize.</param>
 		/// <returns>Value +/- Amount</returns>
-		public static float ReturnNoise (float value, float amount)
+		public static float ReturnNoise(float value, float amount)
 		{
-			float f = Random.Range (value-amount, value+amount);
-			return ( f );
+			var f = Random.Range(value - amount, value + amount);
+
+			return f;
 		}
-		#endregion
+#endregion
+
 	}
-	#endregion
+#endregion
+
 }

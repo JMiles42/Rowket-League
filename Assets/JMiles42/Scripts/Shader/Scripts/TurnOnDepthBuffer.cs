@@ -1,14 +1,13 @@
 using UnityEngine;
-using System.Collections;
 
 [ExecuteInEditMode]
-public class TurnOnDepthBuffer : MonoBehaviour
+public class TurnOnDepthBuffer: MonoBehaviour
 {
+	private void Start()
+	{
+		var camera = GetComponent<Camera>();
 
-    void Start()
-    {
-        var camera = GetComponent<Camera>();
-        if (camera)
-            camera.depthTextureMode = DepthTextureMode.Depth;
-    }
+		if(camera)
+			camera.depthTextureMode = DepthTextureMode.Depth;
+	}
 }

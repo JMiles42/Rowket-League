@@ -1,8 +1,6 @@
-using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections;
 
-public class SimpleSceneLoader : JMilesBehaviour 
+public class SimpleSceneLoader: JMilesBehaviour
 {
 	public int levelNum;
 
@@ -11,10 +9,12 @@ public class SimpleSceneLoader : JMilesBehaviour
 		SceneManager.UnloadSceneAsync(levelNum);
 		SceneManager.LoadScene(levelNum);
 	}
+
 	public void LoadScene(int s)
 	{
 		SceneManager.LoadScene(s);
 	}
+
 	public void LoadScene(string s)
 	{
 		SceneManager.LoadScene(s);
@@ -24,10 +24,12 @@ public class SimpleSceneLoader : JMilesBehaviour
 	{
 		SceneManager.LoadScene(0);
 	}
+
 	public static void EndGame()
 	{
 		SceneManager.LoadScene(2);
 	}
+
 	public static void LoadGame(int lvl)
 	{
 		SceneManager.LoadScene(lvl);

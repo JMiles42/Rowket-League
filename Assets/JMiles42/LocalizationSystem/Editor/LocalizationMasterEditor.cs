@@ -1,5 +1,3 @@
-using UnityEditor;
-using UnityEngine;
 
 //public class LocalizationMasterEditor : JMilesScriptableObjectEditor
 //{

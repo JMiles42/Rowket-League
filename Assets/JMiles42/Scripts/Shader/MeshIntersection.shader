@@ -1,3 +1,5 @@
+// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
 //Highlights intersections with other objects
 //origanly from https://chrismflynn.wordpress.com/2012/09/06/fun-with-shaders-and-the-depth-buffer/
 
@@ -39,7 +41,7 @@ Shader "JMiles42/IntersectionHighlights"
 	v2f vert(appdata_base v)
 	{
 		v2f o;
-		o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+		o.pos = UnityObjectToClipPos(v.vertex);
 		o.projPos = ComputeScreenPos(o.pos);
 
 		return o;

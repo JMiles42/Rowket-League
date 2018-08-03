@@ -1,6 +1,3 @@
-using System;
-using UnityEditor;
-using UnityEngine;
 
 //[CustomEditor(typeof(MonoBehaviour),true)]
 //public class JMilesMonoBehaviourEditor : CustomEditorBase

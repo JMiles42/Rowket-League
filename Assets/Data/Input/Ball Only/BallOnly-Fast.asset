@@ -9,7 +9,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e485d8ccc92ea8e479c55d984bc466a0, type: 3}
-  m_Name: Dumbbb
+  m_Name: BallOnly-Fast
   m_EditorClassIdentifier: 
   MoveDir: {x: 14.957566, y: -7.1084304, z: 35.66811}
   ReactionTime: 0.1

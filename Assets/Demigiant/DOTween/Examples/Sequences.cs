@@ -1,12 +1,11 @@
-using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using UnityEngine;
 
-public class Sequences : MonoBehaviour
+public class Sequences: MonoBehaviour
 {
 	public Transform target;
 
-	void Start()
+	private void Start()
 	{
 		// FIRST OF ALL, note this!
 		// Sequences contain and animate other tweens,
@@ -18,7 +17,7 @@ public class Sequences : MonoBehaviour
 		// Also, during all the tween, we will make sure that the target also moves on the X axis.
 
 		// Create new Sequence object
-		Sequence mySequence = DOTween.Sequence();
+		var mySequence = DOTween.Sequence();
 		// Add a 1 second move tween only on the Y axis
 		mySequence.Append(target.DOMoveY(2, 1));
 		// Add a 1 second rotation tween, using Join so it will start when the previous one starts

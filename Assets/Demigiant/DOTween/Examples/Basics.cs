@@ -1,12 +1,11 @@
-using UnityEngine;
-using System.Collections;
 using DG.Tweening;
+using UnityEngine;
 
-public class Basics : MonoBehaviour
+public class Basics: MonoBehaviour
 {
 	public Transform cubeA, cubeB;
 
-	void Start()
+	private void Start()
 	{
 		// Initialize DOTween (needs to be done only once).
 		// If you don't initialize DOTween yourself,
@@ -22,7 +21,7 @@ public class Basics : MonoBehaviour
 		cubeA.DOMove(new Vector3(-2, 2, 0), 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
 
 		// cubeB > GENERIC WAY
-		DOTween.To(()=> cubeB.position, x=> cubeB.position = x, new Vector3(-2, 2, 0), 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
+		DOTween.To(() => cubeB.position, x => cubeB.position = x, new Vector3(-2, 2, 0), 1).SetRelative().SetLoops(-1, LoopType.Yoyo);
 
 		// Voilà.
 		// To see all available shortcuts check out DOTween's online documentation.

@@ -1,5 +1,3 @@
-using UnityEditor;
-using UnityEngine;
 
 //[CustomEditor(typeof(ScriptableObject),true)]
 //public class JMilesScriptableObjectEditor : Editor

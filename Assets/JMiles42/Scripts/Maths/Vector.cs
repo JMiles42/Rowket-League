@@ -1,18 +1,19 @@
 using UnityEngine;
-using System.Collections;
+
 //using UnityEngine.SceneManagement;
 //using UnityEngine.Ui;
 //using System.Collections.Generic;
 namespace JMiles42.Maths
 {
-
 	public static class Vector
 	{
 		public static Vector3 GetVectorDirection(Vector3 vA, Vector3 vB, bool Normalized = true)
 		{
-			Vector3 output = vA - vB;
-			if( Normalized )
+			var output = vA - vB;
+
+			if(Normalized)
 				output.Normalize();
+
 			return output;
 		}
 	}
@@ -20,20 +21,26 @@ namespace JMiles42.Maths
 	public static class VectorMaths
 	{
 		public const float ROTATIONMAX = 360f;
+
 		public static float ClampAngle(float angle, float min, float max)
 		{
-			if( angle < -ROTATIONMAX)
+			if(angle < -ROTATIONMAX)
 				angle += ROTATIONMAX;
-			if( angle > ROTATIONMAX)
+
+			if(angle > ROTATIONMAX)
 				angle -= ROTATIONMAX;
+
 			return Mathf.Clamp(angle, min, max);
 		}
+
 		public static float ClampAngle(float angle)
 		{
-			if( angle < -ROTATIONMAX)
+			if(angle < -ROTATIONMAX)
 				angle += ROTATIONMAX * 2;
-			if( angle > ROTATIONMAX)
+
+			if(angle > ROTATIONMAX)
 				angle -= ROTATIONMAX * 2;
+
 			return angle;
 		}
 	}
@@ -43,18 +50,21 @@ namespace JMiles42.Maths
 		//Returns the rotated Vector3 using a Quaterion
 		public static Vector3 RotateAroundPivot(this Vector3 Point, Vector3 Pivot, Quaternion Angle)
 		{
-			return Angle * (Point - Pivot) + Pivot;
+			return (Angle * (Point - Pivot)) + Pivot;
 		}
+
 		//Returns the rotated Vector3 using Euler
 		public static Vector3 RotateAroundPivot(this Vector3 Point, Vector3 Pivot, Vector3 Euler)
 		{
 			return RotateAroundPivot(Point, Pivot, Quaternion.Euler(Euler));
 		}
+
 		//Rotates the Transform's position using a Quaterion
 		public static void RotateAroundPivot(this Transform Me, Vector3 Pivot, Quaternion Angle)
 		{
 			Me.position = Me.position.RotateAroundPivot(Pivot, Angle);
 		}
+
 		//Rotates the Transform's position using Euler
 		public static void RotateAroundPivot(this Transform Me, Vector3 Pivot, Vector3 Euler)
 		{

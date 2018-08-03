@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class MyCustomBuildProcessor
 {
-    [PostProcessBuild(1)]
-    public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
-    {
-        Debug.Log(pathToBuiltProject);
-    }
+	[PostProcessBuild(1)]
+	public static void OnPostprocessBuild(BuildTarget target, string pathToBuiltProject)
+	{
+		Debug.Log(pathToBuiltProject);
+	}
 }
 #endif

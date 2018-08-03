@@ -1,4 +1,6 @@
-﻿Shader "JMiles42/Texture With Outline"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "JMiles42/Texture With Outline"
 {
 	Properties
 	{
@@ -43,7 +45,7 @@
 			{
 				v2f o;
 				v.vertex.xyz += v.normal.xyz * _Offset;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				return o;
 			}
@@ -82,7 +84,7 @@
 			{
 				v2f o;
 				v.vertex.xyz += v.normal.xyz * _Outline;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				return o;
 			}
 

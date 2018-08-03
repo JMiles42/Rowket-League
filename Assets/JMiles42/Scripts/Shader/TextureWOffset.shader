@@ -1,4 +1,6 @@
-﻿Shader "JMiles42/TextureWOffset"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "JMiles42/TextureWOffset"
 {
 	Properties
 	{
@@ -44,7 +46,7 @@
 			{
 				v2f o;
 				v.vertex.xyz += v.normal.xyz * _Offset;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.uv = TRANSFORM_TEX(v.uv, _MainTex);
 				UNITY_TRANSFER_FOG(o, o.vertex);
 				return o;
